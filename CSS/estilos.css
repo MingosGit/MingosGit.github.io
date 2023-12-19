@@ -8,6 +8,23 @@ body {
     padding: 20px;
 }
 
+/* Animación Keyframe */
+@keyframes aparecerDesdeArriba {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar animación a elementos */
+.foto, h1, p, .links a {
+    animation: aparecerDesdeArriba 1s ease-out;
+}
+
 /* Estilo para la imagen de perfil */
 .foto {
     width: 150px;
@@ -24,7 +41,7 @@ body {
     align-items: center;
     justify-content: center;
     margin: 10px 0;
-    padding: 10px;
+    padding: 12px;
     background-color: #ff6600; /* Fondo naranja */
     color: #fff; /* Texto blanco */
     text-decoration: none;
@@ -39,15 +56,16 @@ body {
 
 /* Estilo para las imágenes en los enlaces */
 .link-img {
-    width: 20px;
-    height: 20px;
+    width: 30px; /* Ajustar según sea necesario */
+    height: auto; /* Mantiene la proporción */
     vertical-align: middle;
-    margin-right: 5px;
+    margin-right: 10px; /* Ajustar según sea necesario */
 }
 
 /* Estilo para los contenedores de los enlaces */
 .links {
-    border-left: 4px solid #ff6600; /* Barra lateral naranja */
+    
+   /* border-left: 2px solid #ff6600;  Barra más delgada */
     padding-left: 20px;
     margin: 20px 0;
 }
@@ -57,7 +75,7 @@ h1, p {
     margin: 10px 0;
 }
 
-/* Estilos adicionales para mejorar la presentación */
+
 h1 {
     font-size: 2em;
     font-weight: bold;

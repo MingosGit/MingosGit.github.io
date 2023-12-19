@@ -14,10 +14,6 @@ Este es el repositorio de la página web personal de @josecrub, un espacio para 
 - CSS3
 - Flexbox para la disposición de elementos.
 
-## Vista Previa
-
-![Vista previa de la web](Media/preview.png)
-
 ## Enlaces a Redes Sociales
 
 - [Instagram](https://www.instagram.com/josecrub/)

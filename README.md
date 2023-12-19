@@ -20,9 +20,3 @@ Este es el repositorio de la página web personal de @josecrub, un espacio para 
 - [Google Drive](https://drive.google.com/drive/u/0/folders/1nD7HDT8sZyuix58YG4BRQxWlZ0rHgh7b)
 - [GitHub](https://github.com/MingosGit)
 
-## Instalación
-
-Para clonar este repositorio y ver la página en tu servidor local, ejecuta:
-
-```bash
-git clone https://github.com/username/repository.git

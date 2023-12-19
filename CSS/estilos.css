@@ -88,11 +88,35 @@ p {
 }
 
 @media (max-width: 600px) {
+    body {
+        padding: 15px 20px; /* Aumenta el padding para más espacio alrededor */
+    }
+
+    .foto {
+        width: 200px; /* Aumenta el tamaño de la imagen de perfil */
+        height: 200px;
+        margin: 20px auto; /* Ajusta el margen para centrar */
+    }
+
+    h1 {
+        font-size: 2em; /* Aumenta el tamaño de la fuente para el título */
+    }
+
+    p {
+        font-size: 1.4em; /* Aumenta el tamaño de la fuente para el párrafo */
+        margin-bottom: 25px; /* Aumenta el espacio después del párrafo */
+    }
+
     .links a {
-        flex-direction: column; /* Cambia a disposición vertical en pantallas pequeñas */
+        flex-direction: column; /* Mantiene los enlaces en columna */
+        margin: 15px 0; /* Aumenta el espacio entre enlaces */
+        padding: 15px; /* Aumenta el padding dentro de los enlaces */
     }
 
     .link-img {
-        margin-bottom: 5px;
+        width: 40px; /* Aumenta el tamaño de las imágenes de enlace */
+        margin-bottom: 10px; /* Aumenta el espacio entre la imagen y el texto del enlace */
     }
+
 }
+

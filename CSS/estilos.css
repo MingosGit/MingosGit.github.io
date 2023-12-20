@@ -1,6 +1,6 @@
 :root {
     --bunker: #33334D;          /* Gris oscuro, casi azulado */
-    --nobel: #e8ccab;           /* Gris medio claro */
+    --nobel: #e8dec0;           /* Gris medio claro */
     --nevada: #6B6B7C;          /* Gris azulado medio */
     --scarpa-flow: #505067;     /* Gris azulado oscuro */
     --corduroy: #48485A;        /* Gris muy oscuro */
@@ -22,7 +22,7 @@ body {
     padding: 20px;
     display: block;
 
-    background: linear-gradient(-45deg, #333,#663615, #333);
+    background: linear-gradient(-45deg, #333,#a15320, #333);
     background-size: 400% 400%;
     animation: fondoAnimado 7s ease infinite;
     /* Resto de las propiedades */
@@ -232,10 +232,14 @@ p {
     
     .front {
         transform: rotateY(0deg);
+        z-index: 2; /* Coloca la parte frontal sobre la trasera */
+
     }
     
     .back {
         transform: rotateY(-180deg);
+        z-index: 1; /* Coloca la parte trasera detrás de la frontal */
+
     }
 
 

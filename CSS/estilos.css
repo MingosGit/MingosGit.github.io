@@ -147,6 +147,9 @@ p {
 
 
 @media (max-width: 600px) {
+    footer span:hover {
+        color: #000; /* Cambia este color al deseado */
+    }
     body {
         display: flex; /* Habilita Flexbox */
         flex-direction: column; /* Alinea los elementos en una columna */
@@ -183,7 +186,7 @@ p {
         vertical-align: middle;
         margin-right: 0px; /* Espacio a la derecha de la imagen */
         margin-left: min(60%, max(auto, auto)); /* Espacio a la izquierda de la imagen */
-        transform: translateX(-33%); /* Ajusta la posición de la imagen para centrarla realmente */
+        /* transform: translateX(-33%); Ajusta la posición de la imagen para centrarla realmente */
         display: inline-block;
     }
     .links {
@@ -198,7 +201,8 @@ p {
          max-width: 100%;
      
          margin: 20px 0;
-     }
+    }
+    
      
     }
     .flipper {
@@ -262,3 +266,19 @@ p {
         border-radius: 50%; Forma circular
         transition: transform 0.6s; Transición suave
     } */
+
+    footer {
+        text-align: center;
+        color: black;
+        padding: 5px 0;
+        background-color: #fbead16f; /* Asegúrate de reemplazar con el color de fondo deseado */
+        width: 100%; /* Ocupa toda la fila horizontal */
+        position: fixed; /* Fija el footer en la parte inferior */
+        bottom: 0; /* Posición en la parte inferior de la pantalla */
+        left: 0; /* Alineado a la izquierda */
+    }
+    
+    footer span:hover {
+        color: #e65c00; /* Cambia este color al deseado */
+    }
+    

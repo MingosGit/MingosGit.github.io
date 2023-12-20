@@ -1,6 +1,6 @@
 :root {
     --bunker: #33334D;          /* Gris oscuro, casi azulado */
-    --nobel: #A6A6A6;           /* Gris medio claro */
+    --nobel: #e8ccab;           /* Gris medio claro */
     --nevada: #6B6B7C;          /* Gris azulado medio */
     --scarpa-flow: #505067;     /* Gris azulado oscuro */
     --corduroy: #48485A;        /* Gris muy oscuro */
@@ -22,7 +22,7 @@ body {
     padding: 20px;
     display: block;
 
-    background: linear-gradient(-45deg, var(--corduroy), var(--scarpa-flow), var(--nevada));
+    background: linear-gradient(-45deg, #333,#663615, #333);
     background-size: 400% 400%;
     animation: fondoAnimado 7s ease infinite;
     /* Resto de las propiedades */
@@ -51,6 +51,10 @@ body {
     animation: aparecerDesdeArriba 1s ease-out;
 }
 
+/* .foto:hover {
+    transform: rotate(360deg); /* Gira la imagen 360 grados */
+/* }  */
+
 /* Estilo para la imagen de perfil */
 .foto {
     margin-top: 20px;
@@ -62,25 +66,32 @@ body {
     border: 4px solid var(--nobel);
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    transition: transform 0.5s ease-in-out;
+    transform-style: preserve-3d; /* Permite la rotación en 3D */
 }
 
 /* Estilo para los enlaces */
 .links a {
+
     font-weight: bold; /* Hace el texto en negrita */
     flex-direction: row; /* Alinear elementos en una fila */
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: right; */
+    justify-content: flex-start;
     margin: 10px 0;
     /* margin-left: 20vh; */
     /* margin-right: 30vh; */ 
     padding: 12px;
-    background-color: var(--oslo-gray);
+    background-color: var(--nobel);
     color: var(--corduroy);
     text-decoration: none;
     border-radius: 10px;
     transition: background-color 0.3s, transform 0.2s;
-    
+    align-items: right; /* Alineación vertical de elementos */
+    justify-content: left; /* Centra los elementos horizontalmente */
+    text-align: left; /* Alinea el texto al centro */
+    width: 100%; /* Utiliza el ancho completo del contenedor */    
  /* El ancho se ajusta al contenido hasta el máximo establecido */
 }
 
@@ -91,13 +102,20 @@ body {
 }
 
 /* Estilo para las imágenes en los enlaces */
+    
+
+.links a > span {
+    flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+    text-align: center; /* Centra el texto dentro del espacio asignado */
+}
 .link-img {
-    width: 30px; /* Ajustar según sea necesario */
+    width: 27px; /* Ajusta el ancho */
     height: auto; /* Mantiene la proporción */
     vertical-align: middle;
-    margin-right: 10px; /* Ajustar según sea necesario */
-
-
+    margin-right: 10px; /* Espacio a la derecha de la imagen */
+    margin-left: 37%; /* Espacio a la izquierda de la imagen */
+    transform: translateX(-37%); /* Ajusta la posición de la imagen para centrarla realmente */
+    display: inline-block;
 }
 
 /* Estilo para los contenedores de los enlaces */
@@ -108,7 +126,7 @@ body {
     /* flex-direction: column; Organizar los enlaces en una columna */
     align-items: center; /* Centrar enlaces horizontalmente */
     padding-left: 35%;
-    padding-right: 35%;
+    padding-right: 36%;
     margin: 20px 0;
     max-width: 100%;
 
@@ -194,6 +212,5 @@ p {
      }
      
 }
-
 
 

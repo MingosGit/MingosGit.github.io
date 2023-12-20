@@ -1,30 +1,16 @@
-:root {
-    --bunker: #33334D;          /* Gris oscuro, casi azulado */
-    --nobel: #A6A6A6;           /* Gris medio claro */
-    --nevada: #6B6B7C;          /* Gris azulado medio */
-    --scarpa-flow: #505067;     /* Gris azulado oscuro */
-    --corduroy: #48485A;        /* Gris muy oscuro */
-    --oslo-gray: #8B8B9E;       /* Gris claro azulado */
-    --gunsmoke: #7C7C8A;        /* Gris cálido medio */
-    --nandor: #54545E;          /* Gris azulado medio oscuro */
-    --xanadu: #7C7C85;          /* Gris suave medio */
-}
-
-
 /* Estilos Generales */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--scarpa-flow); /* Fondo gris oscuro suave */
-    color: var(--nobel); /* Texto en gris claro */
+    background-color: #333; /* Gris oscuro */
+    color: #fff; /* Blanco para el texto */
     text-align: center;
     margin: 0;
-
     padding: 20px;
     display: block;
 
-    background: linear-gradient(-45deg, var(--corduroy), var(--scarpa-flow), var(--nevada));
+    background: linear-gradient(-45deg, #333,#8a4f28, #333);
     background-size: 400% 400%;
-    animation: fondoAnimado 7s ease infinite;
+    animation: fondoAnimado 10s ease infinite;
     /* Resto de las propiedades */
 }
 
@@ -53,41 +39,33 @@ body {
 
 /* Estilo para la imagen de perfil */
 .foto {
-    margin-top: 20px;
-    max-width: 40%; /* Ajustar al ancho del dispositivo */
-    width: auto; /* Ancho automático para mantener la proporción */
-    max-height: 12rem; /* Establecer una altura máxima en relación con la altura de la ventana del navegador */
-    height: auto; /* Altura automática para mantener la proporción */
+    max-width: 100%; /* Ajustar al ancho del dispositivo */
+    width: 30vh ;
+    height: auto;
     border-radius: 50%;
-    border: 4px solid var(--nobel);
+    border: 4px solid #ff6600; /* Borde naranja */
     margin: 20px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidad */
 }
 
 /* Estilo para los enlaces */
 .links a {
-    font-weight: bold; /* Hace el texto en negrita */
     flex-direction: row; /* Alinear elementos en una fila */
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 10px 0;
-    /* margin-left: 20vh; */
-    /* margin-right: 30vh; */ 
     padding: 12px;
-    background-color: var(--oslo-gray);
-    color: var(--corduroy);
+    background-color: #ff6600; /* Fondo naranja */
+    color: #1a1a1a;; /* Texto blanco */
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s;
-    
- /* El ancho se ajusta al contenido hasta el máximo establecido */
 }
-
 
 .links a:hover {
     background-color: #e65c00; /* Naranja más oscuro al pasar el ratón */
-    transform: translateY(-2px); /* Eleva ligeramente el enlace */ 
+    transform: translateY(-2px); /* Eleva ligeramente el enlace */
 }
 
 /* Estilo para las imágenes en los enlaces */
@@ -96,22 +74,14 @@ body {
     height: auto; /* Mantiene la proporción */
     vertical-align: middle;
     margin-right: 10px; /* Ajustar según sea necesario */
-
-
 }
 
 /* Estilo para los contenedores de los enlaces */
 .links {
     
    /* border-left: 2px solid #ff6600;  Barra más delgada */
-    /* display: flex; Usar flex para alinear los enlaces */
-    /* flex-direction: column; Organizar los enlaces en una columna */
-    align-items: center; /* Centrar enlaces horizontalmente */
-    padding-left: 35%;
-    padding-right: 35%;
-    margin: 20px 0;
-    max-width: 100%;
-
+    padding-left: 20px;
+    padding-right: 20px;
     margin: 20px 0;
 }
 
@@ -119,23 +89,15 @@ body {
 h1, p {
     margin: 10px 0;
 }
-h1 a {
-    text-decoration: none; /* Elimina cualquier subrayado predeterminado */
-    color: inherit; /* Hereda el color del texto del título h1 */
-    cursor: pointer; /* Cambia el cursor al puntero al pasar el ratón por encima */
-    /* Otros estilos que desees aplicar */
-}
 
 
 h1 {
     font-size: 2rem; /* en lugar de 2em */
     text-decoration-line: overline;
-    color: var(--nobel);
 }
 
 p {
     font-size: 1.2rem; /* en lugar de 1.2em */
-    color: var(--nobel);
 }
 
 
@@ -158,41 +120,27 @@ p {
     }
 
     h1 {
-        font-size: 1.2rem; /* Tamaño de título ajustado para legibilidad */
+        font-size: 2em; /* Tamaño de título ajustado para legibilidad */
     }
 
     p {
         font-size: 1em; /* Tamaño de texto ajustado para legibilidad */
-        margin-bottom: 4px; /* Espacio ajustado después del párrafo */
+        margin-bottom: 15px; /* Espacio ajustado después del párrafo */
     }
 
     .links a {
-        padding-left: 200%;
-        display: block; 
         flex-direction: row; /* Cambiar a fila para mantener imagen y texto en la misma línea */
-        align-items: center; /* Alinea verticalmente los elementos */
+        align-items: left; /* Alinea verticalmente los elementos */
         margin: 10px 0; /* Espacio ajustado entre enlaces */
         padding: 10px; /* Padding ajustado para toque estético */
-        text-align: center; /* Alinear texto al centro */  
+        text-align: left; /* Alinear texto al centro */
     }
 
     .link-img {
-        margin: 5px 0;
+        width: 25px; /* Tamaño de logos ajustado para visibilidad */
+        margin-right: 10px; /* Espacio a la derecha de la imagen */
+        align-items: left;
     }
-    .links {
-    
-        /* border-left: 2px solid #ff6600;  Barra más delgada */
-         /* display: flex; Usar flex para alinear los enlaces */
-         /* flex-direction: column; Organizar los enlaces en una columna */
-         align-items: center; /* Centrar enlaces horizontalmente */
-         padding-left: 20%;
-         padding-right: 20%;
-         margin: 20px 0;
-         max-width: 100%;
-     
-         margin: 20px 0;
-     }
-     
 }
 
 

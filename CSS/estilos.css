@@ -20,7 +20,7 @@ body {
     margin: 0;
 
     padding: 20px;
-    display: block;
+    box-sizing: border-box;
 
     background: linear-gradient(-45deg, #333,#a15320, #333);
     background-size: 400% 400%;
@@ -61,11 +61,11 @@ body {
 /* Estilo para los enlaces */
 .links a {
 
+    place-items: center;
     font-weight: bold; /* Hace el texto en negrita */
     flex-direction: row; /* Alinear elementos en una fila */
     display: flex;
     /* align-items: right; */
-    justify-content: flex-start;
     margin: 10px 0;
     /* margin-left: 20vh; */
     /* margin-right: 30vh; */ 
@@ -75,9 +75,6 @@ body {
     text-decoration: none;
     border-radius: 10px;
     transition: background-color 0.3s, transform 0.2s;
-    align-items: right; /* Alineación vertical de elementos */
-    justify-content: left; /* Centra los elementos horizontalmente */
-    text-align: left; /* Alinea el texto al centro */
     width: 100%; /* Utiliza el ancho completo del contenedor */    
  /* El ancho se ajusta al contenido hasta el máximo establecido */
 }
@@ -112,10 +109,9 @@ body {
    /* border-left: 2px solid #ff6600;  Barra más delgada */
     /* display: flex; Usar flex para alinear los enlaces */
     /* flex-direction: column; Organizar los enlaces en una columna */
-    align-items: center; /* Centrar enlaces horizontalmente */
     padding-left: 35%;
-    padding-right: 35%;
-    
+    padding-right: 36%;
+    text-align: justify;
     max-width: 100%;
 /* 
     margin: 20px 0; */
@@ -183,13 +179,9 @@ p {
         text-align: center; /* Centra el texto dentro del espacio asignado */
     }
     .link-img {
-        width: 27px; /* Ajusta el ancho */
-        height: auto; /* Mantiene la proporción */
-        vertical-align: middle;
-        margin-right: 0px; /* Espacio a la derecha de la imagen */
-        margin-left: min(60%, max(auto, auto)); /* Espacio a la izquierda de la imagen */
-        transform: translateX(-33%); /* Ajusta la posición de la imagen para centrarla realmente */
-        display: inline-block;
+        align-items: center;
+        justify-content: center;
+      
     }
     .links {
     
@@ -201,7 +193,7 @@ p {
          padding-right: 20%;
          margin: 20px 0;
          max-width: 100%;
-     
+        text-align: justify;
          margin: 20px 0;
     }
     
@@ -270,6 +262,7 @@ p {
     } */
 
     footer {
+        
         text-align: center;
         color: black;
         padding: 5px 0;

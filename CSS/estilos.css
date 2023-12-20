@@ -1,6 +1,6 @@
 :root {
     --bunker: #33334D;          /* Gris oscuro, casi azulado */
-    --nobel: #fee8c9;           /* Gris medio claro */
+    --nobel: #fbead1;           /* Gris medio claro */
     --nevada: #6B6B7C;          /* Gris azulado medio */
     --scarpa-flow: #505067;     /* Gris azulado oscuro */
     --corduroy: #48485A;        /* Gris muy oscuro */
@@ -99,7 +99,7 @@ body {
     width: 27px; /* Ajusta el ancho */
     height: auto; /* Mantiene la proporción */
     vertical-align: middle;
-    margin-right: 10px; /* Espacio a la derecha de la imagen */
+    margin-right: 0px; /* Espacio a la derecha de la imagen */
     margin-left: 37%; /* Espacio a la izquierda de la imagen */
     transform: translateX(-37%); /* Ajusta la posición de la imagen para centrarla realmente */
     display: inline-block;
@@ -113,11 +113,10 @@ body {
     /* flex-direction: column; Organizar los enlaces en una columna */
     align-items: center; /* Centrar enlaces horizontalmente */
     padding-left: 35%;
-    padding-right: 36%;
-    margin: 20px 0;
+    padding-right: 35%;
     max-width: 100%;
-
-    margin: 20px 0;
+/* 
+    margin: 20px 0; */
 }
 
 /* Estilo para el nombre y la descripción */
@@ -174,18 +173,18 @@ p {
         margin-bottom: 4px; /* Espacio ajustado después del párrafo */
     }
 
-    .links a {
-        padding-left: 200%;
-        display: block; 
-        flex-direction: row; /* Cambiar a fila para mantener imagen y texto en la misma línea */
-        align-items: center; /* Alinea verticalmente los elementos */
-        margin: 10px 0; /* Espacio ajustado entre enlaces */
-        padding: 10px; /* Padding ajustado para toque estético */
-        text-align: center; /* Alinear texto al centro */  
+    .links a > span {
+        flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+        text-align: center; /* Centra el texto dentro del espacio asignado */
     }
-
     .link-img {
-        margin: 5px 0;
+        width: 27px; /* Ajusta el ancho */
+        height: auto; /* Mantiene la proporción */
+        vertical-align: middle;
+        margin-right: 0px; /* Espacio a la derecha de la imagen */
+        margin-left: 27%; /* Espacio a la izquierda de la imagen */
+        transform: translateX(-37%); /* Ajusta la posición de la imagen para centrarla realmente */
+        display: inline-block;
     }
     .links {
     
@@ -228,6 +227,8 @@ p {
         backface-visibility: hidden; /* Oculta la parte trasera cuando rota */
         border-radius: 50%; /* Forma circular */
         transition: transform 0.6s; /* Transición suave */
+    
+    
     }
     
     .front {
@@ -243,3 +244,21 @@ p {
     }
 
 
+    /* .foto {
+        margin-top: 20px;
+        max-width: 40%; Ajustar al ancho del dispositivo
+        width: auto; Ancho automático para mantener la proporción
+        max-height: 12rem; Establecer una altura máxima en relación con la altura de la ventana del navegador
+        height: auto; Altura automática para mantener la proporción
+        border-radius: 50%;
+        border: 4px solid var(--nobel);
+        margin: 20px auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        transition: transform 0.5s ease-in-out;
+        transform-style: preserve-3d; Permite la rotación en 3D
+        position: absolute;
+        backface-visibility: hidden; Oculta la parte trasera cuando rota
+        border-radius: 50%; Forma circular
+        transition: transform 0.6s; Transición suave
+    } */

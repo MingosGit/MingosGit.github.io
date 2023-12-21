@@ -177,6 +177,9 @@ p {
     .links a {
         font-size: 0.9em;
     }
+    footer {
+        display: none; /* Oculta el footer en pantallas pequeñas */
+    }
 }
 
 
@@ -225,13 +228,14 @@ p {
 
     footer {
         
+        margin-top: auto;
         text-align: center;
         color: black;
         padding: 5px 0;
         background-color: #fbead16f; /* Asegúrate de reemplazar con el color de fondo deseado */
         width: 100%; /* Ocupa toda la fila horizontal */
-        position: fixed; /* Fija el footer en la parte inferior */
-        bottom: 0; /* Posición en la parte inferior de la pantalla */
+
+        bottom: auto; /* Posición en la parte inferior de la pantalla */
         left: 0; /* Alineado a la izquierda */
     }
     

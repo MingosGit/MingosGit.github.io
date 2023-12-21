@@ -142,7 +142,7 @@ p {
     }
 
     .foto {
-        width: 50%; /* Imagen de perfil adaptada al ancho del dispositivo */
+        width: 40%; /* Imagen de perfil adaptada al ancho del dispositivo */
         height: auto; /* Altura automática para mantener la proporción */
         margin-top: 15px; /* Margen superior ajustado */
         margin-bottom: 15px; /* Margen inferior ajustado */
@@ -161,11 +161,6 @@ p {
         flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
         text-align: center; /* Centra el texto dentro del espacio asignado */
     }
-    .link-img {
-        align-items: center;
-        justify-content: center;
-      
-    }
     .links {
          align-items: center; /* Centrar enlaces horizontalmente */
          padding-left: 20%;
@@ -175,58 +170,12 @@ p {
         text-align: justify;
          margin: 20px 0;
     }
+    .links a {
+        font-size: 0.9em;
+    }
 }
 
-    @media (max-width: 425px) {
-        footer span:hover {
-            color: #000; /* Cambia este color al deseado */
-        }
-        body {
-            display: flex; /* Habilita Flexbox */
-            flex-direction: column; /* Alinea los elementos en una columna */
-            justify-content: center; /* Centra los elementos verticalmente */
-            /* align-items: center; Centra los elementos horizontalmente */
-            height: 90vh; /* Altura completa de la ventana del navegador */
-            margin: 0; /* Elimina cualquier margen por defecto */
-            padding: 10px; /* Añade padding para evitar que el contenido toque los bordes */
-        }
-    
-        .foto {
-            width: 50%; /* Imagen de perfil adaptada al ancho del dispositivo */
-            height: auto; /* Altura automática para mantener la proporción */
-            margin-top: 15px; /* Margen superior ajustado */
-            margin-bottom: 15px; /* Margen inferior ajustado */
-        }
-    
-        h1 {
-            font-size: 1.2rem; /* Tamaño de título ajustado para legibilidad */
-        }
-    
-        p {
-            font-size: 1em; /* Tamaño de texto ajustado para legibilidad */
-            margin-bottom: 4px; /* Espacio ajustado después del párrafo */
-        }
-    
-        .links a > span {
-            flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
-            text-align: center; /* Centra el texto dentro del espacio asignado */
-        }
-        .link-img {
-            align-items: center;
-            justify-content: center;
-          
-        }
-        .links {
-            align-items: center; /* Centrar enlaces horizontalmente */
-            padding-left: 15%;
-            padding-right: 20%;
-            margin: 20px 0;
-            max-width: 100%;
-            text-align: justify;
-            margin: 20px 0;
-        }
-     
-    }
+
     .flipper {
         perspective: 1000px; /* Profundidad de la perspectiva para el efecto 3D */
         width: 200px; /* Ancho de la moneda */

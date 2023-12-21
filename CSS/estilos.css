@@ -139,7 +139,11 @@ p {
         height: 90vh; /* Altura completa de la ventana del navegador */
         margin: 0; /* Elimina cualquier margen por defecto */
         padding: 10px; /* Añade padding para evitar que el contenido toque los bordes */
-    }
+        box-sizing: border-box;
+
+        background: linear-gradient(-45deg, #333,#a15320, #333);
+        background-size: 400% 400%;
+        animation: fondoAnimado 5s ease infinite;}
 
     .foto {
         width: 40%; /* Imagen de perfil adaptada al ancho del dispositivo */

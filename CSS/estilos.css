@@ -51,12 +51,14 @@ body {
     animation: aparecerDesdeArriba 1s ease-out;
 }
 
-/* .foto:hover {
-    transform: rotate(360deg); /* Gira la imagen 360 grados */
-/* }  */
-
-/* Estilo para la imagen de perfil */
-
+/* Estilo para los contenedores de los enlaces */
+.links {
+    margin-top: 20px;
+    padding-left: max(35%);
+    padding-right: max(35%);
+    text-align: justify;
+    max-width: 100%;
+}
 
 /* Estilo para los enlaces */
 .links a {
@@ -65,18 +67,15 @@ body {
     font-weight: bold; /* Hace el texto en negrita */
     flex-direction: row; /* Alinear elementos en una fila */
     display: flex;
-    /* align-items: right; */
     margin: 10px 0;
-    /* margin-left: 20vh; */
-    /* margin-right: 30vh; */ 
+    justify-content: center;
     padding: 10px;
     background-color: var(--nobel);
     color: var(--corduroy);
     text-decoration: none;
     border-radius: 10px;
     transition: background-color 0.3s, transform 0.2s;
-    width: 100%; /* Utiliza el ancho completo del contenedor */    
- /* El ancho se ajusta al contenido hasta el máximo establecido */
+
 }
 
 
@@ -85,7 +84,6 @@ body {
     transform: translateY(-2px); /* Eleva ligeramente el enlace */ 
 }
 
-/* Estilo para las imágenes en los enlaces */
     
 
 .links a > span {
@@ -95,29 +93,14 @@ body {
 .link-img {
     width: 27px; /* Ajusta el ancho */
     height: auto; /* Mantiene la proporción */
-    vertical-align: middle;
-    margin-right: 0px; /* Espacio a la derecha de la imagen */
-    margin-left: min(37%);
- /* Espacio a la izquierda de la imagen */
-    transform: translateX(-37%); /* Ajusta la posición de la imagen para centrarla realmente */
+    /* vertical-align: middle; */
+    margin-right: 3px; /* Espacio a la derecha de la imagen */
     display: inline-block;
 }
 
-/* Estilo para los contenedores de los enlaces */
-.links {
-    
-   /* border-left: 2px solid #ff6600;  Barra más delgada */
-    /* display: flex; Usar flex para alinear los enlaces */
-    /* flex-direction: column; Organizar los enlaces en una columna */
-    padding-left: 35%;
-    padding-right: 36%;
-    text-align: justify;
-    max-width: 100%;
-/* 
-    margin: 20px 0; */
-}
 
-/* Estilo para el nombre y la descripción */
+
+
 h1, p {
     margin: 10px 0;
 }
@@ -125,7 +108,6 @@ h1 a {
     text-decoration: none; /* Elimina cualquier subrayado predeterminado */
     color: inherit; /* Hereda el color del texto del título h1 */
     cursor: pointer; /* Cambia el cursor al puntero al pasar el ratón por encima */
-    /* Otros estilos que desees aplicar */
 }
 
 
@@ -141,6 +123,7 @@ h1 {
 p {
     font-size: 1.2rem; /* en lugar de 1.2em */
     color: var(--nobel);
+
 }
 
 
@@ -184,10 +167,6 @@ p {
       
     }
     .links {
-    
-        /* border-left: 2px solid #ff6600;  Barra más delgada */
-         /* display: flex; Usar flex para alinear los enlaces */
-         /* flex-direction: column; Organizar los enlaces en una columna */
          align-items: center; /* Centrar enlaces horizontalmente */
          padding-left: 20%;
          padding-right: 20%;
@@ -196,7 +175,56 @@ p {
         text-align: justify;
          margin: 20px 0;
     }
+}
+
+    @media (max-width: 425px) {
+        footer span:hover {
+            color: #000; /* Cambia este color al deseado */
+        }
+        body {
+            display: flex; /* Habilita Flexbox */
+            flex-direction: column; /* Alinea los elementos en una columna */
+            justify-content: center; /* Centra los elementos verticalmente */
+            /* align-items: center; Centra los elementos horizontalmente */
+            height: 90vh; /* Altura completa de la ventana del navegador */
+            margin: 0; /* Elimina cualquier margen por defecto */
+            padding: 10px; /* Añade padding para evitar que el contenido toque los bordes */
+        }
     
+        .foto {
+            width: 50%; /* Imagen de perfil adaptada al ancho del dispositivo */
+            height: auto; /* Altura automática para mantener la proporción */
+            margin-top: 15px; /* Margen superior ajustado */
+            margin-bottom: 15px; /* Margen inferior ajustado */
+        }
+    
+        h1 {
+            font-size: 1.2rem; /* Tamaño de título ajustado para legibilidad */
+        }
+    
+        p {
+            font-size: 1em; /* Tamaño de texto ajustado para legibilidad */
+            margin-bottom: 4px; /* Espacio ajustado después del párrafo */
+        }
+    
+        .links a > span {
+            flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+            text-align: center; /* Centra el texto dentro del espacio asignado */
+        }
+        .link-img {
+            align-items: center;
+            justify-content: center;
+          
+        }
+        .links {
+            align-items: center; /* Centrar enlaces horizontalmente */
+            padding-left: 15%;
+            padding-right: 20%;
+            margin: 20px 0;
+            max-width: 100%;
+            text-align: justify;
+            margin: 20px 0;
+        }
      
     }
     .flipper {
@@ -241,25 +269,6 @@ p {
 
     }
 
-
-    /* .foto {
-        margin-top: 20px;
-        max-width: 40%; Ajustar al ancho del dispositivo
-        width: auto; Ancho automático para mantener la proporción
-        max-height: 12rem; Establecer una altura máxima en relación con la altura de la ventana del navegador
-        height: auto; Altura automática para mantener la proporción
-        border-radius: 50%;
-        border: 4px solid var(--nobel);
-        margin: 20px auto;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        transition: transform 0.5s ease-in-out;
-        transform-style: preserve-3d; Permite la rotación en 3D
-        position: absolute;
-        backface-visibility: hidden; Oculta la parte trasera cuando rota
-        border-radius: 50%; Forma circular
-        transition: transform 0.6s; Transición suave
-    } */
 
     footer {
         

@@ -3,166 +3,119 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cómo eliminar tu cuenta en TorneoYa / How to Delete Your TorneoYa Account</title>
-  <meta name="description" content="Guía rápida para eliminar tu cuenta en TorneoYa / Quick guide to delete your TorneoYa account: Cuenta → Ajustes → Mi Cuenta → Eliminar cuenta / Account → Settings → My Account → Delete account." />
+  <title>Eliminar cuenta TorneoYa / Delete TorneoYa Account</title>
+  <meta name="description" content="Guía para eliminar tu cuenta en TorneoYa con selector de idioma. / Guide to delete your TorneoYa account with language selector." />
   <style>
     :root{
       --bg:#0f1220; --card:#161a2b; --text:#e8ecf1; --muted:#a7b0c0;
-      --accent:#7c9cff; --danger:#ff4d4d; --ok:#21c07a; --border:#232844;
+      --accent:#7c9cff; --danger:#ff4d4d; --border:#232844;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%; margin:0; padding:0}
     body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial,sans-serif;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,Arial,sans-serif;
       background:radial-gradient(1200px 800px at 20% -10%, #1a2040 0%, #0f1220 60%), var(--bg);
       color:var(--text); line-height:1.55;
-      display:flex; align-items:center; justify-content:center; padding:24px;
+      display:flex; align-items:flex-start; justify-content:center; padding:40px 24px;
     }
-    .wrap{width:min(920px,100%); }
+    .wrap{width:min(920px,100%);}
     .card{
       background:linear-gradient(180deg,#151a2b 0%, #13172a 100%);
       border:1px solid var(--border); border-radius:20px; padding:28px;
       box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
     }
+    .lang-selector{
+      display:flex; justify-content:flex-end; margin-bottom:16px;
+    }
+    select{
+      background:var(--card); color:var(--text);
+      border:1px solid var(--border); border-radius:8px; padding:6px 10px;
+      font-size:.95rem; cursor:pointer;
+    }
     h1{margin:.2rem 0 1rem; font-size:clamp(1.6rem,2.5vw,2.2rem)}
     p{margin:.4rem 0 1rem; color:var(--muted)}
-    .crumbs{
-      display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:.25rem 0 1rem;
-      font-size:.95rem; color:var(--muted)
-    }
+    .crumbs{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:.25rem 0 1rem; font-size:.95rem; color:var(--muted)}
     .crumbs .sep{opacity:.45}
-    .crumbs .pill{
-      padding:.2rem .6rem; border:1px dashed var(--border); border-radius:999px;
-      background:rgba(255,255,255,.02)
-    }
+    .crumbs .pill{padding:.2rem .6rem; border:1px dashed var(--border); border-radius:999px; background:rgba(255,255,255,.02)}
     .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:18px 0}
-    .step{
-      border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--card);
-      position:relative; overflow:hidden;
-    }
+    .step{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--card); position:relative}
     .step h3{margin:0 0 .35rem; font-size:1.05rem}
-    .step .n{
-      position:absolute; top:-18px; right:-18px; width:64px; height:64px; border-radius:50%;
-      background:conic-gradient(from 180deg,var(--accent),#b28bff);
-      filter:blur(18px); opacity:.35; pointer-events:none;
-    }
     .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95rem}
     .warn,.info,.tip{
       border:1px solid var(--border); border-radius:14px; padding:14px; margin:14px 0;
-      display:flex; gap:12px; align-items:flex-start; background:rgba(255,255,255,.02)
+      background:rgba(255,255,255,.02)
     }
     .warn{border-color:rgba(255,77,77,.35); background:rgba(255,77,77,.06)}
     .info{border-color:rgba(124,156,255,.35); background:rgba(124,156,255,.06)}
     .tip{border-color:rgba(33,192,122,.35); background:rgba(33,192,122,.06)}
-    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px}
-    .btn{
-      appearance:none; border:none; cursor:pointer; font-weight:600; letter-spacing:.2px;
-      padding:10px 14px; border-radius:12px; background:var(--accent); color:#0b0e1a;
-      transition:transform .05s ease, filter .2s ease; text-decoration:none; display:inline-block
-    }
-    .btn:hover{filter:brightness(1.05)}
-    .btn:active{transform:translateY(1px)}
-    .btn-outline{background:transparent; color:var(--text); border:1px solid var(--border)}
-    details{border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin-top:10px; background:rgba(255,255,255,.02)}
-    summary{cursor:pointer; font-weight:600}
-    ul{margin:.4rem 0 .4rem 1.2rem}
     footer{margin-top:16px; font-size:.9rem; color:var(--muted); display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap}
     code{background:#0b0e1a; border:1px solid var(--border); padding:.15rem .35rem; border-radius:6px}
+    [data-lang]{display:none;}
+    [data-lang].active{display:block;}
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="card">
-      <div class="crumbs" aria-label="Ruta en la app / App path">
-        <span class="pill">Cuenta / Account</span>
-        <span class="sep">→</span>
-        <span class="pill">Ajustes / Settings</span>
-        <span class="sep">→</span>
-        <span class="pill">Mi Cuenta / My Account</span>
-        <span class="sep">→</span>
-        <span class="pill" style="border-color:rgba(255,77,77,.35);">Eliminar cuenta / Delete account</span>
+      <div class="lang-selector">
+        <label for="lang" style="display:none;">Language</label>
+        <select id="lang">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
       </div>
 
-      <h1>Eliminar tu cuenta en TorneoYa / Delete Your TorneoYa Account</h1>
-      <p>
-        ES: Sigue estos pasos dentro de la app para solicitar la eliminación total de tu cuenta y datos.  
-        EN: Follow these steps in the app to request the full deletion of your account and data.
-      </p>
-
-      <div class="warn" role="note">
-        <div>
-          <strong>ES:</strong> Acción permanente. Al confirmar, tu cuenta se desactiva y se programa la eliminación de datos asociada. Esta acción no se puede deshacer.<br>
-          <strong>EN:</strong> Permanent action. Once confirmed, your account will be deactivated and the associated data scheduled for deletion. This action cannot be undone.
+      <!-- Español -->
+      <div data-lang="es" class="active">
+        <div class="crumbs">
+          <span class="pill">Cuenta</span><span class="sep">→</span>
+          <span class="pill">Ajustes</span><span class="sep">→</span>
+          <span class="pill">Mi Cuenta</span><span class="sep">→</span>
+          <span class="pill" style="border-color:rgba(255,77,77,.35);">Eliminar cuenta</span>
         </div>
-      </div>
-
-      <section class="steps">
-        <article class="step">
-          <div class="n"></div>
-          <h3>1) ES: Abre <span class="kbd">Cuenta</span> / EN: Open <span class="kbd">Account</span></h3>
-          <p>ES: Desde el menú principal, entra en tu perfil y toca <em>Cuenta</em>.<br>EN: From the main menu, go to your profile and tap <em>Account</em>.</p>
-        </article>
-
-        <article class="step">
-          <div class="n"></div>
-          <h3>2) ES: Entra en <span class="kbd">Ajustes</span> / EN: Go to <span class="kbd">Settings</span></h3>
-          <p>ES: Dentro de Cuenta, selecciona <em>Ajustes</em>.<br>EN: Inside Account, select <em>Settings</em>.</p>
-        </article>
-
-        <article class="step">
-          <div class="n"></div>
-          <h3>3) ES: Ve a <span class="kbd">Mi Cuenta</span> / EN: Go to <span class="kbd">My Account</span></h3>
-          <p>ES: En Ajustes, toca <em>Mi Cuenta</em>.<br>EN: In Settings, tap <em>My Account</em>.</p>
-        </article>
-
-        <article class="step">
-          <div class="n"></div>
-          <h3>4) ES: Toca <span class="kbd">Eliminar cuenta</span> / EN: Tap <span class="kbd">Delete account</span></h3>
-          <p>ES: Lee el aviso, confirma y finaliza el proceso.<br>EN: Read the notice, confirm, and complete the process.</p>
-        </article>
-      </section>
-
-      <div class="info">
-        <div>
-          <strong>ES: Después de confirmar:</strong>
-          <ul>
-            <li>Se cierra tu sesión en todos los dispositivos.</li>
-            <li>Tu perfil y participación dejan de ser visibles.</li>
-            <li>Se inicia la eliminación de datos.</li>
-          </ul>
-          <strong>EN: After confirming:</strong>
-          <ul>
-            <li>You will be signed out from all devices.</li>
-            <li>Your profile and participation will no longer be visible.</li>
-            <li>Data deletion process will start.</li>
-          </ul>
+        <h1>Eliminar tu cuenta en TorneoYa</h1>
+        <p>Sigue estos pasos dentro de la app para solicitar la eliminación total de tu cuenta y datos.</p>
+        <div class="warn"><strong>Acción permanente.</strong> Esta acción no se puede deshacer.</div>
+        <div class="steps">
+          <div class="step"><h3>1) Abre <span class="kbd">Cuenta</span></h3><p>Desde el menú principal entra en tu perfil.</p></div>
+          <div class="step"><h3>2) Entra en <span class="kbd">Ajustes</span></h3><p>Selecciona Ajustes para opciones avanzadas.</p></div>
+          <div class="step"><h3>3) Ve a <span class="kbd">Mi Cuenta</span></h3><p>Gestiona la información de tu perfil.</p></div>
+          <div class="step"><h3>4) Toca <span class="kbd">Eliminar cuenta</span></h3><p>Confirma para finalizar el proceso.</p></div>
         </div>
+        <div class="info"><strong>Después de confirmar:</strong><ul><li>Se cierra sesión en todos los dispositivos.</li><li>Perfil deja de ser visible.</li><li>Se inicia eliminación de datos.</li></ul></div>
+        <footer><span>Ruta rápida: <code>Cuenta → Ajustes → Mi Cuenta → Eliminar cuenta</code></span><span>© TorneoYa</span></footer>
       </div>
 
-      <details>
-        <summary>ES: Preguntas frecuentes / EN: Frequently Asked Questions</summary>
-        <ul>
-          <li><strong>ES:</strong> No veo la opción. Asegúrate de estar en <em>Cuenta → Ajustes → Mi Cuenta</em>.  
-              <strong>EN:</strong> I can’t find the option. Make sure you are in <em>Account → Settings → My Account</em>.</li>
-          <li><strong>ES:</strong> ¿Puedo revertirlo? No.  
-              <strong>EN:</strong> Can I undo it? No.</li>
-          <li><strong>ES:</strong> ¿Qué pasa con mis torneos?  
-              <strong>EN:</strong> What happens to my tournaments? Your user is removed; operational data may be anonymized if needed.</li>
-        </ul>
-      </details>
-
-      <div class="tip">
-        <div>
-          ES: ¿Necesitas ayuda? Contacta con soporte desde <em>Cuenta → Ayuda</em>.<br>
-          EN: Need help? Contact support from <em>Account → Help</em>.
+      <!-- English -->
+      <div data-lang="en">
+        <div class="crumbs">
+          <span class="pill">Account</span><span class="sep">→</span>
+          <span class="pill">Settings</span><span class="sep">→</span>
+          <span class="pill">My Account</span><span class="sep">→</span>
+          <span class="pill" style="border-color:rgba(255,77,77,.35);">Delete account</span>
         </div>
+        <h1>Delete Your TorneoYa Account</h1>
+        <p>Follow these steps in the app to request the full deletion of your account and data.</p>
+        <div class="warn"><strong>Permanent action.</strong> This cannot be undone.</div>
+        <div class="steps">
+          <div class="step"><h3>1) Open <span class="kbd">Account</span></h3><p>From the main menu go to your profile.</p></div>
+          <div class="step"><h3>2) Go to <span class="kbd">Settings</span></h3><p>Select Settings for advanced options.</p></div>
+          <div class="step"><h3>3) Go to <span class="kbd">My Account</span></h3><p>Manage your profile information.</p></div>
+          <div class="step"><h3>4) Tap <span class="kbd">Delete account</span></h3><p>Confirm to complete the process.</p></div>
+        </div>
+        <div class="info"><strong>After confirming:</strong><ul><li>You will be signed out from all devices.</li><li>Your profile will no longer be visible.</li><li>Data deletion process starts.</li></ul></div>
+        <footer><span>Quick path: <code>Account → Settings → My Account → Delete account</code></span><span>© TorneoYa</span></footer>
       </div>
-
-      <footer>
-        <span>ES: Ruta rápida → <code>Cuenta → Ajustes → Mi Cuenta → Eliminar cuenta</code><br>EN: Quick path → <code>Account → Settings → My Account → Delete account</code></span>
-        <span>© TorneoYa</span>
-      </footer>
     </section>
   </main>
+
+  <script>
+    const selector = document.getElementById('lang');
+    const langs = document.querySelectorAll('[data-lang]');
+    selector.addEventListener('change', () => {
+      langs.forEach(l => l.classList.remove('active'));
+      document.querySelector(`[data-lang="${selector.value}"]`).classList.add('active');
+    });
+  </script>
 </body>
 </html>

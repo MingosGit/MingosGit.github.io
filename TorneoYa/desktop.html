@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TorneoYa — Juega fútbol con tus amigos</title>
+  <meta name="description" content="TorneoYa: crea y únete a partidos de fútbol con tus amigos. Marcadores, comentarios, encuestas y estadísticas. Interfaz bonita, sin anuncios ni compras." />
+  <link rel="icon" href="torneoya.png" type="image/png" />
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* ===================== PALETA EXACTA TORNEOYA ===================== */
+    :root{
+      /* Base */
+      --blue: #296DFF;
+      --violet: #8F5CFF;
+      --accent: #FFB531;
+      --accent-dark: #A26500;
+      --yellow: #FFB531;
+
+      /* Dark */
+      --bg-dark: #181B26;
+      --card-dark: #22263B;
+      --surface-dark: #191B27;
+      --chip-dark: #24294A;
+      --text-light: #F7F7FF;
+      --muted: #B7B7D1;
+
+      /* Light */
+      --bg-light: #F4F6FF;
+      --card-light: #F7F7FF;
+      --surface-light: #E7EAF9;
+      --chip-light: #E0E5FF;
+      --text-dark: #13142C;
+
+      /* Gradients de fondo EXACTOS */
+      --dark-grad-0: #1B1D29;   /* 0.00 */
+      --dark-grad-28: #212442;  /* 0.28 */
+      --dark-grad-58: #191A23;  /* 0.58 */
+      --dark-grad-100: #14151B; /* 1.00 */
+
+      --light-grad-0: #FFFFFF;  /* 0.00 */
+      --light-grad-30: #F8FAFF; /* 0.30 */
+      --light-grad-70: #EAEFFF; /* 0.70 */
+      --light-grad-100: #DAD6FF;/* 1.00 */
+    }
+
+    /* ===================== TEMA DARK POR DEFECTO ===================== */
+    html[data-theme="dark"], body { height: 100%; }
+
+    html[data-theme="dark"] body{
+      background:
+        linear-gradient(180deg,
+          var(--dark-grad-0) 0%,
+          var(--dark-grad-28) 28%,
+          var(--dark-grad-58) 58%,
+          var(--dark-grad-100) 100%
+        );
+      color: var(--text-light);
+      background-attachment: fixed;
+    }
+
+    html[data-theme="dark"] .surface       { background: var(--surface-dark); }
+    html[data-theme="dark"] .surface-var   { background: var(--card-dark); }
+    html[data-theme="dark"] .on-bg         { color: var(--text-light); }
+    html[data-theme="dark"] .on-surface    { color: var(--text-light); }
+    html[data-theme="dark"] .muted         { color: var(--muted); }
+
+    /* ===================== TEMA LIGHT (OPCIONAL) ===================== */
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) body{
+        background:
+          linear-gradient(180deg,
+            var(--light-grad-0) 0%,
+            var(--light-grad-30) 30%,
+            var(--light-grad-70) 70%,
+            var(--light-grad-100) 100%
+          );
+        color: var(--text-dark);
+      }
+      html:not([data-theme="dark"]) .surface       { background: var(--surface-light); }
+      html:not([data-theme="dark"]) .surface-var   { background: var(--card-light); }
+      html:not([data-theme="dark"]) .on-bg         { color: var(--text-dark); }
+      html:not([data-theme="dark"]) .on-surface    { color: var(--text-dark); }
+      html:not([data-theme="dark"]) .muted         { color: var(--card-dark); }
+    }
+
+    .container-narrow { max-width: 980px; }
+
+    /* Borde degradado azul-violeta */
+    .g-ring, .g-card {
+      position: relative;
+      padding: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+      border-radius: 999px;
+    }
+    .g-card { border-radius: 18px; }
+    .g-card > .body {
+      border-radius: 16px;
+      background: linear-gradient(90deg, var(--surface-dark), var(--card-dark));
+      padding: 18px 14px;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .g-card > .body{
+        background: linear-gradient(90deg, var(--surface-light), var(--card-light));
+      }
+    }
+    /* Botones FAQ acordes al estilo */
+    .g-card .btn {
+      background: transparent;
+      color: var(--text-light);
+      padding: 0;
+    }
+    .g-card .btn:hover { opacity: .85; }
+    .g-card .bi-chevron-down { transition: transform .25s ease; }
+    .g-card .collapse.show + .bi-chevron-down,
+    .g-card .btn[aria-expanded="true"] .bi-chevron-down {
+      transform: rotate(180deg);
+    }
+    .ring-inner {
+      display: inline-flex; width: 100%; height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--surface-dark), var(--card-dark));
+      align-items: center; justify-content: center;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .ring-inner{
+        background: linear-gradient(90deg, var(--surface-light), var(--card-light));
+      }
+    }
+
+    .btn-icon {
+      width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 999px;
+      color: currentColor;
+      transition: transform .06s ease, opacity .2s ease;
+    }
+    .btn-icon:active { transform: scale(.98); }
+    .btn-icon i { font-size: 1.35rem; }
+
+    .badge-chip {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--chip-dark); color: var(--text-light);
+      border-radius: 999px; padding: .4rem .75rem; font-weight: 700; font-size: .9rem;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .badge-chip{ background: var(--chip-light); color: var(--text-dark); }
+    }
+
+    .screen-title { font-weight: 900; letter-spacing: .2px; }
+
+    .hero-title { font-weight: 900; font-size: clamp(2rem, 3.6vw + 1rem, 3.2rem); line-height: 1.08; }
+    .hero-sub   { font-size: 1.15rem; color: var(--muted); }
+
+    .app-icon {
+      width: 86px; height: 86px; border-radius: 22%;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+      color: #fff; border: 0; border-radius: 12px; padding: .8rem 1.1rem;
+      font-weight: 800; text-decoration: none;
+      box-shadow: 0 8px 24px rgba(73, 112, 255, .25);
+    }
+    .cta-primary:hover { opacity: .95; }
+
+    .cta-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 2px solid rgba(255,255,255,.18);
+      color: var(--text-light); border-radius: 12px; padding: .72rem 1rem; text-decoration: none; font-weight: 800;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .cta-ghost{ border-color: rgba(0,0,0,.18); color: var(--text-dark); }
+    }
+
+    .feature-icon {
+      width: 46px; height: 46px; border-radius: 12px; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(90deg, rgba(41,109,255,.15), rgba(143,92,255,.15));
+      color: #fff; font-size: 1.3rem;
+    }
+
+    .stat-label { color: var(--accent); font-weight: 800; font-size: .95rem; }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .stat-label { color: var(--accent-dark); }
+    }
+    .stat-value { font-weight: 900; font-size: 1.6rem; }
+
+    .section-title { font-weight: 900; font-size: 1.8rem; }
+
+    .phone-frame {
+      border-radius: 28px; padding: 10px; background: linear-gradient(90deg, var(--surface-dark), var(--card-dark));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.06), 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    .footer { font-size: .95rem; border-top: 1px solid rgba(255,255,255,.06); }
+    @media (prefers-color-scheme: light) { html:not([data-theme="dark"]) .footer { border-top-color: rgba(0,0,0,.06); } }
+
+    .nav-blur { backdrop-filter: blur(10px); background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.06)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    @media (prefers-color-scheme: light) { html:not([data-theme="dark"]) .nav-blur { background: linear-gradient(90deg, rgba(0,0,0,.02), rgba(0,0,0,.03)); border-bottom-color: rgba(0,0,0,.06); } }
+
+    .divider { height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.12)); margin: 1.5rem 0; }
+
+    .check { color: #7CFFB7; }
+
+    /* ======= Dropdown de idiomas ======= */
+    .flag {
+      width: 20px; height: 14px; display: inline-block; border-radius: 3px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,.15);
+    }
+    .flag.es { background: linear-gradient(#AA151B 0 20%, #F1BF00 20% 80%, #AA151B 80% 100%); }
+    /* Catalana (simplificada) */
+    .flag.ca {
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          #FCDD09 0, #FCDD09 14%,
+          #DA121A 14%, #DA121A 28%
+        );
+    }
+  .flag.uk {
+    background-image: url('https://flagcdn.com/w20/gb.png');
+  }
+    .dropdown-menu {
+      --bs-dropdown-bg: linear-gradient(90deg, var(--surface-dark), var(--card-dark));
+      --bs-dropdown-link-color: var(--text-light);
+      --bs-dropdown-link-hover-bg: rgba(255,255,255,.06);
+      --bs-dropdown-link-hover-color: var(--text-light);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .dropdown-menu{
+        --bs-dropdown-bg: linear-gradient(90deg, var(--surface-light), var(--card-light));
+        --bs-dropdown-link-hover-bg: rgba(0,0,0,.06);
+        border-color: rgba(0,0,0,.12);
+      }
+    }
+    /* Animación hover para botones principales */
+    .cta-primary, .cta-ghost {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .cta-primary:hover, .cta-ghost:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      opacity: .95;
+    }
+
+    /* Animación hover para icon buttons */
+    .btn-icon, .btn-icon-gradient .inner {
+      transition: transform 0.2s ease;
+    }
+    .btn-icon:hover, .btn-icon-gradient:hover .inner {
+      transform: scale(1.1);
+    }
+
+    .lang-item { display:flex; align-items:center; gap:.5rem; }
+    .lang-btn-label { min-width: 82px; text-align: left; }
+    .btn-icon-gradient {
+      padding: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--violet));
+    }
+    .btn-icon-gradient .inner {
+      width: 44px; height: 44px; border-radius: 999px; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(90deg, var(--surface-dark), var(--card-dark));
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) .btn-icon-gradient .inner {
+        background: linear-gradient(90deg, var(--surface-light), var(--card-light));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav-blur sticky-top">
+    <div class="container container-narrow d-flex align-items-center justify-content-between py-2">
+      <div class="d-flex align-items-center gap-2">
+        <img src="torneoya.png" width="28" height="28" class="rounded" alt="Icono TorneoYa"/>
+        <strong class="on-bg">TorneoYa</strong>
+        <span class="badge-chip ms-2"><i class="bi bi-shield-check"></i> <span data-i18n="nav.badge">Sin anuncios • Sin pagos</span></span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <!-- ===== Botón de idiomas (a la izquierda de Descargar) ===== -->
+        <div class="dropdown">
+          <button id="langDropdown" class="btn btn-icon-gradient" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Language">
+            <span class="inner">
+              <span id="currentFlag" class="flag es" title="Español"></span>
+            </span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li>
+              <button class="dropdown-item lang-opt" data-lang="es">
+                <span class="lang-item">
+                  <span class="flag es"></span>
+                  <span class="lang-btn-label">Español</span>
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item lang-opt" data-lang="ca">
+                <span class="lang-item">
+                  <span class="flag ca"></span>
+                  <span class="lang-btn-label">Català</span>
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item lang-opt" data-lang="en">
+                <span class="lang-item">
+                  <span class="flag uk"></span>
+                  <span class="lang-btn-label">English</span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <!-- BOTONES NAV -->
+        <a href="#descargar" class="cta-primary"><i class="bi bi-download"></i><span data-i18n="nav.download">Descargar</span></a>
+        <a href="#caracteristicas" class="cta-ghost"><i class="bi bi-lightning-charge"></i><span data-i18n="nav.features">Características</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="py-5 py-lg-6">
+    <div class="container container-narrow on-bg">
+      <div class="row align-items-center g-4">
+        <!-- Columna texto -->
+        <div class="col-12 col-lg-7">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="torneoya.png" class="app-icon" alt="TorneoYa icon"/>
+            <div>
+              <div class="badge-chip"><i class="bi bi-android2"></i> <span data-i18n="hero.android">Para Android</span></div>
+            </div>
+          </div>
+          <h1 class="hero-title mb-3" data-i18n="hero.title">Organiza partidos con tus amigos en segundos</h1>
+          <p class="hero-sub mb-4" data-i18n="hero.subtitle">
+            Crea o únete a partidos, lleva el recuento de goles, comenta y vota encuestas.
+            Todo en una interfaz cuidada, sin anuncios y sin transacciones.
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#descargar" class="cta-primary"><i class="bi bi-download"></i> <span data-i18n="hero.ctaPrimary">Obtener TorneoYa</span></a>
+            <a href="#como-funciona" class="cta-ghost"><i class="bi bi-play-circle"></i> <span data-i18n="hero.ctaGhost">Ver cómo funciona</span></a>
+          </div>
+
+          <div class="divider"></div>
+          <div class="row row-cols-3 g-3 text-center">
+            <div class="col">
+              <div class="stat-label" data-i18n="hero.statMatches">Partidos</div>
+              <div class="stat-value on-bg" data-i18n="hero.statMatchesValue">∞</div>
+            </div>
+            <div class="col">
+              <div class="stat-label" data-i18n="hero.statGoals">Goles</div>
+              <div class="stat-value on-bg" data-i18n="hero.statGoalsValue">Incontables</div>
+            </div>
+            <div class="col">
+              <div class="stat-label" data-i18n="hero.statPolls">Encuestas</div>
+              <div class="stat-value on-bg" data-i18n="hero.statPollsValue">Todos los días</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna mockup teléfono -->
+        <div class="col-12 col-lg-5">
+          <div class="g-card">
+            <div class="body">
+              <div class="phone-frame">
+                <div id="phoneCarousel"
+                    class="carousel slide"
+                    data-bs-ride="carousel"
+                    data-bs-interval="3500"
+                    data-bs-touch="true"
+                    data-bs-keyboard="true"
+                    data-bs-pause="false">
+
+                  <!-- Indicadores -->
+                  <div class="carousel-indicators" style="margin-bottom:-6px;">
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Inicio"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="1" aria-label="Lista de partidos"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="2" aria-label="Jugadores"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="3" aria-label="Eventos"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="4" aria-label="Comentarios"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="5" aria-label="Encuestas"></button>
+                    <button type="button" data-bs-target="#phoneCarousel" data-bs-slide-to="6" aria-label="Tu usuario"></button>
+                  </div>
+
+                  <!-- Slides -->
+                  <div class="carousel-inner rounded-4 overflow-hidden">
+                    <div class="carousel-item active">
+                      <img src="image1.webp" class="d-block w-100" alt="Pantalla de inicio de TorneoYa">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image2.webp" class="d-block w-100" alt="Lista de partidos">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image3.webp" class="d-block w-100" alt="Jugadores en el partido">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image4.webp" class="d-block w-100" alt="Eventos de partido en vivo">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image5.webp" class="d-block w-100" alt="Comentarios del partido">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image6.webp" class="d-block w-100" alt="Encuestas de la comunidad">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="image7.webp" class="d-block w-100" alt="Perfil de usuario en TorneoYa">
+                    </div>
+                  </div>
+
+                  <!-- Controles -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#phoneCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#phoneCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                  </button>
+                </div>
+              </div><!-- /.phone-frame -->
+            </div><!-- /.body -->
+          </div><!-- /.g-card -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- CARACTERÍSTICAS -->
+  <section id="caracteristicas" class="py-4">
+    <div class="container container-narrow on-bg">
+      <h2 class="section-title mb-3" data-i18n="features.title">Todo lo que necesitas para jugar</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-people"></i></span>
+              <strong data-i18n="features.item1.title">Conecta con amigos</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item1.desc">Invita a tu grupo, crea equipos y mantén tu red de fútbol siempre activa.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-geo-alt"></i></span>
+              <strong data-i18n="features.item2.title">Crea partidos</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item2.desc">Fecha y hora. Controla la visibilidad.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-calendar-event"></i></span>
+              <strong data-i18n="features.item3.title">Únete en 1 toque</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item3.desc">Visualiza partidos y únete fácilmente.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-trophy"></i></span>
+              <strong data-i18n="features.item4.title">Recuento de goles</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item4.desc">Goles y asistencias por jugador. Suma MVP y estadísticas básicas.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-chat"></i></span>
+              <strong data-i18n="features.item5.title">Comentarios</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item5.desc">Crónicas rápidas, reacciones y debates rápidos.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <span class="feature-icon"><i class="bi bi-bar-chart"></i></span>
+              <strong data-i18n="features.item6.title">Encuestas</strong>
+            </div>
+            <p class="muted mb-0" data-i18n="features.item6.desc">Decide quien ha sido el mejor o si una jugada es polémica.</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
+        <span class="badge-chip"><i class="bi bi-hand-thumbs-up"></i> <span data-i18n="features.badge1">Interfaz bonita</span></span>
+        <span class="badge-chip"><i class="bi bi-bell"></i> <span data-i18n="features.badge2">Notificaciones claras</span></span>
+        <span class="badge-chip"><i class="bi bi-shield-check"></i> <span data-i18n="features.badge3">Sin anuncios ni transacciones</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como-funciona" class="py-5">
+    <div class="container container-narrow on-bg">
+      <h2 class="section-title mb-3" data-i18n="how.title">Cómo funciona</h2>
+      <div class="row row-cols-1 row-cols-lg-3 g-3">
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-2 mb-2"><span class="feature-icon"><i class="bi bi-1-circle"></i></span><strong data-i18n="how.step1.title">Conecta</strong></div>
+            <p class="muted mb-0" data-i18n="how.step1.desc">Agrega amigos y grupos. Crea tu equipo con amigos y organiza la semana.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-2 mb-2"><span class="feature-icon"><i class="bi bi-2-circle"></i></span><strong data-i18n="how.step2.title">Crea o únete</strong></div>
+            <p class="muted mb-0" data-i18n="how.step2.desc">Publica un partido o únete a uno existente. Gestiona plazas al instante.</p>
+          </div></div>
+        </div>
+        <div class="col">
+          <div class="g-card h-100"><div class="body h-100 p-3">
+            <div class="d-flex align-items-center gap-2 mb-2"><span class="feature-icon"><i class="bi bi-3-circle"></i></span><strong data-i18n="how.step3.title">Juega y registra</strong></div>
+            <p class="muted mb-0" data-i18n="how.step3.desc">Lleva el marcador, comenta la jugada y vota encuestas. Tus stats quedan guardadas.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS / SOCIAL PROOF -->
+  <section class="py-4">
+    <div class="container container-narrow on-bg">
+      <div class="g-card">
+        <div class="body p-4">
+          <div class="row g-3 align-items-center">
+            <div class="col-12 col-md-8">
+              <h3 class="h4 mb-1" data-i18n="testi.quote">“Desde que usamos TorneoYa nunca nos quedamos sin gente.”</h3>
+              <p class="muted mb-2" data-i18n="testi.author">Diego, capitán del 7v7 de los jueves</p>
+              <ul class="list-unstyled m-0">
+                <li class="d-flex align-items-center gap-2"><i class="bi bi-check2 check"></i><span data-i18n="testi.point1">Grupos activos sin chats infinitos</span></li>
+                <li class="d-flex align-items-center gap-2"><i class="bi bi-check2 check"></i><span data-i18n="testi.point2">Plazas claras y notificaciones justas</span></li>
+                <li class="d-flex align-items-center gap-2"><i class="bi bi-check2 check"></i><span data-i18n="testi.point3">Marcador y encuestas integradas</span></li>
+              </ul>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="g-card h-100"><div class="body p-3 text-center">
+                <div class="mb-2 fw-bold" data-i18n="testi.ratingLabel">Puntuación de usuarios</div>
+                <div class="fs-2 fw-black">4.9/5</div>
+                <div class="muted" data-i18n="testi.ratingSub">Interfaz • Simplicidad • Sin anuncios</div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+<section class="py-4">
+  <div class="container container-narrow on-bg">
+    <h2 class="section-title mb-3" data-i18n="faq.title">Preguntas frecuentes</h2>
+    <div class="d-flex flex-column gap-3">
+
+      <!-- FAQ item -->
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq1">
+            <span data-i18n="faq.q1">¿Tiene anuncios o compras?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq1" class="collapse show mt-2">
+            <p class="muted mb-0" data-i18n="faq.a1">No. TorneoYa no incluye anuncios ni transacciones dentro de la app.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq2">
+            <span data-i18n="faq.q2">¿Necesito cuenta?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq2" class="collapse mt-2">
+            <p class="muted mb-0" data-i18n="faq.a2">Sí. Puedes registrarte con email.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq3">
+            <span data-i18n="faq.q3">¿Puedo llevar estadísticas?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq3" class="collapse mt-2">
+            <p class="muted mb-0" data-i18n="faq.a3">Sí. Goles, asistencias, promedio de gol por partido y partidos jugados.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ: Tema claro -->
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq-light" aria-expanded="false">
+            <span data-i18n="faq.q4">¿Tiene tema claro?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq-light" class="collapse mt-2">
+            <p class="muted mb-2" data-i18n="faq.a4_1">
+              Sí. TorneoYa soporta <strong>tema claro y oscuro</strong>. Por defecto se adapta al
+              <em>modo del sistema</em> (auto), y desde Ajustes puedes <strong>forzarlo</strong> a claro u oscuro.
+            </p>
+            <ul class="m-0 ps-3">
+              <li data-i18n="faq.a4_li1">Auto: sigue el ajuste del dispositivo.</li>
+              <li data-i18n="faq.a4_li2">Claro: interfaz de alto contraste sobre fondo claro.</li>
+              <li data-i18n="faq.a4_li3">Oscuro: interfaz cuidada para entornos de poca luz.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ: Idiomas -->
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq-langs" aria-expanded="false">
+            <span data-i18n="faq.q5">¿Está disponible en diferentes idiomas?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq-langs" class="collapse mt-2">
+            <p class="muted mb-2" data-i18n="faq.a5_1">
+              Sí. La app está disponible en <strong>español</strong>, <strong>catalán</strong> e <strong>inglés</strong>.
+            </p>
+            <p class="muted mb-0" data-i18n="faq.a5_2">
+              El idioma se selecciona automáticamente según el del dispositivo; también puedes
+              cambiarlo manualmente en <strong>Ajustes → Idioma</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ: Eliminar cuenta -->
+      <div class="g-card">
+        <div class="body p-3">
+          <button class="btn w-100 d-flex justify-content-between align-items-center fw-bold text-start"
+                  data-bs-toggle="collapse" data-bs-target="#faq-delete" aria-expanded="false">
+            <span data-i18n="faq.q6">¿Puedo eliminar mi cuenta?</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div id="faq-delete" class="collapse mt-2">
+            <p class="muted mb-2" data-i18n="faq.a6_1">
+              Sí. Puedes borrar tu cuenta en <strong>Ajustes → Cuenta → Eliminar cuenta</strong>.
+              Esto elimina tus datos personales y estadísticas asociadas.
+            </p>
+            <ul class="m-0 ps-3">
+              <li data-i18n="faq.a6_li1">La eliminación es <strong>permanente</strong> y no reversible.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <section id="descargar" class="py-5">
+    <div class="container container-narrow on-bg text-center">
+      <h2 class="section-title mb-2" data-i18n="download.title">Descarga TorneoYa</h2>
+      <p class="muted" data-i18n="download.subtitle">Instala la app en tu Android y empieza a jugar hoy.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-2 mt-2">
+        <!-- Enlace directo al último Release -->
+        <a class="cta-primary"
+          href="https://github.com/MingosGit/TorneoYa/releases/latest/download/TorneoYa1.0.apk"
+          target="_blank" rel="noopener"
+          aria-label="Descargar APK">
+          <i class="bi bi-filetype-apk"></i> <span data-i18n="download.apk">APK directo</span>
+        </a>
+
+        <!-- Placeholder para Google Play -->
+        <a class="cta-ghost"
+          href="#"
+          aria-label="Abrir en Google Play">
+          <i class="bi bi-google-play"></i> <span data-i18n="download.play">Google Play</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer py-4">
+    <div class="container container-narrow d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+      <div>© <span id="year"></span> <span data-i18n="footer.copy">TorneoYa — Juega con tu gente</span></div>
+      <div class="d-flex align-items-center gap-3 small">
+        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="d-flex align-items-center gap-1 text-decoration-none on-bg">
+          <i class="bi bi-github"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="d-flex align-items-center gap-1 text-decoration-none on-bg">
+          <i class="bi bi-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+  
+  <!-- Interacciones + i18n -->
+  <script>
+    // Año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Scroll suave para anclas internas
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (id.length > 1 && document.querySelector(id)){
+          e.preventDefault();
+          document.querySelector(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', id);
+        }
+      });
+    });
+
+    // ======= I18N (ES, CA, EN) =======
+    const I18N = {
+      es: {
+        "nav.badge": "Sin anuncios • Sin pagos",
+        "nav.download": "Descargar",
+        "nav.features": "Características",
+        "hero.android": "Para Android",
+        "hero.title": "Organiza partidos con tus amigos en segundos",
+        "hero.subtitle": "Crea o únete a partidos, lleva el recuento de goles, comenta y vota encuestas. Todo en una interfaz cuidada, sin anuncios y sin transacciones.",
+        "hero.ctaPrimary": "Obtener TorneoYa",
+        "hero.ctaGhost": "Ver cómo funciona",
+        "hero.statMatches": "Partidos",
+        "hero.statMatchesValue": "∞",
+        "hero.statGoals": "Goles",
+        "hero.statGoalsValue": "Incontables",
+        "hero.statPolls": "Encuestas",
+        "hero.statPollsValue": "Todos los días",
+
+        "features.title": "Todo lo que necesitas para jugar",
+        "features.item1.title": "Conecta con amigos",
+        "features.item1.desc": "Invita a tu grupo, crea equipos y mantén tu red de fútbol siempre activa.",
+        "features.item2.title": "Crea partidos",
+        "features.item2.desc": "Fecha y hora. Controla la visibilidad.",
+        "features.item3.title": "Únete en 1 toque",
+        "features.item3.desc": "Visualiza partidos y únete fácilmente.",
+        "features.item4.title": "Recuento de goles",
+        "features.item4.desc": "Goles y asistencias por jugador. Suma MVP y estadísticas básicas.",
+        "features.item5.title": "Comentarios",
+        "features.item5.desc": "Crónicas rápidas, reacciones y debates rápidos.",
+        "features.item6.title": "Encuestas",
+        "features.item6.desc": "Decide quien ha sido el mejor o si una jugada es polémica.",
+        "features.badge1": "Interfaz bonita",
+        "features.badge2": "Notificaciones claras",
+        "features.badge3": "Sin anuncios ni transacciones",
+
+        "how.title": "Cómo funciona",
+        "how.step1.title": "Conecta",
+        "how.step1.desc": "Agrega amigos y grupos. Crea tu equipo con amigos y organiza la semana.",
+        "how.step2.title": "Crea o únete",
+        "how.step2.desc": "Publica un partido o únete a uno existente. Gestiona plazas al instante.",
+        "how.step3.title": "Juega y registra",
+        "how.step3.desc": "Lleva el marcador, comenta la jugada y vota encuestas. Tus stats quedan guardadas.",
+
+        "testi.quote": "“Desde que usamos TorneoYa nunca nos quedamos sin gente.”",
+        "testi.author": "Diego, capitán del 7v7 de los jueves",
+        "testi.point1": "Grupos activos sin chats infinitos",
+        "testi.point2": "Plazas claras y notificaciones justas",
+        "testi.point3": "Marcador y encuestas integradas",
+        "testi.ratingLabel": "Puntuación de usuarios",
+        "testi.ratingSub": "Interfaz • Simplicidad • Sin anuncios",
+
+        "faq.title": "Preguntas frecuentes",
+        "faq.q1": "¿Tiene anuncios o compras?",
+        "faq.a1": "No. TorneoYa no incluye anuncios ni transacciones dentro de la app.",
+        "faq.q2": "¿Necesito cuenta?",
+        "faq.a2": "Sí. Puedes registrarte con email.",
+        "faq.q3": "¿Puedo llevar estadísticas?",
+        "faq.a3": "Sí. Goles, asistencias, promedio de gol por partido y partidos jugados.",
+        "faq.q4": "¿Tiene tema claro?",
+        "faq.a4_1": "Sí. TorneoYa soporta <strong>tema claro y oscuro</strong>. Por defecto se adapta al <em>modo del sistema</em> (auto), y desde Ajustes puedes <strong>forzarlo</strong> a claro u oscuro.",
+        "faq.a4_li1": "Auto: sigue el ajuste del dispositivo.",
+        "faq.a4_li2": "Claro: interfaz de alto contraste sobre fondo claro.",
+        "faq.a4_li3": "Oscuro: interfaz cuidada para entornos de poca luz.",
+        "faq.q5": "¿Está disponible en diferentes idiomas?",
+        "faq.a5_1": "Sí. La app está disponible en <strong>español</strong>, <strong>catalán</strong> e <strong>inglés</strong>.",
+        "faq.a5_2": "El idioma se selecciona automáticamente según el del dispositivo; también puedes cambiarlo manualmente en <strong>Ajustes → Idioma</strong>.",
+        "faq.q6": "¿Puedo eliminar mi cuenta?",
+        "faq.a6_1": "Sí. Puedes borrar tu cuenta en <strong>Ajustes → Cuenta → Eliminar cuenta</strong>. Esto elimina tus datos personales y estadísticas asociadas.",
+        "faq.a6_li1": "La eliminación es <strong>permanente</strong> y no reversible.",
+
+        "download.title": "Descarga TorneoYa",
+        "download.subtitle": "Instala la app en tu Android y empieza a jugar hoy.",
+        "download.apk": "APK directo",
+        "download.play": "Google Play",
+
+        "footer.copy": "TorneoYa — Juega con tu gente"
+      },
+      ca: {
+        "nav.badge": "Sense anuncis • Sense pagaments",
+        "nav.download": "Descarregar",
+        "nav.features": "Característiques",
+        "hero.android": "Per a Android",
+        "hero.title": "Organitza partits amb els teus amics en segons",
+        "hero.subtitle": "Crea o uneix-te a partits, porta el recompte de gols, comenta i vota enquestes. Tot amb una interfície cuidada, sense anuncis ni transaccions.",
+        "hero.ctaPrimary": "Obtenir TorneoYa",
+        "hero.ctaGhost": "Veure com funciona",
+        "hero.statMatches": "Partits",
+        "hero.statMatchesValue": "∞",
+        "hero.statGoals": "Gols",
+        "hero.statGoalsValue": "Incomptables",
+        "hero.statPolls": "Enquestes",
+        "hero.statPollsValue": "Cada dia",
+
+        "features.title": "Tot el que necessites per jugar",
+        "features.item1.title": "Connecta amb amics",
+        "features.item1.desc": "Convida el teu grup, crea equips i mantén la teva xarxa de futbol sempre activa.",
+        "features.item2.title": "Crea partits",
+        "features.item2.desc": "Data i hora. Controla la visibilitat.",
+        "features.item3.title": "Uneix-t'hi en 1 toc",
+        "features.item3.desc": "Visualitza partits i uneix-t'hi fàcilment.",
+        "features.item4.title": "Recompte de gols",
+        "features.item4.desc": "Gols i assistències per jugador. Suma MVP i estadístiques bàsiques.",
+        "features.item5.title": "Comentaris",
+        "features.item5.desc": "Cròniques ràpides, reaccions i debats àgils.",
+        "features.item6.title": "Enquestes",
+        "features.item6.desc": "Decideix qui ha estat el millor o si una jugada és polèmica.",
+        "features.badge1": "Interfície bonica",
+        "features.badge2": "Notificacions clares",
+        "features.badge3": "Sense anuncis ni transaccions",
+
+        "how.title": "Com funciona",
+        "how.step1.title": "Connecta",
+        "how.step1.desc": "Afegeix amics i grups. Crea el teu equip i organitza la setmana.",
+        "how.step2.title": "Crea o uneix-t'hi",
+        "how.step2.desc": "Publica un partit o uneix-te a un d'existent. Gestiona places a l'instant.",
+        "how.step3.title": "Juga i registra",
+        "how.step3.desc": "Porta el marcador, comenta la jugada i vota enquestes. Les teves estadístiques queden desades.",
+
+        "testi.quote": "“Des que fem servir TorneoYa mai ens falten jugadors.”",
+        "testi.author": "Diego, capità del 7v7 dels dijous",
+        "testi.point1": "Grups actius sense xats infinits",
+        "testi.point2": "Places clares i notificacions justes",
+        "testi.point3": "Marcador i enquestes integrades",
+        "testi.ratingLabel": "Puntuació d'usuaris",
+        "testi.ratingSub": "Interfície • Simplicitat • Sense anuncis",
+
+        "faq.title": "Preguntes freqüents",
+        "faq.q1": "Té anuncis o compres?",
+        "faq.a1": "No. TorneoYa no inclou anuncis ni transaccions dins l'app.",
+        "faq.q2": "Necessito un compte?",
+        "faq.a2": "Sí. Pots registrar-t'hi amb email.",
+        "faq.q3": "Puc portar estadístiques?",
+        "faq.a3": "Sí. Gols, assistències, mitjana de gol per partit i partits jugats.",
+        "faq.q4": "Té tema clar?",
+        "faq.a4_1": "Sí. TorneoYa suporta <strong>tema clar i fosc</strong>. Per defecte s'adapta al <em>mode del sistema</em> (auto), i des d'Ajustos el pots <strong>forçar</strong> a clar o fosc.",
+        "faq.a4_li1": "Auto: segueix l'ajust del dispositiu.",
+        "faq.a4_li2": "Clar: interfície d'alt contrast sobre fons clar.",
+        "faq.a4_li3": "Fosc: interfície acurada per ambients de poca llum.",
+        "faq.q5": "Està disponible en diferents idiomes?",
+        "faq.a5_1": "Sí. L'app està disponible en <strong>espanyol</strong>, <strong>català</strong> i <strong>anglès</strong>.",
+        "faq.a5_2": "L'idioma se selecciona automàticament segons el del dispositiu; també el pots canviar manualment a <strong>Ajustos → Idioma</strong>.",
+        "faq.q6": "Puc eliminar el meu compte?",
+        "faq.a6_1": "Sí. Pots esborrar el teu compte a <strong>Ajustos → Compte → Eliminar compte</strong>. Això elimina les teves dades personals i estadístiques associades.",
+        "faq.a6_li1": "L'eliminació és <strong>permanent</strong> i no reversible.",
+
+        "download.title": "Descarrega TorneoYa",
+        "download.subtitle": "Instal·la l'app al teu Android i comença a jugar avui.",
+        "download.apk": "APK directe",
+        "download.play": "Google Play",
+
+        "footer.copy": "TorneoYa — Juga amb la teva gent"
+      },
+      en: {
+        "nav.badge": "No ads • No payments",
+        "nav.download": "Download",
+        "nav.features": "Features",
+        "hero.android": "For Android",
+        "hero.title": "Organise matches with friends in seconds",
+        "hero.subtitle": "Create or join matches, track goals, comment and vote in polls. All in a polished interface, with no ads and no transactions.",
+        "hero.ctaPrimary": "Get TorneoYa",
+        "hero.ctaGhost": "See how it works",
+        "hero.statMatches": "Matches",
+        "hero.statMatchesValue": "∞",
+        "hero.statGoals": "Goals",
+        "hero.statGoalsValue": "Countless",
+        "hero.statPolls": "Polls",
+        "hero.statPollsValue": "Every day",
+
+        "features.title": "Everything you need to play",
+        "features.item1.title": "Connect with friends",
+        "features.item1.desc": "Invite your group, create teams and keep your football network active.",
+        "features.item2.title": "Create matches",
+        "features.item2.desc": "Date and time. Control visibility.",
+        "features.item3.title": "Join in 1 tap",
+        "features.item3.desc": "Browse matches and join easily.",
+        "features.item4.title": "Goal tracking",
+        "features.item4.desc": "Goals and assists per player. MVP points and basic stats.",
+        "features.item5.title": "Comments",
+        "features.item5.desc": "Quick recaps, reactions and fast debates.",
+        "features.item6.title": "Polls",
+        "features.item6.desc": "Decide who was best or if a play was controversial.",
+        "features.badge1": "Beautiful UI",
+        "features.badge2": "Clear notifications",
+        "features.badge3": "No ads or IAPs",
+
+        "how.title": "How it works",
+        "how.step1.title": "Connect",
+        "how.step1.desc": "Add friends and groups. Build your team and plan the week.",
+        "how.step2.title": "Create or join",
+        "how.step2.desc": "Publish a match or join an existing one. Manage spots instantly.",
+        "how.step3.title": "Play & record",
+        "how.step3.desc": "Keep score, comment plays and vote in polls. Your stats are saved.",
+
+        "testi.quote": "“Since using TorneoYa we never run short of players.”",
+        "testi.author": "Diego, captain of the Thursday 7v7",
+        "testi.point1": "Active groups without endless chats",
+        "testi.point2": "Clear spots & fair notifications",
+        "testi.point3": "Built-in scoreboard & polls",
+        "testi.ratingLabel": "User rating",
+        "testi.ratingSub": "Interface • Simplicity • No ads",
+
+        "faq.title": "FAQ",
+        "faq.q1": "Does it have ads or purchases?",
+        "faq.a1": "No. TorneoYa includes no ads and no in-app transactions.",
+        "faq.q2": "Do I need an account?",
+        "faq.a2": "Yes. You can sign up with email.",
+        "faq.q3": "Can I track stats?",
+        "faq.a3": "Yes. Goals, assists, goals per game and matches played.",
+        "faq.q4": "Is there a light theme?",
+        "faq.a4_1": "Yes. TorneoYa supports <strong>light and dark</strong> themes. By default it follows the <em>system setting</em> (auto), and from Settings you can <strong>force</strong> light or dark.",
+        "faq.a4_li1": "Auto: follows device setting.",
+        "faq.a4_li2": "Light: high-contrast UI on light background.",
+        "faq.a4_li3": "Dark: comfy UI for low-light.",
+        "faq.q5": "Is it available in multiple languages?",
+        "faq.a5_1": "Yes. The app is available in <strong>Spanish</strong>, <strong>Catalan</strong> and <strong>English</strong>.",
+        "faq.a5_2": "Language follows your device automatically; you can also change it manually in <strong>Settings → Language</strong>.",
+        "faq.q6": "Can I delete my account?",
+        "faq.a6_1": "Yes. Delete it in <strong>Settings → Account → Delete account</strong>. This removes your personal data and related stats.",
+        "faq.a6_li1": "Deletion is <strong>permanent</strong> and irreversible.",
+
+        "download.title": "Download TorneoYa",
+        "download.subtitle": "Install the app on Android and start playing today.",
+        "download.apk": "Direct APK",
+        "download.play": "Google Play",
+
+        "footer.copy": "TorneoYa — Play with your people"
+      }
+    };
+
+    const LANG_FLAGS = {
+      es: "es",
+      ca: "ca",
+      en: "uk"
+    };
+
+    function applyTranslations(lang) {
+      const dict = I18N[lang] || I18N.es;
+      document.documentElement.lang = lang;
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (!key) return;
+        const val = dict[key];
+        if (val == null) return;
+        // Si contiene tags HTML permitidos (p.e. <strong>), usar innerHTML
+        if (/<\/?(strong|em|br)>/i.test(val)) {
+          el.innerHTML = val;
+        } else {
+          el.textContent = val;
+        }
+      });
+
+      // Actualiza flag del botón
+      const flag = document.getElementById("currentFlag");
+      if (flag) {
+        flag.className = "flag " + (LANG_FLAGS[lang] || "es");
+        flag.title = lang === "es" ? "Español" : lang === "ca" ? "Català" : "English";
+      }
+
+      // Guarda preferencia
+      try { localStorage.setItem("torneoya_lang", lang); } catch(e){}
+    }
+
+    // Listeners de selección
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".lang-opt");
+      if (!btn) return;
+      const lang = btn.getAttribute("data-lang");
+      applyTranslations(lang);
+    });
+
+    // Idioma inicial (guardar/restaurar)
+    (function initLang(){
+      let lang = "es";
+      try {
+        const saved = localStorage.getItem("torneoya_lang");
+        if (saved && I18N[saved]) lang = saved;
+      } catch(e){}
+      applyTranslations(lang);
+    })();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>

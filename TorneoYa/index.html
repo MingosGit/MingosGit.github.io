@@ -567,9 +567,10 @@
             aria-label="Descargar APK">
             <i class="bi bi-filetype-apk"></i> <span data-i18n="download.apk">APK directo</span>
           </a>
-          <a class="cta-ghost" href="#" aria-label="Abrir en Google Play">
-            <i class="bi bi-google-play"></i> <span data-i18n="download.play">Google Play</span>
-          </a>
+            <a class="cta-ghost js-play" href="#" aria-label="Abrir en Google Play">
+              <i class="bi bi-google-play"></i> <span data-i18n="download.play">Google Play</span>
+            </a>
+
         </div>
       </div>
     </section>
@@ -820,9 +821,9 @@
           <a class="cta cta-primary" href="https://github.com/MingosGit/TorneoYa/releases/latest/download/TorneoYa1.0.apk" target="_blank" rel="noopener" aria-label="Descargar APK">
             <i class="bi bi-filetype-apk"></i> <span data-i18n="download.apk">APK directo</span>
           </a>
-          <a class="cta cta-ghost" href="#" aria-label="Abrir en Google Play">
-            <i class="bi bi-google-play"></i> <span data-i18n="download.play">Google Play</span>
-          </a>
+            <a class="cta cta-ghost js-play" href="#" aria-label="Abrir en Google Play">
+              <i class="bi bi-google-play"></i> <span data-i18n="download.play">Google Play</span>
+            </a>
         </div>
 
         <div class="mt-3 text-start">
@@ -1230,5 +1231,40 @@
       navigator.serviceWorker.register(swURL).catch(()=>{});
     }
   </script>
+  <!-- Modal: Beta testers -->
+<div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content surface-var">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="betaModalLabel">La app está en pruebas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        Aún estamos en <strong>beta cerrada</strong>. ¿Quieres unirte al <strong>programa de testers</strong>?
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Ahora no</button>
+        <a id="goTester" class="btn btn-primary"
+           href="https://forms.gle/TKeVk4sBLWuD6wiu6" target="_blank" rel="noopener">
+          Quiero ser tester
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const FORMS_URL = "https://forms.gle/TKeVk4sBLWuD6wiu6";
+
+  document.querySelectorAll('.js-play').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('goTester').setAttribute('href', FORMS_URL);
+      const modal = new bootstrap.Modal(document.getElementById('betaModal'));
+      modal.show();
+    });
+  });
+</script>
+
 </body>
 </html>

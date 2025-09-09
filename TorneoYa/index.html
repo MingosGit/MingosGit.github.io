@@ -17,6 +17,33 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
+    /* Estilo modal acorde al resto */
+#betaModal .modal-content {
+  background: var(--bs-dark); /* mismo fondo oscuro que usas en la web */
+  color: #fff;
+}
+
+#betaModal .modal-title {
+  font-size: 1.25rem;
+}
+
+#betaModal .btn-primary {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b); /* ejemplo gradiente */
+  border: none;
+  font-weight: 600;
+}
+
+#betaModal .btn-outline-light {
+  border: 1px solid #ccc;
+}
+
+#betaModal .btn {
+  transition: transform 0.15s ease;
+}
+#betaModal .btn:hover {
+  transform: scale(1.05);
+}
+
     /* --------- SWITCH DESKTOP / MOBILE --------- */
     #desktop { display: block; }
     #mobile  { display: none; }
@@ -1231,23 +1258,30 @@
       navigator.serviceWorker.register(swURL).catch(()=>{});
     }
   </script>
-  <!-- Modal: Beta testers -->
-<div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content surface-var">
-      <div class="modal-header border-0">
-        <h5 class="modal-title" id="betaModalLabel">La app está en pruebas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        Aún estamos en <strong>beta cerrada</strong>. ¿Quieres unirte al <strong>programa de testers</strong>?
-      </div>
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Ahora no</button>
-        <a id="goTester" class="btn btn-primary"
-           href="https://forms.gle/TKeVk4sBLWuD6wiu6" target="_blank" rel="noopener">
-          Quiero ser tester
-        </a>
+    <!-- Modal: Beta testers -->
+        <div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content g-card border-0">
+              <div class="body p-4 text-center">
+                
+                <h5 class="fw-bold mb-2" id="betaModalLabel">🚀 La app está en pruebas</h5>
+                <p class="muted mb-4">
+                  Estamos en <strong>beta cerrada</strong>.  
+                  ¿Quieres unirte al <strong>programa de testers</strong>?
+                </p>
+
+                <div class="d-flex justify-content-center gap-2">
+        <div class="modal-footer border-0 d-flex justify-content-center gap-2">
+          <a href="#" class="cta cta-ghost" data-bs-dismiss="modal">
+            Ahora no
+          </a>
+          <a id="goTester"
+            class="cta cta-primary"
+            href="https://forms.gle/TKeVk4sBLWuD6wiu6"
+            target="_blank" rel="noopener">
+            Quiero ser tester
+          </a>
+        </div>
       </div>
     </div>
   </div>

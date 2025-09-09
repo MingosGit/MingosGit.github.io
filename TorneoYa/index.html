@@ -1030,7 +1030,11 @@
         "install.step3":"Toca el archivo descargado y confirma la instalación.",
         "install.warn":"Si Android bloquea la instalación, revisa Ajustes → Seguridad → Instalar apps desconocidas.",
 
-        "footer.copy": "TorneoYa — Juega con tu gente"
+        "footer.copy": "TorneoYa — Juega con tu gente",
+        "modal.beta.title": "🚀 La app está en pruebas",
+        "modal.beta.body": "Estamos en <strong>beta cerrada</strong>.<br>¿Quieres unirte al <strong>programa de testers</strong>?",
+        "modal.beta.no": "Ahora no",
+        "modal.beta.yes": "Quiero ser tester"
       },
       ca: {
         "installbar.prompt": "A punt per jugar?",
@@ -1113,7 +1117,11 @@
         "install.step3":"Obre el fitxer i confirma.",
         "install.warn":"Si Android el bloqueja, mira Ajustos → Seguretat → Apps desconegudes.",
 
-        "footer.copy": "TorneoYa — Juga amb la teva gent"
+        "footer.copy": "TorneoYa — Juga amb la teva gent",
+        "modal.beta.title": "🚀 L'app està en proves",
+        "modal.beta.body": "Som en <strong>beta tancada</strong>.<br>Vols unir-te al <strong>programa de testers</strong>?",
+        "modal.beta.no": "Ara no",
+        "modal.beta.yes": "Vull ser tester"
       },
       en: {
         "installbar.prompt": "Ready to play?",
@@ -1196,7 +1204,11 @@
         "install.step3":"Open the file and confirm.",
         "install.warn":"If blocked, check Settings → Security → Install unknown apps.",
 
-        "footer.copy": "TorneoYa — Play with your people"
+        "footer.copy": "TorneoYa — Play with your people",
+        "modal.beta.title": "🚀 The app is in testing",
+        "modal.beta.body": "We’re in a <strong>closed beta</strong>.<br>Do you want to join the <strong>tester program</strong>?",
+        "modal.beta.no": "Not now",
+        "modal.beta.yes": "I want to test"
       }
     };
 
@@ -1258,53 +1270,36 @@
       navigator.serviceWorker.register(swURL).catch(()=>{});
     }
   </script>
-<<<<<<< HEAD
-    <!-- Modal: Beta testers -->
-        <div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content g-card border-0">
-              <div class="body p-4 text-center">
-                
-                <h5 class="fw-bold mb-2" id="betaModalLabel">🚀 La app está en pruebas</h5>
-                <p class="muted mb-4">
-                  Estamos en <strong>beta cerrada</strong>.  
-                  ¿Quieres unirte al <strong>programa de testers</strong>?
-                </p>
-
-                <div class="d-flex justify-content-center gap-2">
-        <div class="modal-footer border-0 d-flex justify-content-center gap-2">
-          <a href="#" class="cta cta-ghost" data-bs-dismiss="modal">
-            Ahora no
-          </a>
-          <a id="goTester"
-            class="cta cta-primary"
-            href="https://forms.gle/TKeVk4sBLWuD6wiu6"
-            target="_blank" rel="noopener">
-            Quiero ser tester
-          </a>
+<!-- Modal: Beta testers -->
+  <div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content g-card border-0">
+        <div class="body p-4 text-center">
+          <h5 class="fw-bold mb-2" id="betaModalLabel" data-i18n="modal.beta.title">
+            🚀 La app está en pruebas
+          </h5>
+          <p class="muted mb-4" data-i18n="modal.beta.body">
+            Estamos en <strong>beta cerrada</strong>.<br>
+            ¿Quieres unirte al <strong>programa de testers</strong>?
+          </p>
+          <div class="modal-footer border-0 d-flex justify-content-center gap-2 p-0">
+            <a href="#" class="cta cta-ghost" data-bs-dismiss="modal" data-i18n="modal.beta.no">
+              Ahora no
+            </a>
+            <a id="goTester"
+              class="cta cta-primary"
+              href="https://forms.gle/TKeVk4sBLWuD6wiu6"
+              target="_blank" rel="noopener"
+              data-i18n="modal.beta.yes">
+              Quiero ser tester
+            </a>
+          </div>
         </div>
-=======
-  <!-- Modal: Beta testers -->
-<div class="modal fade" id="betaModal" tabindex="-1" aria-labelledby="betaModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content surface-var">
-      <div class="modal-header border-0">
-        <h5 class="modal-title" id="betaModalLabel">La app está en pruebas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        Aún estamos en <strong>beta cerrada</strong>. ¿Quieres unirte al <strong>programa de testers</strong>?
-      </div>
-      <div class="modal-footer border-0">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Ahora no</button>
-        <a id="goTester" class="btn btn-primary"
-           href="https://forms.gle/TKeVk4sBLWuD6wiu6" target="_blank" rel="noopener">
-          Quiero ser tester
-        </a>
->>>>>>> ceae9a7f20c862cb878fee744b082001ba56f2e8
       </div>
     </div>
   </div>
+
+
 </div>
 
 <script>

@@ -151,56 +151,70 @@
 
     /* ——— ESTILOS PROYECTO DESTACADO (NUEVO) ——— */
     .project-card {
-      margin: 10px 0;
-      padding: 20px;
-      border: 2px solid var(--ink);
-      background: rgba(0,0,0,0.03); /* Sutil contraste */
-      border-radius: 4px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .pc-title {
-      font-weight: 700;
-      font-size: 1.1em;
+      font-weight: 550;
+      font-size: clamp(16px,2.1vw,18px);
       margin: 0;
+      letter-spacing: .2px;
     }
     .pc-desc {
-      font-size: 0.9em;
+      font-size: clamp(14px,1.9vw,16px);
       margin: 0;
-      opacity: 0.85;
-      line-height: 1.4;
+      opacity: 0.7;
+      line-height: 1.5;
+      font-weight: 400;
     }
     .pc-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 5px;
+      gap: 12px;
+      margin-top: 2px;
     }
     .pc-btn {
+      --boldness:0;
+      position: relative;
       text-decoration: none;
-      padding: 8px 14px;
-      font-size: 0.85em;
-      font-weight: 600;
-      border-radius: 2px;
-      transition: all 0.2s ease;
-      border: 1px solid var(--ink);
-    }
-    /* Botón sólido */
-    .pc-btn-fill {
-      background: var(--ink);
-      color: var(--bg);
-    }
-    .pc-btn-fill:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-    /* Botón línea */
-    .pc-btn-line {
-      color: var(--ink);
+      color: inherit;
+      font-weight: 550;
+      letter-spacing: .2px;
+      font-size: clamp(14px,1.9vw,16px);
+      padding: 0;
       background: transparent;
+      border: none;
+      transition: color .25s ease;
+      text-shadow:
+        calc(var(--boldness)*0.4px) 0 currentColor,
+        calc(var(--boldness)*-0.4px) 0 currentColor,
+        0 calc(var(--boldness)*0.4px) currentColor,
+        0 calc(var(--boldness)*-0.4px) currentColor;
     }
-    .pc-btn-line:hover {
-      background: rgba(0,0,0,0.05);
+    .pc-btn:hover {
+      color: var(--ink);
+      --boldness: 1;
+    }
+    .pc-btn::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 2px;
+      background: currentColor;
+      transform-origin: left center;
+      transform: scaleX(0);
+      opacity: 0;
+      transition: transform .28s ease, opacity .28s ease;
+    }
+    .pc-btn:hover::after {
+      transform: scaleX(1);
+      opacity: .85;
     }
 
     /* ——— override SOLO en móvil para el título ——— */
@@ -233,19 +247,9 @@
         <a class="link" href="TorneoYa">TorneoYa</a>
       </div>
 
-      <div class="project-card">
-        <h3 class="pc-title">Supply Chain Simulator</h3>
-        <p class="pc-desc">
-            Simulador de eventos discretos y optimización de costes operativos (Python/SimPy).
-        </p>
-        <div class="pc-actions">
-            <a class="pc-btn pc-btn-line" href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank">
-                Ver Código
-            </a>
-            <a class="pc-btn pc-btn-fill" href="https://retail-supply-chain-sim.streamlit.app/" target="_blank">
-                Probar App
-            </a>
-        </div>
+      <div class="link-row">
+        <span class="dot"></span>
+        <a class="link" href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener">Supply&nbsp;Chain&nbsp;Simulator</a>
       </div>
       <div class="link-row">
         <span class="dot"></span>

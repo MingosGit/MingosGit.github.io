@@ -41,6 +41,8 @@
       .links{align-items:center; text-align:center}
       .link-row{justify-content:center}
       .dot{display:none}
+      /* Ajuste para el proyecto en móvil */
+      .project-card { text-align: left; } 
     }
 
     /* IMAGEN + HUMO */
@@ -147,6 +149,60 @@
     }
     .link:hover::after{ transform:scaleX(1); opacity:.85 }
 
+    /* ——— ESTILOS PROYECTO DESTACADO (NUEVO) ——— */
+    .project-card {
+      margin: 10px 0;
+      padding: 20px;
+      border: 2px solid var(--ink);
+      background: rgba(0,0,0,0.03); /* Sutil contraste */
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pc-title {
+      font-weight: 700;
+      font-size: 1.1em;
+      margin: 0;
+    }
+    .pc-desc {
+      font-size: 0.9em;
+      margin: 0;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+    .pc-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .pc-btn {
+      text-decoration: none;
+      padding: 8px 14px;
+      font-size: 0.85em;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+      border: 1px solid var(--ink);
+    }
+    /* Botón sólido */
+    .pc-btn-fill {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .pc-btn-fill:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    /* Botón línea */
+    .pc-btn-line {
+      color: var(--ink);
+      background: transparent;
+    }
+    .pc-btn-line:hover {
+      background: rgba(0,0,0,0.05);
+    }
+
     /* ——— override SOLO en móvil para el título ——— */
     @media (max-width:820px){
       .title{ font-size:30px; }
@@ -155,7 +211,6 @@
 </head>
 <body>
   <main class="wrap" aria-label="Presentación minimalista">
-    <!-- Columna izquierda: imagen -->
     <figure class="figure" aria-label="Toro y molino">
       <img src="toro.png" alt="Toro y molino" />
       <div class="smoke" aria-hidden="true">
@@ -166,7 +221,6 @@
       </div>
     </figure>
 
-    <!-- Columna derecha: links -->
     <section class="links" aria-label="Enlaces">
       <h1 class="title">José Candon Rubio</h1>
 
@@ -177,6 +231,21 @@
       <div class="link-row">
         <span class="dot"></span>
         <a class="link" href="TorneoYa">TorneoYa</a>
+      </div>
+
+      <div class="project-card">
+        <h3 class="pc-title">Supply Chain Simulator</h3>
+        <p class="pc-desc">
+            Simulador de eventos discretos y optimización de costes operativos (Python/SimPy).
+        </p>
+        <div class="pc-actions">
+            <a class="pc-btn pc-btn-line" href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank">
+                Ver Código
+            </a>
+            <a class="pc-btn pc-btn-fill" href="https://retail-supply-chain-sim.streamlit.app/" target="_blank">
+                Probar App
+            </a>
+        </div>
       </div>
       <div class="link-row">
         <span class="dot"></span>

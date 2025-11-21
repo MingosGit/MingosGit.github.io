@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supply Chain Simulator - José Candon</title>
+  <style>
+    :root{
+      --bg:#efd9b4;
+      --ink:#151515;
+      --ink-soft:#2b2b2b;
+      --accent:#8b7355;
+      --accent-light:rgba(139, 115, 85, 0.12);
+    }
+
+    *{box-sizing:border-box}
+    html,body{min-height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,system-ui,"Helvetica Neue",sans-serif;
+      padding: 40px 20px;
+    }
+
+    .container{
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back-link{
+      display: inline-block;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-weight: 550;
+      margin-bottom: 32px;
+      transition: color .25s ease;
+    }
+    .back-link:hover{
+      color: var(--ink);
+    }
+    .back-link::before{
+      content: "← ";
+    }
+
+    .header{
+      margin-bottom: 48px;
+    }
+
+    h1{
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      margin: 0 0 16px;
+      letter-spacing: .3px;
+      line-height: 1.2;
+    }
+
+    .subtitle{
+      font-size: clamp(18px, 2.5vw, 22px);
+      color: var(--ink-soft);
+      margin: 0 0 32px;
+      font-weight: 400;
+    }
+
+    .cta-primary{
+      display: inline-block;
+      padding: 16px 32px;
+      background: var(--ink);
+      color: var(--bg);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 18px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .cta-primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-primary::after{
+      content: " →";
+    }
+
+    h2{
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 600;
+      margin: 48px 0 20px;
+      letter-spacing: .2px;
+    }
+
+    h3{
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--accent);
+    }
+
+    p{
+      margin: 0 0 16px;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+
+    .section{
+      margin-bottom: 48px;
+    }
+
+    .feature-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .feature-card{
+      padding: 24px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .feature-icon{
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .feature-title{
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: var(--ink);
+    }
+
+    .feature-desc{
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .tech-stack{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .tech-tag{
+      padding: 8px 16px;
+      background: var(--accent-light);
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 550;
+      letter-spacing: .2px;
+      border: 1px solid rgba(139, 115, 85, 0.2);
+    }
+
+    .screenshot-placeholder{
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, var(--accent-light) 0%, rgba(139, 115, 85, 0.05) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 18px;
+      margin: 32px 0;
+      border: 2px dashed var(--accent);
+    }
+
+    .use-case{
+      padding: 20px;
+      background: rgba(139, 115, 85, 0.08);
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .use-case-title{
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    ul{
+      margin: 12px 0;
+      padding-left: 24px;
+    }
+
+    li{
+      margin-bottom: 8px;
+      color: var(--ink-soft);
+    }
+
+    .cta-section{
+      background: linear-gradient(135deg, var(--accent-light) 0%, rgba(139, 115, 85, 0.05) 100%);
+      padding: 48px 32px;
+      border-radius: 16px;
+      text-align: center;
+      margin-top: 64px;
+      border: 2px solid rgba(139, 115, 85, 0.15);
+    }
+
+    .cta-section h2{
+      margin-top: 0;
+    }
+
+    @media (max-width: 600px){
+      body{ padding: 24px 16px; }
+      h1{ margin-bottom: 12px; }
+      .feature-grid{ grid-template-columns: 1fr; }
+      .cta-section{ padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">Volver al inicio</a>
+    
+    <header class="header">
+      <h1>📊 Supply Chain Simulator</h1>
+      <p class="subtitle">
+        Herramienta interactiva de simulación para optimizar la gestión de inventario y cadena de suministro en retail
+      </p>
+      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="cta-primary">
+        Abrir Simulador
+      </a>
+    </header>
+
+    <section class="section">
+      <h2>¿Qué es?</h2>
+      <p>
+        Supply Chain Simulator es una aplicación web que permite modelar y analizar diferentes estrategias 
+        de gestión de inventario para retail. Utilizando simulación de eventos discretos, puedes experimentar 
+        con parámetros como el punto de reorden (ROP), cantidad económica de pedido (EOQ) y lead time para 
+        encontrar la configuración óptima que minimice costes operativos.
+      </p>
+      <p>
+        La herramienta está diseñada tanto para estudiantes que quieren entender conceptos de supply chain 
+        como para profesionales que buscan validar estrategias de inventario antes de implementarlas.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Características Principales</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">Simulación Realista</h3>
+          <p class="feature-desc">
+            Modela 365 días de operación con diferentes patrones de demanda (uniforme, normal, Poisson) 
+            y factores estacionales configurables.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <h3 class="feature-title">Análisis de Costes</h3>
+          <p class="feature-desc">
+            Calcula automáticamente costes de almacenamiento, pedido y ruptura de stock. 
+            Visualiza el desglose completo y compara escenarios.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3 class="feature-title">Optimización Automática</h3>
+          <p class="feature-desc">
+            El motor de optimización busca la mejor combinación de ROP y Q mediante grid search, 
+            mostrando mapas de calor interactivos.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3 class="feature-title">Visualizaciones Interactivas</h3>
+          <p class="feature-desc">
+            Gráficos dinámicos que muestran evolución de stock, pedidos pendientes, distribución 
+            de demanda y análisis de sensibilidad.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Comparación de Escenarios</h3>
+          <p class="feature-desc">
+            Ejecuta múltiples simulaciones en paralelo para comparar políticas conservadoras, 
+            actuales y agresivas lado a lado.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💾</div>
+          <h3 class="feature-title">Exportación de Datos</h3>
+          <p class="feature-desc">
+            Descarga resultados en CSV o genera reportes PDF automáticos con todos los 
+            parámetros y métricas clave.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>¿Cómo Funciona?</h2>
+      
+      <h3>1. Configuración de Parámetros</h3>
+      <p>
+        Define los parámetros clave de tu política de inventario:
+      </p>
+      <ul>
+        <li><strong>Punto de Reorden (ROP):</strong> Nivel de stock que dispara automáticamente un nuevo pedido</li>
+        <li><strong>Cantidad de Pedido (Q):</strong> Número de unidades solicitadas en cada orden</li>
+        <li><strong>Lead Time:</strong> Tiempo de entrega del proveedor (en días)</li>
+        <li><strong>Patrón de Demanda:</strong> Distribución estadística y factores estacionales</li>
+        <li><strong>Estructura de Costes:</strong> Costes de pedido, almacenamiento y ruptura</li>
+      </ul>
+
+      <h3>2. Simulación de Eventos</h3>
+      <p>
+        El motor de simulación (basado en SimPy) ejecuta un año completo de operaciones:
+      </p>
+      <ul>
+        <li>Genera demanda diaria según la distribución configurada</li>
+        <li>Gestiona inventario automáticamente según la política ROP-Q</li>
+        <li>Registra pedidos, entregas y rupturas de stock</li>
+        <li>Calcula costes en cada evento del sistema</li>
+      </ul>
+
+      <h3>3. Análisis y Optimización</h3>
+      <p>
+        La herramienta analiza los resultados y proporciona:
+      </p>
+      <ul>
+        <li>KPIs clave: nivel de servicio, rotación de inventario, coste total</li>
+        <li>Recomendaciones basadas en el modelo EOQ (Economic Order Quantity)</li>
+        <li>Análisis de sensibilidad para entender el impacto de cambios</li>
+        <li>Comparativas entre diferentes estrategias</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Casos de Uso</h2>
+      
+      <div class="use-case">
+        <div class="use-case-title">🎓 Educación</div>
+        <p class="feature-desc">
+          Perfecto para estudiantes de supply chain, logística u operations management. 
+          Permite experimentar con conceptos teóricos (EOQ, safety stock, lead time) en un entorno seguro.
+        </p>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-title">🏪 Retail & E-commerce</div>
+        <p class="feature-desc">
+          Valida estrategias de inventario antes de implementarlas. Simula temporadas altas, 
+          promociones y cambios en lead time para anticipar problemas.
+        </p>
+      </div>
+
+      <div class="use-case">
+        <div class="use-case-title">💼 Consultoría</div>
+        <p class="feature-desc">
+          Herramienta de prototipado rápido para presentar propuestas a clientes. 
+          Demuestra el impacto económico de cambiar políticas de inventario.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Stack Tecnológico</h2>
+      <div class="tech-stack">
+        <span class="tech-tag">Python 3.11</span>
+        <span class="tech-tag">Streamlit</span>
+        <span class="tech-tag">SimPy (Discrete Event Simulation)</span>
+        <span class="tech-tag">Pandas</span>
+        <span class="tech-tag">NumPy</span>
+        <span class="tech-tag">Plotly</span>
+        <span class="tech-tag">Matplotlib</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Desafíos Técnicos Resueltos</h2>
+      <p>
+        Durante el desarrollo del simulador, enfrenté varios retos interesantes:
+      </p>
+      <ul>
+        <li>
+          <strong>Performance:</strong> Optimización de simulaciones para ejecutar 365 días en <1 segundo 
+          mediante vectorización de operaciones NumPy
+        </li>
+        <li>
+          <strong>UX:</strong> Diseño de interfaz intuitiva con validaciones en tiempo real y tooltips 
+          explicativos para cada parámetro
+        </li>
+        <li>
+          <strong>Visualización:</strong> Generación dinámica de gráficos interactivos con Plotly 
+          que se actualizan sin recargar la página
+        </li>
+        <li>
+          <strong>Optimización:</strong> Implementación de algoritmo grid search eficiente con 
+          progress bars para búsquedas de 100+ combinaciones
+        </li>
+        <li>
+          <strong>Estado:</strong> Gestión de session state en Streamlit para mantener resultados 
+          entre interacciones (exportación de datos sin pérdida)
+        </li>
+      </ul>
+    </section>
+
+    <div class="cta-section">
+      <h2>Pruébalo Ahora</h2>
+      <p style="margin-bottom: 32px; font-size: 18px;">
+        La aplicación está desplegada en Streamlit Cloud y es completamente gratuita.
+      </p>
+      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="cta-primary">
+        Abrir Simulador
+      </a>
+    </div>
+  </div>
+</body>
+</html>

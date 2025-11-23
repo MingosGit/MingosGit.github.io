@@ -225,7 +225,7 @@
     <header class="header">
       <h1>📊 Supply Chain Simulator</h1>
       <p class="subtitle">
-        Herramienta interactiva de simulación para optimizar la gestión de inventario y cadena de suministro en retail
+        Simulador profesional de cadena de suministro con tablero financiero P&L. Optimiza inventario, reduce costes y mejora el nivel de servicio usando eventos discretos.
       </p>
       <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="cta-primary">
         Abrir Simulador
@@ -235,14 +235,19 @@
     <section class="section">
       <h2>¿Qué es?</h2>
       <p>
-        Supply Chain Simulator es una aplicación web que permite modelar y analizar diferentes estrategias 
-        de gestión de inventario para retail. Utilizando simulación de eventos discretos, puedes experimentar 
-        con parámetros como el punto de reorden (ROP), cantidad económica de pedido (EOQ) y lead time para 
-        encontrar la configuración óptima que minimice costes operativos.
+        Supply Chain Simulator es una <strong>aplicación empresarial profesional</strong> que permite modelar y analizar 
+        estrategias de gestión de inventario para retail. Con un <strong>tablero financiero P&L integrado</strong>, 
+        visualizas el impacto en euros (no solo unidades) de cada decisión operativa.
       </p>
       <p>
-        La herramienta está diseñada tanto para estudiantes que quieren entender conceptos de supply chain 
-        como para profesionales que buscan validar estrategias de inventario antes de implementarlas.
+        Utilizando simulación de eventos discretos (SimPy), experimentas con parámetros como punto de reorden (ROP), 
+        cantidad económica de pedido (EOQ) y lead time para encontrar la configuración óptima que <strong>minimice 
+        costes y maximice el nivel de servicio</strong>.
+      </p>
+      <p>
+        <strong>✨ Experiencia "0 Segundos":</strong> La app carga con datos de demostración pre-ejecutados. 
+        Ves gráficos, métricas financieras y el tablero P&L inmediatamente, sin configurar nada. 
+        Ideal para presentaciones ejecutivas.
       </p>
     </section>
 
@@ -259,11 +264,20 @@
         </div>
 
         <div class="feature-card">
-          <div class="feature-icon">💰</div>
-          <h3 class="feature-title">Análisis de Costes</h3>
+          <div class="feature-icon">💼</div>
+          <h3 class="feature-title">Tablero Financiero P&L</h3>
           <p class="feature-desc">
-            Calcula automáticamente costes de almacenamiento, pedido y ruptura de stock. 
-            Visualiza el desglose completo y compara escenarios.
+            Dashboard ejecutivo con métricas en euros (€). Ingresos potenciales, costes operativos, 
+            % impacto en margen y desglose P&L completo. Habla el idioma del CFO.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Datos Semilla (0 Segundos)</h3>
+          <p class="feature-desc">
+            Carga instantánea con simulación pre-ejecutada. Gráficos y métricas visibles 
+            inmediatamente. Tiempo hasta el "asombro": cero.
           </p>
         </div>
 
@@ -277,29 +291,47 @@
         </div>
 
         <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-title">Diseño Corporativo Profesional</h3>
+          <p class="feature-desc">
+            Paleta azul corporativa (no prototipo naranja). Cumple WCAG AA. Gradientes, 
+            toolbar minimalista. Aspecto de aplicación empresarial (SAP/Simul8).
+          </p>
+        </div>
+
+        <div class="feature-card">
           <div class="feature-icon">📈</div>
           <h3 class="feature-title">Visualizaciones Interactivas</h3>
           <p class="feature-desc">
-            Gráficos dinámicos que muestran evolución de stock, pedidos pendientes, distribución 
-            de demanda y análisis de sensibilidad.
+            Gráficos Plotly dinámicos con tooltips. Evolución de stock, pedidos, distribución 
+            de demanda, análisis de sensibilidad y mapas de calor.
           </p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Análisis What-If Interactivo</h3>
+          <p class="feature-desc">
+            Slider en tiempo real para simular cambios de demanda (+50%, -20%, etc.). 
+            Visualiza el ROI neto instantáneamente con comparación lado a lado Base vs What-If.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
           <h3 class="feature-title">Comparación de Escenarios</h3>
           <p class="feature-desc">
-            Ejecuta múltiples simulaciones en paralelo para comparar políticas conservadoras, 
-            actuales y agresivas lado a lado.
+            Compara automáticamente el impacto financiero: Δ Ingresos, Δ Costes, ROI Neto. 
+            Recomendaciones estratégicas según el escenario (aumenta ROP, reduce Q, etc.).
           </p>
         </div>
 
         <div class="feature-card">
           <div class="feature-icon">💾</div>
-          <h3 class="feature-title">Exportación de Datos</h3>
+          <h3 class="feature-title">Exportación Profesional</h3>
           <p class="feature-desc">
-            Descarga resultados en CSV o genera reportes PDF automáticos con todos los 
-            parámetros y métricas clave.
+            Excel con 3 hojas (Resumen Financiero €, Datos Diarios, Parámetros). 
+            Reportes TXT formateados. Listos para presentaciones ejecutivas.
           </p>
         </div>
       </div>
@@ -331,15 +363,18 @@
         <li>Calcula costes en cada evento del sistema</li>
       </ul>
 
-      <h3>3. Análisis y Optimización</h3>
+      <h3>3. Análisis Financiero y Optimización</h3>
       <p>
         La herramienta analiza los resultados y proporciona:
       </p>
       <ul>
-        <li>KPIs clave: nivel de servicio, rotación de inventario, coste total</li>
-        <li>Recomendaciones basadas en el modelo EOQ (Economic Order Quantity)</li>
-        <li>Análisis de sensibilidad para entender el impacto de cambios</li>
-        <li>Comparativas entre diferentes estrategias</li>
+        <li><strong>Tablero P&L:</strong> Ingresos potenciales, costes operativos (€), % impacto en margen</li>
+        <li><strong>What-If Interactivo:</strong> Slider para simular escenarios de demanda (±100%). Comparación automática Base vs What-If con ROI neto estimado</li>
+        <li><strong>KPIs ejecutivos:</strong> Nivel de servicio (%), rotación, fill rate, coste total (€)</li>
+        <li><strong>Recomendaciones EOQ:</strong> Cantidad económica de pedido dinámica según demanda y costes actuales</li>
+        <li><strong>Análisis de sensibilidad:</strong> Gráficos de impacto de ROP/Q en costes totales</li>
+        <li><strong>Desglose P&L:</strong> Almacenamiento, pedidos, rupturas (€ y %)</li>
+        <li><strong>Recomendaciones estratégicas:</strong> Alertas automáticas basadas en escenarios What-If</li>
       </ul>
     </section>
 
@@ -357,8 +392,9 @@
       <div class="use-case">
         <div class="use-case-title">🏪 Retail & E-commerce</div>
         <p class="feature-desc">
-          Valida estrategias de inventario antes de implementarlas. Simula temporadas altas, 
-          promociones y cambios en lead time para anticipar problemas.
+          Valida estrategias de inventario con <strong>impacto financiero en euros</strong>. 
+          Simula temporadas altas (estacionalidad Navidad/Verano), promociones y cambios en lead time. 
+          Presenta el P&L al CFO para justificar inversiones en inventario.
         </p>
       </div>
 
@@ -368,6 +404,111 @@
           Herramienta de prototipado rápido para presentar propuestas a clientes. 
           Demuestra el impacto económico de cambiar políticas de inventario.
         </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Capturas de Pantalla</h2>
+      
+      <h3>💼 Tablero Financiero P&L</h3>
+      <img src="Media/supply-chain-sim/tablero-pl.png" 
+           alt="Tablero Financiero P&L con métricas en euros - Dashboard ejecutivo con ingresos potenciales, costes operativos e impacto en margen" 
+           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+      <p class="feature-desc" style="text-align: center; color: var(--accent);">
+        <strong>Vista completa:</strong> Demanda valorada (9,180€), Coste Total (1,241€), Impacto 13.5% con -86.5% margen. 
+        Desglose P&L en tabla con € y % del total.
+      </p>
+
+      <h3>🔄 Análisis What-If Interactivo</h3>
+      <img src="Media/supply-chain-sim/whatif-comparison.png" 
+           alt="Análisis What-If Interactivo - Comparación lado a lado entre escenario base y escenario +50% demanda con ROI neto" 
+           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+      <p class="feature-desc" style="text-align: center; color: var(--accent);">
+        <strong>Comparativa financiera:</strong> Demanda media (2.5 → 3.8 uds/día), Coste Total delta (-78€), 
+        Nivel Servicio (100.0%), ROI Neto (-832€) con indicador de rentabilidad.
+      </p>
+
+      <h3>📊 Resultados de Simulación</h3>
+      <img src="Media/supply-chain-sim/resultados-simulacion.png" 
+           alt="Resultados de Simulación - Tarjetas ejecutivas con métricas clave: Coste Total, Almacenamiento, Pedidos y Rupturas" 
+           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+      <p class="feature-desc" style="text-align: center; color: var(--accent);">
+        <strong>Vista ejecutiva:</strong> 4 tarjetas con gradientes corporativos. Stock promedio, número de pedidos, 
+        y costes con tooltips explicativos.
+      </p>
+
+      <h3>🎯 Asistente Inteligente EOQ</h3>
+      <div style="display: flex; justify-content: center; align-items: flex-start; gap: 32px; margin: 32px 0; flex-wrap: wrap;">
+        <div style="flex: 0 0 auto; max-width: 280px;">
+          <img src="Media/supply-chain-sim/eoq-asistente.png" 
+               alt="Asistente Inteligente EOQ - Recomendación dinámica de cantidad óptima de pedido con cálculo en tiempo real" 
+               style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        </div>
+        <div style="flex: 1; min-width: 280px;">
+          <p class="feature-desc" style="margin: 0; color: var(--ink-soft);">
+            <strong style="display: block; margin-bottom: 12px; color: var(--accent);">Ayuda contextual en tiempo real</strong>
+            El asistente EOQ muestra advertencias cuando la cantidad actual (Q) difiere del óptimo calculado. 
+            Incluye métrica visual con delta vs actual, y visualización de parámetros clave como demanda anual (D), 
+            coste de pedido (S) y coste de almacenamiento (H).
+          </p>
+          <p class="feature-desc" style="margin-top: 16px; padding: 12px; background: var(--accent-light); border-radius: 8px; border-left: 3px solid var(--accent);">
+            <strong>💡 Ejemplo:</strong> Con D=1369 uds/año, S=100€ y H=5€, el EOQ óptimo es ~234 unidades. 
+            Si tu Q actual es 50, verás una advertencia con la diferencia (+183 vs actual).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Métricas de Calidad</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Tiempo hasta Asombro</h3>
+          <p class="feature-desc">
+            <strong>0 segundos</strong> - Gráficos, métricas P&L y tablero financiero visibles al instante con datos semilla pre-cargados
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 class="feature-title">What-If Interactivo</h3>
+          <p class="feature-desc">
+            <strong>100% Implementado</strong> - Slider en tiempo real (0.5x-2.0x), comparación automática, ROI neto, recomendaciones estratégicas
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">♿</div>
+          <h3 class="feature-title">Accesibilidad WCAG</h3>
+          <p class="feature-desc">
+            <strong>AA Completo</strong> - Contraste 14.7:1 (texto), 9.2:1 (botones), optimizado para daltonismo
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3 class="feature-title">Diseño Profesional</h3>
+          <p class="feature-desc">
+            <strong>10/10</strong> - Paleta corporativa azul (#1E3A8A), gradientes coherentes, toolbar minimalista, aspecto empresarial
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💼</div>
+          <h3 class="feature-title">Tablero Financiero P&L</h3>
+          <p class="feature-desc">
+            <strong>Completo</strong> - Todas las métricas en € con desglose de costes, % impacto en margen, ROI comparativo
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3 class="feature-title">EOQ Dinámico</h3>
+          <p class="feature-desc">
+            <strong>Reactivo</strong> - Recalcula según demanda What-If, costes actuales, persistencia session_state
+          </p>
+        </div>
       </div>
     </section>
 
@@ -391,24 +532,46 @@
       </p>
       <ul>
         <li>
+          <strong>Experiencia "0 Segundos":</strong> Implementación de datos semilla con simulación automática 
+          al cargar. Session state inicializado con resultados pre-calculados para visualización instantánea
+        </li>
+        <li>
+          <strong>Tablero Financiero P&L:</strong> Diseño de dashboard ejecutivo con métricas en € (no solo unidades). 
+          Cálculo de ingresos potenciales, % costes/ingresos, y desglose P&L con formato profesional
+        </li>
+        <li>
           <strong>Performance:</strong> Optimización de simulaciones para ejecutar 365 días en <1 segundo 
-          mediante vectorización de operaciones NumPy
+          mediante vectorización NumPy y procesos concurrentes SimPy
         </li>
         <li>
-          <strong>UX:</strong> Diseño de interfaz intuitiva con validaciones en tiempo real y tooltips 
-          explicativos para cada parámetro
+          <strong>Diseño Corporativo:</strong> Theming profesional con config.toml (paleta azul #1E3A8A). 
+          Cumplimiento WCAG AA (contraste 14.7:1). Gradientes CSS coherentes en toda la app
         </li>
         <li>
-          <strong>Visualización:</strong> Generación dinámica de gráficos interactivos con Plotly 
-          que se actualizan sin recargar la página
+          <strong>UX Profesional:</strong> Interfaz con validaciones en tiempo real, tooltips explicativos, 
+          popovers contextuales, y banner informativo para datos demo
         </li>
         <li>
-          <strong>Optimización:</strong> Implementación de algoritmo grid search eficiente con 
-          progress bars para búsquedas de 100+ combinaciones
+          <strong>Visualización Avanzada:</strong> Gráficos Plotly dinámicos con paleta corporativa coherente. 
+          Pie charts, histogramas, scatter plots, mapas de calor y análisis de sensibilidad
         </li>
         <li>
-          <strong>Estado:</strong> Gestión de session state en Streamlit para mantener resultados 
-          entre interacciones (exportación de datos sin pérdida)
+          <strong>Optimización Grid Search:</strong> Algoritmo eficiente con progress bars para 100+ combinaciones. 
+          Visualización de resultados en heatmaps interactivos
+        </li>
+        <li>
+          <strong>Análisis What-If en Tiempo Real:</strong> Sistema interactivo con slider (0.5x - 2.0x demanda). 
+          Comparación automática Base vs escenario modificado con cálculo de ROI neto (Δ Ingresos - Δ Costes). 
+          Recomendaciones estratégicas contextuales con protección contra división por cero
+        </li>
+        <li>
+          <strong>EOQ Dinámico:</strong> Cálculo reactivo de Cantidad Económica de Pedido que responde 
+          instantáneamente a cambios en demanda (multiplicador What-If), costes de almacenamiento y costes de pedido. 
+          Persistencia mediante session_state para mantener valor entre ejecuciones
+        </li>
+        <li>
+          <strong>Gestión de Estado:</strong> Session state robusto en Streamlit para mantener resultados 
+          entre interacciones. Exportación sin pérdida de datos (Excel con formato €, TXT, CSV)
         </li>
       </ul>
     </section>

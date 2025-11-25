@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeeGame - Simulación Ecológica con IA</title>
+  <style>
+    :root {
+      --bg: #efd9b4;
+      --ink: #151515;
+      --ink-soft: #2b2b2b;
+      --accent: #f4a261;
+      --accent-hover: #e76f51;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 32px;
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-weight: 550;
+      letter-spacing: .3px;
+      transition: color .25s ease;
+    }
+    .back-link:hover { color: var(--ink); }
+    .back-link::before { content: "← "; }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      margin: 0 0 12px;
+      letter-spacing: .3px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 2.5vw, 22px);
+      color: var(--ink-soft);
+      margin: 0 0 32px;
+      font-weight: 500;
+      opacity: .85;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.12);
+      margin: 0 auto 40px;
+      display: block;
+    }
+
+    h2 {
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 650;
+      margin: 48px 0 16px;
+      letter-spacing: .2px;
+    }
+
+    h3 {
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--ink-soft);
+    }
+
+    p {
+      margin: 0 0 16px;
+      line-height: 1.7;
+      font-size: clamp(15px, 2vw, 17px);
+    }
+
+    ul {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 8px 0;
+      line-height: 1.7;
+      font-size: clamp(15px, 2vw, 17px);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin: 32px 0;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, .35);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, .08);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    }
+
+    .feature-emoji {
+      font-size: 36px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-title {
+      font-weight: 650;
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      margin: 0;
+      opacity: .8;
+      line-height: 1.6;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: .3px;
+      border-radius: 8px;
+      transition: all .25s ease;
+      font-size: 16px;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 14px rgba(244, 162, 97, .3);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(244, 162, 97, .4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--ink-soft);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0,0,0,.05);
+      border-color: var(--ink);
+    }
+
+    .tech-stack {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    .tech-badge {
+      background: rgba(0,0,0,.08);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 550;
+      letter-spacing: .2px;
+    }
+
+    .highlight-box {
+      background: rgba(244, 162, 97, .15);
+      border-left: 4px solid var(--accent);
+      padding: 20px 24px;
+      margin: 32px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .highlight-box p:last-child { margin-bottom: 0; }
+
+    @media (max-width: 640px) {
+      .container { padding: 32px 20px; }
+      h1 { font-size: 32px; }
+      .cta-buttons { flex-direction: column; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">Volver al inicio</a>
+
+    <h1>🐝 BeeGame</h1>
+    <p class="subtitle">Simulación Ecológica con Inteligencia Artificial Simbólica</p>
+
+    <img src="Media/BeeGame.png" alt="Captura de pantalla de BeeGame mostrando el tablero de juego con abejas, flores y obstáculos" class="hero-image" />
+
+    <div class="cta-buttons">
+      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary">
+        Ver en GitHub
+      </a>
+      <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn btn-secondary">
+        Documentación
+      </a>
+    </div>
+
+    <h2>¿Qué es BeeGame?</h2>
+    <p>
+      <strong>BeeGame</strong> es un juego de estrategia por turnos desarrollado en Python que simula la compleja relación entre las abejas y la actividad humana. El proyecto implementa algoritmos avanzados de <strong>Inteligencia Artificial Simbólica</strong>, incluyendo <strong>Expectimax</strong> con nodos de azar, búsqueda <strong>A*</strong> para pathfinding, y una función heurística multi-componente.
+    </p>
+
+    <div class="highlight-box">
+      <p><strong>🌍 Objetivo Educativo:</strong> El juego busca concienciar sobre la importancia de las abejas y el medio ambiente a través de una experiencia interactiva, demostrando cómo los pesticidas y obstáculos ambientales afectan la supervivencia de estos insectos vitales para la polinización.</p>
+    </div>
+
+    <h2>Características Principales</h2>
+    <div class="features">
+      <div class="feature-card">
+        <span class="feature-emoji">🧠</span>
+        <h3 class="feature-title">Algoritmo Expectimax</h3>
+        <p class="feature-desc">Toma de decisiones óptimas considerando probabilidades y nodos de azar para clima y reproducción.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-emoji">🎯</span>
+        <h3 class="feature-title">A* Pathfinding</h3>
+        <p class="feature-desc">Cálculo de rutas óptimas al rusc evitando obstáculos con heurística de distancia Manhattan.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-emoji">⚖️</span>
+        <h3 class="feature-title">Teoría de Juegos</h3>
+        <p class="feature-desc">Agente MAX (abeja) vs Agente MIN (humanidad) con restricciones de poda estratégica.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-emoji">🌦️</span>
+        <h3 class="feature-title">Eventos de Azar</h3>
+        <p class="feature-desc">Sistema climático (lluvia, sol, normal) y reproducción de flores con probabilidades dinámicas.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-emoji">📊</span>
+        <h3 class="feature-title">Heurística Compleja</h3>
+        <p class="feature-desc">Función de evaluación con 7 componentes ponderados para análisis de estados del juego.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-emoji">🎮</span>
+        <h3 class="feature-title">3 Modos de Juego</h3>
+        <p class="feature-desc">Jugador manual, IA básica aleatoria, o Expectimax avanzado para ambos agentes.</p>
+      </div>
+    </div>
+
+    <h2>Mecánicas del Juego</h2>
+
+    <h3>🐝 La Abeja (Agente MAX)</h3>
+    <ul>
+      <li><strong>Vida:</strong> 100 puntos (muere al llegar a 0)</li>
+      <li><strong>Energía:</strong> 100 puntos (se gasta al moverse y recolectar)</li>
+      <li><strong>Néctar:</strong> Capacidad de 50 unidades (objetivo: acumular néctar en el rusc)</li>
+      <li><strong>Acciones:</strong> Moverse, polinizar flores, descansar, volver al rusc con A*</li>
+    </ul>
+
+    <h3>👥 La Humanidad (Agente MIN)</h3>
+    <ul>
+      <li><strong>Pesticidas:</strong> Contamina flores (mueren al acumular 3 pesticidas)</li>
+      <li><strong>Obstáculos:</strong> Bloquea casillas (máximo 4 simultáneos con eliminación FIFO)</li>
+      <li><strong>Restricciones:</strong> Pesticidas solo en radio 2 de la abeja, obstáculos solo en radio 3 del rusc</li>
+    </ul>
+
+    <h3>🌦️ Eventos Climáticos (Cada 4 turnos)</h3>
+    <ul>
+      <li><strong>☔ Lluvia (10%):</strong> Reduce 1 pesticida de todas las flores</li>
+      <li><strong>☀️ Sol (15%):</strong> Aumenta probabilidad de reproducción al 40%</li>
+      <li><strong>🌤️ Normal (75%):</strong> Sin efectos especiales</li>
+    </ul>
+
+    <h2>Tecnologías Utilizadas</h2>
+    <div class="tech-stack">
+      <span class="tech-badge">Python 3.12.3</span>
+      <span class="tech-badge">Pygame 2.6.0</span>
+      <span class="tech-badge">Expectimax Algorithm</span>
+      <span class="tech-badge">A* Pathfinding</span>
+      <span class="tech-badge">Game Theory</span>
+      <span class="tech-badge">Heuristic Functions</span>
+    </div>
+
+    <h2>Instalación y Uso</h2>
+    <p>Para ejecutar el juego localmente:</p>
+    <ul>
+      <li>Clona el repositorio desde <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" style="color: var(--accent); font-weight: 600;">GitHub</a></li>
+      <li>Instala Pygame: <code>pip install pygame</code></li>
+      <li>Ejecuta: <code>python main.py</code></li>
+    </ul>
+
+    <div class="highlight-box">
+      <p><strong>📚 Conceptos de IA Aplicados:</strong> Este proyecto demuestra búsqueda informada (A*), extensión de Minimax con nodos probabilísticos (Expectimax), modelado de incertidumbre, poda estratégica, y optimización de funciones heurísticas con pesos ajustables.</p>
+    </div>
+
+    <h2>Estructura del Proyecto</h2>
+    <p>El código está organizado profesionalmente en módulos:</p>
+    <ul>
+      <li><strong>src/</strong> - Módulos principales (bee, board, expectimax, heuristica, etc.)</li>
+      <li><strong>docs/</strong> - Documentación y checklist de objetivos</li>
+      <li><strong>main.py</strong> - Punto de entrada para ejecutar el juego</li>
+      <li><strong>gui_simple.py</strong> - Interfaz gráfica con Pygame</li>
+    </ul>
+
+    <div class="cta-buttons">
+      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary">
+        Explorar Código en GitHub
+      </a>
+      <a href="index.html" class="btn btn-secondary">
+        Volver al Portafolio
+      </a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# robots.txt para josecrub.com / mingosgit.github.io
+# Permite acceso completo a todos los crawlers
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://josecrub.com/sitemap.xml
+Sitemap: https://mingosgit.github.io/sitemap.xml
+
+# Desactivar crawl delay para máxima velocidad de indexación
+Crawl-delay: 0

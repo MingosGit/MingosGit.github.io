@@ -27,12 +27,6 @@
   <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
   <style>
     /* ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL */
-    
-    /* Ajusta finamente la posición de la nariz del toro (relativa al <img>) */
-    :root {
-      --nose-x: 75%; /* izquierda→derecha */
-      --nose-y: 52%; /* arriba→abajo */
-    }
 
     html, body {
       height: 100%;
@@ -59,10 +53,13 @@
     @media (max-width: 820px) {
       .wrap {
         grid-template-columns: 1fr;
-        gap: 36px;
-        padding: 36px 0;
+        gap: 40px;
+        padding: 40px 0;
         width: 100%;
         max-width: calc(100vw - 40px);
+      }
+      .figure img {
+        max-width: 360px;
       }
       .links {
         align-items: center;
@@ -71,11 +68,15 @@
       .link-row {
         justify-content: center;
       }
-      .dot {
-        display: none;
+      .section-divider {
+        width: 80%;
+        margin: 24px auto;
       }
-      .project-card {
-        text-align: left;
+      .title {
+        font-size: 34px;
+      }
+      .tagline {
+        font-size: 16px;
       }
     }
 
@@ -99,61 +100,7 @@
       -webkit-user-drag: none;
     }
 
-    /* Ancla del humo exactamente en la nariz del toro */
-    .smoke {
-      position: absolute;
-      left: var(--nose-x);
-      top: var(--nose-y);
-      width: 1px;
-      height: 1px;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-    }
-    
-    .puff {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(120, 120, 120, 0.65);
-      opacity: 0.65;
-      transform: translate(0, 0) scale(0.7);
-      animation: puff 3.2s ease-in infinite;
-      filter: blur(0.2px);
-    }
-    
-    .puff:nth-child(2) {
-      animation-delay: 0.7s;
-    }
-    
-    .puff:nth-child(3) {
-      animation-delay: 1.4s;
-    }
-    
-    .puff:nth-child(4) {
-      animation-delay: 2.1s;
-    }
-
-    @keyframes puff {
-      0% {
-        transform: translate(0, 0) scale(0.7);
-        opacity: 0.65;
-      }
-      40% {
-        transform: translate(20px, -18px) scale(1);
-        opacity: 0.45;
-      }
-      70% {
-        transform: translate(38px, -40px) scale(1.23);
-        opacity: 0.22;
-      }
-      100% {
-        transform: translate(56px, -66px) scale(1.42);
-        opacity: 0;
-      }
-    }
+    /* Animaciones eliminadas para mejor rendimiento */
 
     /* ENLACES */
     .links {
@@ -163,18 +110,50 @@
     }
     
     .title {
-      margin: 0 0 16px;
+      margin: 0 0 8px;
       font-weight: 700;
       letter-spacing: 0.3px;
-      font-size: clamp(26px, 3.8vw, 40px);
-      line-height: 1.2;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.15;
+    }
+
+    .tagline {
+      margin: 0 0 28px;
+      font-size: clamp(15px, 2vw, 17px);
+      color: var(--accent);
+      font-weight: 550;
+      letter-spacing: 0.3px;
     }
 
     .link-row {
       display: flex;
       align-items: center;
       gap: 14px;
-      font-size: clamp(16px, 2.1vw, 18px);
+      font-size: clamp(15px, 2vw, 17px);
+    }
+
+    .link-row.featured {
+      margin: 6px 0;
+    }
+
+    .link-row.featured .link {
+      font-weight: 600;
+      font-size: clamp(16px, 2.2vw, 19px);
+      color: var(--ink);
+    }
+
+    .link-row.featured .dot {
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      opacity: 1;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      border: none;
     }
     
     .dot {
@@ -283,51 +262,46 @@
   <main class="wrap" aria-label="Presentación minimalista">
     <figure class="figure" aria-label="Toro y molino">
       <img src="toro.png" alt="Toro y molino" />
-      <div class="smoke" aria-hidden="true">
-        <span class="puff"></span>
-        <span class="puff"></span>
-        <span class="puff"></span>
-        <span class="puff"></span>
-      </div>
     </figure>
 
     <section class="links" aria-label="Enlaces">
       <h1 class="title">José Candon Rubio</h1>
+      <p class="tagline">Desarrollador Full-Stack · Python & IA · Data Science</p>
+
+      <div class="link-row featured">
+        <span class="dot"></span>
+        <a class="link" href="barcelona-real-estate/">Barcelona Real Estate Intelligence</a>
+      </div>
+      <div class="link-row featured">
+        <span class="dot"></span>
+        <a class="link" href="supply-chain-simulator/">Supply Chain Simulator</a>
+      </div>
+      <div class="link-row featured">
+        <span class="dot"></span>
+        <a class="link" href="beegame/">BeeGame</a>
+      </div>
+      <div class="link-row featured">
+        <span class="dot"></span>
+        <a class="link" href="TorneoYa/">TorneoYa</a>
+      </div>
+
+      <hr class="section-divider">
 
       <div class="link-row">
         <span class="dot"></span>
-        <a class="link" href="about/" role="link" aria-label="Sobre mí" title="Conoce mi experiencia, habilidades técnicas y filosofía de trabajo">Sobre&nbsp;mí</a>
+        <a class="link" href="about/">Sobre mí</a>
       </div>
       <div class="link-row">
         <span class="dot"></span>
-        <a class="link" href="barcelona-real-estate/" title="Sistema de BI con IA para análisis inmobiliario · Power BI + DAX + AI">Barcelona&nbsp;Real&nbsp;Estate&nbsp;Intelligence</a>
+        <a class="link" href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
       <div class="link-row">
         <span class="dot"></span>
-        <a class="link" href="TorneoYa/" title="Plataforma web para gestionar torneos deportivos · React + Firebase">TorneoYa</a>
-      </div>
-
-      <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="supply-chain-simulator/" title="Simulador interactivo de cadena de suministro para retail · Python + Streamlit">Supply&nbsp;Chain&nbsp;Simulator</a>
-      </div>
-            <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="beegame/" title="Simulación ecológica con IA · Expectimax + A* + Pygame">BeeGame</a>
+        <a class="link" href="https://github.com/MingosGit" target="_blank" rel="noopener">GitHub</a>
       </div>
       <div class="link-row">
         <span class="dot"></span>
-        <a class="link" href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" title="Perfil profesional y experiencia laboral">LinkedIn</a>
-      </div>
-
-      <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="mailto:josecandonrubio@gmail.com" title="Envíame un correo para colaboraciones o consultas">josecandonrubio@gmail.com</a>
-      </div>
-
-      <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="https://github.com/MingosGit" target="_blank" rel="noopener" title="Repositorios de código y proyectos open source">GitHub</a>
+        <a class="link" href="mailto:josecandonrubio@gmail.com">Email</a>
       </div>
     </section>
   </main>

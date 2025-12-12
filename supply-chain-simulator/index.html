@@ -96,13 +96,30 @@
       color: var(--ink);
     }
 
+    .screenshot-img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      margin: 32px 0;
+      display: block;
+    }
+
+    .screenshot-caption {
+      text-align: center;
+      color: var(--accent);
+      font-size: var(--text-sm);
+      margin-top: -20px;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+
     .cta-section {
-      background: linear-gradient(135deg, var(--accent-light) 0%, rgba(139, 115, 85, 0.05) 100%);
+      background: linear-gradient(135deg, var(--accent-light) 0%, rgba(111, 93, 70, 0.08) 100%);
       padding: var(--space-xl) var(--space-lg);
       border-radius: var(--radius-xl);
       text-align: center;
       margin-top: var(--space-2xl);
-      border: 2px solid rgba(139, 115, 85, 0.15);
+      border: 2px solid var(--accent-border);
     }
 
     .cta-section h2 {

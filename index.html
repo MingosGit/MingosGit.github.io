@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>josecrub</title>
   <link rel="icon" type="image/png" href="Media/favicon.png" />
+  <link rel="stylesheet" href="styles/design-system.css" />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -20,158 +21,173 @@
   <meta property="twitter:description" content="Desarrollador de software especializado en Python, IA y simulación. Proyectos: BeeGame, Supply Chain Simulator, TorneoYa." />
   <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
   <style>
-    :root{
-      --bg:#efd9b4;
-      --ink:#151515;
-      --ink-soft:#2b2b2b;
-      --smoke:rgba(120,120,120,.65);
-
-      /* Ajusta finamente la posición de la nariz del toro (relativa al <img>) */
-      --nose-x:75%; /* izquierda→derecha */
-      --nose-y:52%; /* arriba→abajo */
+    /* ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL */
+    
+    /* Ajusta finamente la posición de la nariz del toro (relativa al <img>) */
+    :root {
+      --nose-x: 75%; /* izquierda→derecha */
+      --nose-y: 52%; /* arriba→abajo */
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%; overflow-x:hidden}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,system-ui,"Helvetica Neue",sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
 
     /* LAYOUT */
-    .wrap{
-      width:min(1100px,92vw);
-      max-width:100%;
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:clamp(24px,6vw,64px);
-      align-items:center;
+    .wrap {
+      width: min(1100px, 92vw);
+      max-width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(24px, 6vw, 64px);
+      align-items: center;
     }
-    @media (max-width:820px){
-      .wrap{grid-template-columns:1fr; gap:36px; padding:36px 0; width:100%; max-width:calc(100vw - 40px)}
-      .links{align-items:center; text-align:center}
-      .link-row{justify-content:center}
-      .dot{display:none}
-      /* Ajuste para el proyecto en móvil */
-      .project-card { text-align: left; } 
+    
+    @media (max-width: 820px) {
+      .wrap {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 36px 0;
+        width: 100%;
+        max-width: calc(100vw - 40px);
+      }
+      .links {
+        align-items: center;
+        text-align: center;
+      }
+      .link-row {
+        justify-content: center;
+      }
+      .dot {
+        display: none;
+      }
+      .project-card {
+        text-align: left;
+      }
     }
 
     /* IMAGEN + HUMO */
-    .figure{
-      position:relative;
-      width:100%;
-      max-width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    .figure {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-    .figure img{
-      width:min(520px,100%);
-      max-width:100%;
-      height:auto;
-      display:block;
-      user-select:none;
-      -webkit-user-drag:none;
+    
+    .figure img {
+      width: min(520px, 100%);
+      max-width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     /* Ancla del humo exactamente en la nariz del toro */
-    .smoke{
-      position:absolute;
-      left:var(--nose-x);
-      top:var(--nose-y);
-      width:1px; height:1px;
-      pointer-events:none;
-      transform:translate(-50%,-50%);
+    .smoke {
+      position: absolute;
+      left: var(--nose-x);
+      top: var(--nose-y);
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
     }
-    .puff{
-      position:absolute;
-      left:0; top:0;
-      width:18px; height:18px;
-      border-radius:50%;
-      background:var(--smoke);
-      opacity:.65;
-      transform: translate(0,0) scale(.7);
+    
+    .puff {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(120, 120, 120, 0.65);
+      opacity: 0.65;
+      transform: translate(0, 0) scale(0.7);
       animation: puff 3.2s ease-in infinite;
-      filter: blur(.2px);
+      filter: blur(0.2px);
     }
-    .puff:nth-child(2){ animation-delay:.7s }
-    .puff:nth-child(3){ animation-delay:1.4s }
-    .puff:nth-child(4){ animation-delay:2.1s }
+    
+    .puff:nth-child(2) {
+      animation-delay: 0.7s;
+    }
+    
+    .puff:nth-child(3) {
+      animation-delay: 1.4s;
+    }
+    
+    .puff:nth-child(4) {
+      animation-delay: 2.1s;
+    }
 
-    @keyframes puff{
-      0%   { transform: translate(0,0) scale(.7);  opacity:.65 }
-      40%  { transform: translate(20px,-18px) scale(1);    opacity:.45 }
-      70%  { transform: translate(38px,-40px) scale(1.23); opacity:.22 }
-      100% { transform: translate(56px,-66px) scale(1.42); opacity:0 }
+    @keyframes puff {
+      0% {
+        transform: translate(0, 0) scale(0.7);
+        opacity: 0.65;
+      }
+      40% {
+        transform: translate(20px, -18px) scale(1);
+        opacity: 0.45;
+      }
+      70% {
+        transform: translate(38px, -40px) scale(1.23);
+        opacity: 0.22;
+      }
+      100% {
+        transform: translate(56px, -66px) scale(1.42);
+        opacity: 0;
+      }
     }
 
     /* ENLACES */
-    .links{
-      display:flex;
-      flex-direction:column;
-      gap:20px;
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
-    .title{
-      margin:0 0 16px;
-      font-weight:700;
-      letter-spacing:.3px;
-      font-size:clamp(26px,3.8vw,40px);
-      line-height:1.2;
+    
+    .title {
+      margin: 0 0 16px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      font-size: clamp(26px, 3.8vw, 40px);
+      line-height: 1.2;
     }
 
-    .link-row{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-size:clamp(16px,2.1vw,18px);
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: clamp(16px, 2.1vw, 18px);
     }
-    .dot{
-      width:7px; height:7px; border-radius:50%;
-      background:currentColor;
-      opacity:.45;
-      transition:opacity .3s ease, transform .3s ease;
-      flex-shrink:0;
+    
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.45;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      flex-shrink: 0;
     }
-    .link-row:hover .dot{ opacity:.85; transform:scale(1.25) }
+    
+    .link-row:hover .dot {
+      opacity: 0.85;
+      transform: scale(1.25);
+    }
 
-    .link{
-      --boldness:0;
-      position:relative;
-      display:inline-block;
-      text-decoration:none;
-      color:var(--ink-soft);
-      font-weight:550;
-      letter-spacing:.3px;
-      transition: color .2s ease;
-      text-shadow:
-        calc(var(--boldness)*0.5px) 0 currentColor,
-        calc(var(--boldness)*-0.5px) 0 currentColor,
-        0 calc(var(--boldness)*0.5px) currentColor,
-        0 calc(var(--boldness)*-0.5px) currentColor;
-    }
-    .link:hover{ color:var(--ink); --boldness:1.2 }
-
-    .link::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:-4px;
-      height:2px;
-      background:currentColor;
-      transform-origin:left center;
-      transform:scaleX(0);
-      opacity:0;
-      transition:transform .25s ease, opacity .25s ease;
-    }
-    .link:hover::after{ transform:scaleX(1); opacity:.75 }
-
-    /* ——— ESTILOS PROYECTO DESTACADO (NUEVO) ——— */
+    /* ESTILOS PROYECTO DESTACADO */
     .project-card {
       margin: 0;
       padding: 0;
@@ -181,46 +197,52 @@
       flex-direction: column;
       gap: 8px;
     }
+    
     .pc-title {
       font-weight: 550;
-      font-size: clamp(16px,2.1vw,18px);
+      font-size: clamp(16px, 2.1vw, 18px);
       margin: 0;
-      letter-spacing: .2px;
+      letter-spacing: 0.2px;
     }
+    
     .pc-desc {
-      font-size: clamp(14px,1.9vw,16px);
+      font-size: clamp(14px, 1.9vw, 16px);
       margin: 0;
       opacity: 0.7;
       line-height: 1.5;
       font-weight: 400;
     }
+    
     .pc-actions {
       display: flex;
       gap: 12px;
       margin-top: 2px;
     }
+    
     .pc-btn {
-      --boldness:0;
+      --boldness: 0;
       position: relative;
       text-decoration: none;
       color: inherit;
       font-weight: 550;
-      letter-spacing: .2px;
-      font-size: clamp(14px,1.9vw,16px);
+      letter-spacing: 0.2px;
+      font-size: clamp(14px, 1.9vw, 16px);
       padding: 0;
       background: transparent;
       border: none;
-      transition: color .25s ease;
+      transition: color 0.25s ease;
       text-shadow:
-        calc(var(--boldness)*0.4px) 0 currentColor,
-        calc(var(--boldness)*-0.4px) 0 currentColor,
-        0 calc(var(--boldness)*0.4px) currentColor,
-        0 calc(var(--boldness)*-0.4px) currentColor;
+        calc(var(--boldness) * 0.4px) 0 currentColor,
+        calc(var(--boldness) * -0.4px) 0 currentColor,
+        0 calc(var(--boldness) * 0.4px) currentColor,
+        0 calc(var(--boldness) * -0.4px) currentColor;
     }
+    
     .pc-btn:hover {
       color: var(--ink);
       --boldness: 1;
     }
+    
     .pc-btn::after {
       content: "";
       position: absolute;
@@ -232,17 +254,23 @@
       transform-origin: left center;
       transform: scaleX(0);
       opacity: 0;
-      transition: transform .28s ease, opacity .28s ease;
+      transition: transform 0.28s ease, opacity 0.28s ease;
     }
+    
     .pc-btn:hover::after {
       transform: scaleX(1);
-      opacity: .85;
+      opacity: 0.85;
     }
 
-    /* ——— override SOLO en móvil para el título ——— */
-    @media (max-width:820px){
-      .title{ font-size:32px; margin-bottom:20px; }
-      .links{ gap:18px; }
+    /* Override solo en móvil para el título */
+    @media (max-width: 820px) {
+      .title {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+      .links {
+        gap: 18px;
+      }
     }
   </style>
 </head>

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Supply Chain Simulator - José Candon</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
+  <link rel="stylesheet" href="../styles/design-system.css" />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -20,216 +21,101 @@
   <meta property="twitter:description" content="Simulador profesional de cadena de suministro con tablero financiero P&L. Eventos discretos con SimPy y Python." />
   <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
   <style>
-    :root{
-      --bg:#efd9b4;
-      --ink:#151515;
-      --ink-soft:#2b2b2b;
-      --accent:#8b7355;
-      --accent-light:rgba(139, 115, 85, 0.12);
+    /* ESTILOS ESPECÍFICOS DE SUPPLY CHAIN SIMULATOR */
+    
+    body {
+      line-height: var(--lh-loose);
     }
 
-    *{box-sizing:border-box}
-    html,body{min-height:100%}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,system-ui,"Helvetica Neue",sans-serif;
-      padding: 40px 20px;
-    }
-
-    .container{
+    .container {
       max-width: 900px;
-      margin: 0 auto;
     }
 
-    .back-link{
-      display: inline-block;
-      text-decoration: none;
+    .header {
+      margin-bottom: var(--space-xl);
+    }
+
+    h1 {
+      font-size: var(--title-lg);
+      margin: 0 0 var(--space-sm);
+    }
+
+    .subtitle {
       color: var(--ink-soft);
-      font-weight: 550;
-      margin-bottom: 32px;
-      transition: color .25s ease;
-    }
-    .back-link:hover{
-      color: var(--ink);
-    }
-    .back-link::before{
-      content: "← ";
+      margin: 0 0 var(--space-lg);
+      font-weight: var(--fw-normal);
     }
 
-    .header{
-      margin-bottom: 48px;
+    h2 {
+      margin: var(--space-xl) 0 20px;
     }
 
-    h1{
-      font-size: clamp(32px, 5vw, 48px);
-      font-weight: 700;
-      margin: 0 0 16px;
-      letter-spacing: .3px;
-      line-height: 1.2;
-    }
-
-    .subtitle{
-      font-size: clamp(18px, 2.5vw, 22px);
-      color: var(--ink-soft);
-      margin: 0 0 32px;
-      font-weight: 400;
-    }
-
-    .cta-primary{
-      display: inline-block;
-      padding: 16px 32px;
-      background: var(--ink);
-      color: var(--bg);
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 18px;
-      transition: transform .2s ease, box-shadow .2s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .cta-primary:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .cta-primary::after{
-      content: " →";
-    }
-
-    h2{
-      font-size: clamp(24px, 3.5vw, 32px);
-      font-weight: 600;
-      margin: 48px 0 20px;
-      letter-spacing: .2px;
-    }
-
-    h3{
-      font-size: clamp(18px, 2.5vw, 22px);
-      font-weight: 600;
-      margin: 32px 0 12px;
+    h3 {
+      margin: var(--space-lg) 0 12px;
       color: var(--accent);
     }
 
-    p{
-      margin: 0 0 16px;
-      line-height: 1.8;
-      color: var(--ink-soft);
-    }
-
-    .section{
-      margin-bottom: 48px;
-    }
-
-    .feature-grid{
+    .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
     }
 
-    .feature-card{
-      padding: 24px;
-      background: var(--accent-light);
-      border-radius: 12px;
-      border-left: 4px solid var(--accent);
-    }
-
-    .feature-icon{
+    .feature-icon {
       font-size: 32px;
       margin-bottom: 12px;
     }
 
-    .feature-title{
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      color: var(--ink);
-    }
-
-    .feature-desc{
-      font-size: 15px;
-      line-height: 1.6;
-      margin: 0;
-      color: var(--ink-soft);
-    }
-
-    .tech-stack{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .tech-tag{
-      padding: 8px 16px;
-      background: var(--accent-light);
-      border-radius: 6px;
-      font-size: 15px;
-      font-weight: 550;
-      letter-spacing: .2px;
-      border: 1px solid rgba(139, 115, 85, 0.2);
-    }
-
-    .screenshot-placeholder{
+    .screenshot-placeholder {
       width: 100%;
       height: 400px;
       background: linear-gradient(135deg, var(--accent-light) 0%, rgba(139, 115, 85, 0.05) 100%);
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--accent);
-      font-weight: 600;
-      font-size: 18px;
-      margin: 32px 0;
+      font-weight: var(--fw-semibold);
+      font-size: var(--text-base);
+      margin: var(--space-lg) 0;
       border: 2px dashed var(--accent);
     }
 
-    .use-case{
+    .use-case {
       padding: 20px;
       background: rgba(139, 115, 85, 0.08);
-      border-radius: 8px;
-      margin: 16px 0;
+      border-radius: var(--radius-md);
+      margin: var(--space-sm) 0;
     }
 
-    .use-case-title{
-      font-weight: 600;
+    .use-case-title {
+      font-weight: var(--fw-semibold);
       font-size: 17px;
-      margin-bottom: 8px;
+      margin-bottom: var(--space-xs);
       color: var(--ink);
     }
 
-    ul{
-      margin: 12px 0;
-      padding-left: 24px;
-    }
-
-    li{
-      margin-bottom: 8px;
-      color: var(--ink-soft);
-    }
-
-    .cta-section{
+    .cta-section {
       background: linear-gradient(135deg, var(--accent-light) 0%, rgba(139, 115, 85, 0.05) 100%);
-      padding: 48px 32px;
-      border-radius: 16px;
+      padding: var(--space-xl) var(--space-lg);
+      border-radius: var(--radius-xl);
       text-align: center;
-      margin-top: 64px;
+      margin-top: var(--space-2xl);
       border: 2px solid rgba(139, 115, 85, 0.15);
     }
 
-    .cta-section h2{
+    .cta-section h2 {
       margin-top: 0;
     }
 
-    @media (max-width: 600px){
-      body{ padding: 24px 16px; }
-      h1{ margin-bottom: 12px; }
-      .feature-grid{ grid-template-columns: 1fr; }
-      .cta-section{ padding: 32px 20px; }
+    @media (max-width: 600px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      .cta-section {
+        padding: var(--space-lg) 20px;
+      }
     }
   </style>
 </head>

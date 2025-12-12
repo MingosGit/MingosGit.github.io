@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Simulador profesional de cadena de suministro con tablero P&L y optimización automática. Python, SimPy y análisis What-If para reducción de costes." />
   <title>Supply Chain Simulator - José Candon</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
   <link rel="stylesheet" href="../styles/design-system.css" />
@@ -57,7 +58,7 @@
 
     .feature-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: var(--space-md);
       margin-top: var(--space-lg);
     }
@@ -126,19 +127,19 @@
       margin-top: 0;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .feature-grid {
         grid-template-columns: 1fr;
       }
       .cta-section {
-        padding: var(--space-lg) 20px;
+        padding: var(--space-lg) var(--space-md);
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="../index.html" class="back-link">Volver al inicio</a>
+    <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver al inicio</a>
     
     <header class="header">
       <h1>📊 Supply Chain Simulator</h1>
@@ -331,7 +332,10 @@
       <h3>💼 Tablero Financiero P&L</h3>
       <img src="../Media/supply-chain-sim/tablero-pl.png" 
            alt="Tablero Financiero P&L con métricas en euros - Dashboard ejecutivo con ingresos potenciales, costes operativos e impacto en margen" 
-           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+           class="screenshot-img"
+           loading="lazy"
+           width="1200"
+           height="675">
       <p class="feature-desc" style="text-align: center; color: var(--accent);">
         <strong>Vista completa:</strong> Demanda valorada (9,180€), Coste Total (1,241€), Impacto 13.5% con -86.5% margen. 
         Desglose P&L en tabla con € y % del total.
@@ -340,7 +344,10 @@
       <h3>🔄 Análisis What-If Interactivo</h3>
       <img src="../Media/supply-chain-sim/whatif-comparison.png" 
            alt="Análisis What-If Interactivo - Comparación lado a lado entre escenario base y escenario +50% demanda con ROI neto" 
-           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+           class="screenshot-img"
+           loading="lazy"
+           width="1200"
+           height="675">
       <p class="feature-desc" style="text-align: center; color: var(--accent);">
         <strong>Comparativa financiera:</strong> Demanda media (2.5 → 3.8 uds/día), Coste Total delta (-78€), 
         Nivel Servicio (100.0%), ROI Neto (-832€) con indicador de rentabilidad.
@@ -349,7 +356,10 @@
       <h3>📊 Resultados de Simulación</h3>
       <img src="../Media/supply-chain-sim/resultados-simulacion.png" 
            alt="Resultados de Simulación - Tarjetas ejecutivas con métricas clave: Coste Total, Almacenamiento, Pedidos y Rupturas" 
-           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 32px 0;">
+           class="screenshot-img"
+           loading="lazy"
+           width="1200"
+           height="675">
       <p class="feature-desc" style="text-align: center; color: var(--accent);">
         <strong>Vista ejecutiva:</strong> 4 tarjetas con gradientes corporativos. Stock promedio, número de pedidos, 
         y costes con tooltips explicativos.

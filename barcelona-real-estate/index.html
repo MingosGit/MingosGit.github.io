@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Sistema de Business Intelligence para mercado inmobiliario Barcelona. +10k propiedades analizadas con Power BI, DAX y modelado predictivo." />
   <title>Barcelona Real Estate Intelligence - José Candon Rubio</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
+  <link rel="preconnect" href="https://app.powerbi.com" crossorigin />
   <link rel="stylesheet" href="../styles/design-system.css" />
   
   <!-- Open Graph -->
@@ -83,6 +85,12 @@
       gap: 24px;
       margin-top: 24px;
     }
+    
+    @media (min-width: 769px) {
+      .insights-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      }
+    }
 
     .insight-card {
       background: var(--accent-light);
@@ -95,6 +103,18 @@
     .insight-card:hover {
       transform: translateX(4px);
       box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+      .insight-card {
+        border-left: none;
+        border-top: 4px solid var(--accent);
+        padding: 20px;
+      }
+      
+      .insight-card:hover {
+        transform: translateY(-2px);
+      }
     }
 
     .insight-number {
@@ -157,16 +177,20 @@
       font-size: 12px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .dashboard-wrapper {
         padding: 12px;
+      }
+      
+      .dashboard-note {
+        font-size: 11px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="../" class="back-link">Volver</a>
+    <a href="../" class="back-link" aria-label="Volver a la página principal del portfolio">Volver</a>
     
     <h1>Barcelona Real Estate Intelligence</h1>
     <p class="subtitle">Descodificación del mercado inmobiliario mediante IA y Big Data</p>
@@ -185,15 +209,16 @@
       <div class="dashboard-wrapper">
         <div class="dashboard-container">
           <iframe 
-            title="Barcelona Real Estate Analytics" 
+            title="Barcelona Real Estate Analytics Dashboard Interactivo" 
             src="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" 
             frameborder="0"
-            allowFullScreen="true">
+            allowFullScreen="true"
+            aria-label="Dashboard interactivo de Power BI con análisis de mercado inmobiliario de Barcelona">
           </iframe>
         </div>
         <p class="dashboard-note">💡 Utilice las pestañas del reporte para alternar entre las vistas "Mercado" e "Inteligencia"</p>
         <div class="btn-wrapper">
-          <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi">Abrir en pantalla completa</a>
+          <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi" aria-label="Abrir dashboard de Barcelona Real Estate en pantalla completa en Power BI, abre en nueva pestaña">Abrir en pantalla completa</a>
         </div>
       </div>
     </section>

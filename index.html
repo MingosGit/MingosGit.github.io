@@ -7,9 +7,11 @@
   <meta name="keywords" content="José Candon, desarrollador, Python, IA, machine learning, data science, Power BI, React, Firebase, portfolio" />
   <meta name="author" content="José Candon Rubio" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#efd9b4" />
   <link rel="canonical" href="https://josecrub.com/" />
   <title>josecrub</title>
   <link rel="icon" type="image/png" href="Media/favicon.png" />
+  <link rel="preload" as="image" href="toro.png" />
   <link rel="stylesheet" href="styles/design-system.css" />
   
   <!-- Open Graph / Facebook -->
@@ -50,16 +52,15 @@
       align-items: center;
     }
     
-    @media (max-width: 820px) {
+    @media (max-width: 768px) {
       .wrap {
         grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 40px 0;
-        width: 100%;
-        max-width: calc(100vw - 40px);
+        gap: var(--space-xl);
+        padding: var(--space-xl) 0;
+        width: min(100%, calc(100vw - var(--space-xl)));
       }
       .figure img {
-        max-width: 360px;
+        width: 100%;
       }
       .links {
         align-items: center;
@@ -99,8 +100,6 @@
       user-select: none;
       -webkit-user-drag: none;
     }
-
-    /* Animaciones eliminadas para mejor rendimiento */
 
     /* ENLACES */
     .links {
@@ -151,8 +150,8 @@
 
     .section-divider {
       height: 1px;
-      background: rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
+      background: var(--border-subtle);
+      margin: var(--space-md) 0;
       border: none;
     }
     
@@ -168,7 +167,7 @@
     
     .link-row:hover .dot {
       opacity: 0.85;
-      transform: scale(1.25);
+      transform: scale(1.15);
     }
 
     /* ESTILOS PROYECTO DESTACADO */
@@ -247,13 +246,13 @@
     }
 
     /* Override solo en móvil para el título */
-    @media (max-width: 820px) {
+    @media (max-width: 768px) {
       .title {
-        font-size: 32px;
-        margin-bottom: 20px;
+        font-size: clamp(28px, 6vw, 36px);
+        margin-bottom: var(--space-md);
       }
       .links {
-        gap: 18px;
+        gap: var(--space-sm);
       }
     }
   </style>
@@ -261,7 +260,7 @@
 <body>
   <main class="wrap" aria-label="Presentación minimalista">
     <figure class="figure" aria-label="Toro y molino">
-      <img src="toro.png" alt="Toro y molino" />
+      <img src="toro.png" alt="Ilustración minimalista de un toro frente a un molino de viento" width="520" height="520" loading="eager" fetchpriority="high" />
     </figure>
 
     <section class="links" aria-label="Enlaces">
@@ -269,39 +268,39 @@
       <p class="tagline">Desarrollador Full-Stack · Python & IA · Data Science</p>
 
       <div class="link-row featured">
-        <span class="dot"></span>
-        <a class="link" href="barcelona-real-estate/">Barcelona Real Estate Intelligence</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="barcelona-real-estate/" aria-label="Ver proyecto Barcelona Real Estate Intelligence con Power BI">Barcelona Real Estate Intelligence</a>
       </div>
       <div class="link-row featured">
-        <span class="dot"></span>
-        <a class="link" href="supply-chain-simulator/">Supply Chain Simulator</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="supply-chain-simulator/" aria-label="Ver simulador de cadena de suministro con Python y SimPy">Supply Chain Simulator</a>
       </div>
       <div class="link-row featured">
-        <span class="dot"></span>
-        <a class="link" href="beegame/">BeeGame</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="beegame/" aria-label="Ver juego BeeGame con inteligencia artificial y algoritmo Expectimax">BeeGame</a>
       </div>
       <div class="link-row featured">
-        <span class="dot"></span>
-        <a class="link" href="TorneoYa/">TorneoYa</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="TorneoYa/" aria-label="Ver aplicación TorneoYa para gestión de torneos con Firebase">TorneoYa</a>
       </div>
 
       <hr class="section-divider">
 
       <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="about/">Sobre mí</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="about/" aria-label="Leer más sobre José Candon Rubio, habilidades y experiencia">Sobre mí</a>
       </div>
       <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" aria-label="Ver perfil profesional de José Candon en LinkedIn, abre en nueva pestaña">LinkedIn</a>
       </div>
       <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="https://github.com/MingosGit" target="_blank" rel="noopener">GitHub</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="https://github.com/MingosGit" target="_blank" rel="noopener" aria-label="Ver repositorios de código de José Candon en GitHub, abre en nueva pestaña">GitHub</a>
       </div>
       <div class="link-row">
-        <span class="dot"></span>
-        <a class="link" href="mailto:josecandonrubio@gmail.com">Email</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a class="link" href="mailto:josecandonrubio@gmail.com" aria-label="Enviar correo electrónico a José Candon">Email</a>
       </div>
     </section>
   </main>

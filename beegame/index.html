@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Juego de estrategia ecológico con IA simbólica: Expectimax, A* y teoría de juegos. Python y Pygame para concienciación medioambiental." />
   <title>BeeGame - Simulación Ecológica con IA</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
   <link rel="stylesheet" href="../styles/design-system.css" />
@@ -47,11 +48,13 @@
     .hero-image {
       width: 100%;
       max-width: 500px;
+      max-height: 400px;
       height: auto;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
       margin: 0 auto 40px;
       display: block;
+      object-fit: contain;
     }
 
     h1 {
@@ -75,8 +78,8 @@
     }
 
     .feature-card {
-      background: rgba(255, 255, 255, 0.35);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
     }
 
     .feature-emoji {
@@ -96,13 +99,13 @@
     .btn-primary {
       background: var(--accent);
       color: white;
-      box-shadow: 0 4px 14px rgba(244, 162, 97, 0.3);
+      box-shadow: var(--shadow-button);
     }
 
     .btn-primary:hover {
       background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(244, 162, 97, 0.4);
+      box-shadow: var(--shadow-button-hover);
     }
 
     .tech-stack {
@@ -119,15 +122,21 @@
       font-size: var(--text-xs);
       font-weight: var(--fw-medium);
       letter-spacing: 0.2px;
+      transition: all var(--transition-base);
+    }
+    
+    .tech-badge:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
     }
 
     .highlight-box p:last-child {
       margin-bottom: 0;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .container {
-        padding: var(--space-lg) 20px;
+        padding: var(--space-lg) var(--space-md);
       }
       h1 {
         font-size: 32px;
@@ -144,18 +153,18 @@
 </head>
 <body>
   <div class="container">
-    <a href="../index.html" class="back-link">Volver al inicio</a>
+    <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver al inicio</a>
 
     <h1>🐝 BeeGame</h1>
     <p class="subtitle">Simulación Ecológica con Inteligencia Artificial Simbólica</p>
 
-    <img src="../Media/BeeGame.png" alt="Captura de pantalla de BeeGame mostrando el tablero de juego con abejas, flores y obstáculos" class="hero-image" />
+    <img src="../Media/BeeGame.png" alt="Captura de pantalla de BeeGame mostrando el tablero de juego con abejas, flores y obstáculos" class="hero-image" loading="lazy" width="500" height="400" />
 
     <div class="cta-buttons">
-      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary" aria-label="Ver código fuente de BeeGame en GitHub, abre en nueva pestaña">
         Ver en GitHub
       </a>
-      <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn btn-secondary">
+      <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn btn-secondary" aria-label="Leer documentación completa de BeeGame en GitHub, abre en nueva pestaña">
         Documentación
       </a>
     </div>

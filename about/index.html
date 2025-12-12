@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="José Candon Rubio - Desarrollador Full-Stack especializado en Python, IA, Data Science, Power BI y React. Portfolio de proyectos y habilidades técnicas." />
   <title>Sobre mí - José Candon Rubio</title>
   <link rel="stylesheet" href="../styles/design-system.css" />
   <style>
@@ -70,6 +71,7 @@
       text-align: center;
       color: var(--ink);
       transition: all var(--transition-base);
+      cursor: default;
     }
 
     .skill-tag:hover {
@@ -77,6 +79,7 @@
       color: var(--bg);
       transform: translateY(-2px);
       box-shadow: var(--shadow-sm);
+      border-color: var(--accent);
     }
 
     .contact-card {
@@ -119,8 +122,13 @@
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
     }
+    
+    .contact-btn:focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 2px;
+    }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .profile-header {
         grid-template-columns: 1fr;
         text-align: center;
@@ -139,7 +147,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="../index.html" class="back-link">Volver</a>
+    <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver</a>
     
     <div class="profile-header">
       <div class="profile-avatar" aria-label="Avatar">JC</div>
@@ -174,13 +182,13 @@
     <div class="contact-card">
       <h2>Conecta conmigo</h2>
       <div class="contact-links">
-        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-btn">
+        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-btn" aria-label="Conectar con José Candon en LinkedIn, abre en nueva pestaña">
           LinkedIn
         </a>
-        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-btn">
+        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-btn" aria-label="Ver proyectos de José Candon en GitHub, abre en nueva pestaña">
           GitHub
         </a>
-        <a href="mailto:josecandonrubio@gmail.com" class="contact-btn">
+        <a href="mailto:josecandonrubio@gmail.com" class="contact-btn" aria-label="Enviar correo electrónico a José Candon">
           Email
         </a>
       </div>

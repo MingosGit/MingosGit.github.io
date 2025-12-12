@@ -52,7 +52,7 @@
     }
 
     h3 {
-      margin: var(--space-lg) 0 12px;
+      margin: var(--space-lg) 0 var(--space-sm);
       color: var(--accent);
     }
 
@@ -65,7 +65,7 @@
 
     .feature-icon {
       font-size: 32px;
-      margin-bottom: 12px;
+      margin-bottom: var(--space-sm);
     }
 
     .screenshot-placeholder {
@@ -84,7 +84,7 @@
     }
 
     .use-case {
-      padding: 20px;
+      padding: var(--space-md);
       background: rgba(139, 115, 85, 0.08);
       border-radius: var(--radius-md);
       margin: var(--space-sm) 0;
@@ -138,6 +138,16 @@
   </style>
 </head>
 <body>
+  <!-- Navegación Global -->
+  <header class="site-header">
+    <a href="/" class="site-logo">José Candon</a>
+    <nav class="site-nav">
+      <a href="/#proyectos" class="nav-link">Proyectos</a>
+      <a href="/about/" class="nav-link">Sobre mí</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+    </nav>
+  </header>
+
   <div class="container">
     <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver al inicio</a>
     

@@ -179,16 +179,31 @@
 
     @media (max-width: 768px) {
       .dashboard-wrapper {
-        padding: 12px;
+        padding: var(--space-sm);
       }
       
       .dashboard-note {
         font-size: 11px;
       }
+      
+      .btn-powerbi {
+        font-size: 13px;
+        padding: 8px 16px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Navegación Global -->
+  <header class="site-header">
+    <a href="/" class="site-logo">José Candon</a>
+    <nav class="site-nav">
+      <a href="/#proyectos" class="nav-link">Proyectos</a>
+      <a href="/about/" class="nav-link">Sobre mí</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+    </nav>
+  </header>
+
   <div class="container">
     <a href="../" class="back-link" aria-label="Volver a la página principal del portfolio">Volver</a>
     

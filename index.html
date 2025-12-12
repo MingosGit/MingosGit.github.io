@@ -30,279 +30,345 @@
   <style>
     /* ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL */
 
-    html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
-    
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
+      padding: 0;
     }
 
-    /* LAYOUT */
-    .wrap {
-      width: min(1100px, 92vw);
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: clamp(24px, 6vw, 64px);
-      align-items: center;
-    }
-    
-    @media (max-width: 768px) {
-      .wrap {
-        grid-template-columns: 1fr;
-        gap: var(--space-xl);
-        padding: var(--space-xl) 0;
-        width: min(100%, calc(100vw - var(--space-xl)));
-      }
-      .figure img {
-        width: 100%;
-      }
-      .links {
-        align-items: center;
-        text-align: center;
-      }
-      .link-row {
-        justify-content: center;
-      }
-      .section-divider {
-        width: 80%;
-        margin: 24px auto;
-      }
-      .title {
-        font-size: 34px;
-      }
-      .tagline {
-        font-size: 16px;
-      }
+    /* HERO SECTION */
+    .hero-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: var(--space-2xl) var(--space-md);
     }
 
-    /* IMAGEN + HUMO */
-    .figure {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    
-    .figure img {
-      width: min(520px, 100%);
-      max-width: 100%;
-      height: auto;
-      display: block;
-      user-select: none;
-      -webkit-user-drag: none;
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    /* ENLACES */
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    .title {
-      margin: 0 0 8px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.15;
-    }
-
-    .tagline {
-      margin: 0 0 28px;
-      font-size: clamp(15px, 2vw, 17px);
-      color: var(--accent);
-      font-weight: 550;
-      letter-spacing: 0.3px;
-    }
-
-    .link-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-size: clamp(15px, 2vw, 17px);
-    }
-
-    .link-row.featured {
-      margin: 6px 0;
-    }
-
-    .link-row.featured .link {
-      font-weight: 600;
-      font-size: clamp(16px, 2.2vw, 19px);
+    .hero-title {
+      font-size: var(--title-lg);
+      font-weight: var(--fw-bold);
+      margin: 0 0 var(--space-md);
+      letter-spacing: -0.3px;
+      line-height: var(--lh-tight);
       color: var(--ink);
     }
 
-    .link-row.featured .dot {
-      width: 9px;
-      height: 9px;
+    .hero-tagline {
+      font-size: var(--text-xl);
+      color: var(--ink-soft);
+      font-weight: var(--fw-normal);
+      margin: 0 0 var(--space-lg);
+      line-height: var(--lh-relaxed);
+      max-width: 600px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-cta .btn-primary,
+    .hero-cta .btn-secondary {
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      color: var(--ink-soft);
+      padding: 12px var(--space-md);
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      border-radius: var(--radius-md);
+      box-shadow: none;
+    }
+
+    .hero-cta .btn-primary:hover,
+    .hero-cta .btn-secondary:hover {
       background: var(--accent);
-      opacity: 1;
+      color: var(--bg);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
     }
 
-    .section-divider {
-      height: 1px;
-      background: var(--border-subtle);
-      margin: var(--space-md) 0;
-      border: none;
-    }
-    
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.45;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      flex-shrink: 0;
-    }
-    
-    .link-row:hover .dot {
-      opacity: 0.85;
-      transform: scale(1.15);
+    /* SKILLS SECTION */
+    .skills-section {
+      max-width: 1000px;
+      margin: var(--space-2xl) auto;
+      padding: 0 var(--space-md);
     }
 
-    /* ESTILOS PROYECTO DESTACADO */
-    .project-card {
-      margin: 0;
-      padding: 0;
-      border: none;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .pc-title {
-      font-weight: 550;
-      font-size: clamp(16px, 2.1vw, 18px);
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-    
-    .pc-desc {
-      font-size: clamp(14px, 1.9vw, 16px);
-      margin: 0;
-      opacity: 0.7;
-      line-height: 1.5;
-      font-weight: 400;
-    }
-    
-    .pc-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 2px;
-    }
-    
-    .pc-btn {
-      --boldness: 0;
-      position: relative;
-      text-decoration: none;
-      color: inherit;
-      font-weight: 550;
-      letter-spacing: 0.2px;
-      font-size: clamp(14px, 1.9vw, 16px);
-      padding: 0;
-      background: transparent;
-      border: none;
-      transition: color 0.25s ease;
-      text-shadow:
-        calc(var(--boldness) * 0.4px) 0 currentColor,
-        calc(var(--boldness) * -0.4px) 0 currentColor,
-        0 calc(var(--boldness) * 0.4px) currentColor,
-        0 calc(var(--boldness) * -0.4px) currentColor;
-    }
-    
-    .pc-btn:hover {
+    .skills-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--fw-semibold);
+      margin: 0 0 var(--space-lg);
       color: var(--ink);
-      --boldness: 1;
-    }
-    
-    .pc-btn::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -3px;
-      height: 2px;
-      background: currentColor;
-      transform-origin: left center;
-      transform: scaleX(0);
-      opacity: 0;
-      transition: transform 0.28s ease, opacity 0.28s ease;
-    }
-    
-    .pc-btn:hover::after {
-      transform: scaleX(1);
-      opacity: 0.85;
     }
 
-    /* Override solo en móvil para el título */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .skill-category {
+      background: var(--accent-light);
+      padding: var(--space-md);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--accent-border);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .skill-category:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .skill-name {
+      font-weight: var(--fw-semibold);
+      font-size: var(--text-base);
+      color: var(--ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    .skill-list {
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      line-height: var(--lh-relaxed);
+    }
+
+    /* PROJECTS SECTION */
+    .projects-section {
+      max-width: 1000px;
+      margin: var(--space-2xl) auto;
+      padding: 0 var(--space-md);
+    }
+
+    .projects-header {
+      margin-bottom: var(--space-xl);
+    }
+
+    .projects-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--fw-semibold);
+      margin: 0 0 var(--space-sm);
+      color: var(--ink);
+    }
+
+    .projects-subtitle {
+      font-size: var(--text-base);
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: var(--lh-normal);
+    }
+
+    /* CONTACT SECTION */
+    .contact-section {
+      max-width: 1000px;
+      margin: var(--space-xl) auto var(--space-2xl);
+      padding: var(--space-xl) var(--space-md);
+      text-align: center;
+    }
+
+    .contact-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--fw-semibold);
+      margin: 0 0 var(--space-md);
+      color: var(--ink);
+    }
+
+    .contact-subtitle {
+      font-size: var(--text-base);
+      color: var(--ink-soft);
+      margin: 0 0 var(--space-lg);
+      line-height: var(--lh-normal);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 12px var(--space-md);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-weight: var(--fw-medium);
+      font-size: var(--text-sm);
+      transition: all var(--transition-base);
+    }
+
+    .contact-item:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      border-color: var(--accent);
+    }
+
     @media (max-width: 768px) {
-      .title {
-        font-size: clamp(28px, 6vw, 36px);
-        margin-bottom: var(--space-md);
+      .hero-section {
+        padding: var(--space-xl) var(--space-md);
       }
-      .links {
-        gap: var(--space-sm);
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-section {
+        padding: 0 var(--space-md) var(--space-xl);
       }
     }
   </style>
 </head>
 <body>
-  <main class="wrap" aria-label="Presentación minimalista">
-    <figure class="figure" aria-label="Toro y molino">
-      <img src="toro.png" alt="Ilustración minimalista de un toro frente a un molino de viento" width="520" height="520" loading="eager" fetchpriority="high" />
-    </figure>
+  <!-- Navegación Global -->
+  <header class="site-header">
+    <a href="/" class="site-logo">José Candon</a>
+    <nav class="site-nav">
+      <a href="/#proyectos" class="nav-link">Proyectos</a>
+      <a href="/about/" class="nav-link">Sobre mí</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="nav-link">LinkedIn</a>
+    </nav>
+  </header>
 
-    <section class="links" aria-label="Enlaces">
-      <h1 class="title">José Candon Rubio</h1>
-      <p class="tagline">Desarrollador Full-Stack · Python & IA · Data Science</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">José Candon Rubio</h1>
+      <p class="hero-tagline">Desarrollador especializado en Python, análisis de datos e inteligencia artificial. Construyo soluciones técnicas para problemas complejos.</p>
+      
+      <div class="hero-cta">
+        <a href="mailto:josecandonrubio@gmail.com" class="btn-primary">Contacto</a>
+        <a href="#proyectos" class="btn-secondary">Ver proyectos</a>
+      </div>
+    </div>
+  </section>
 
-      <div class="link-row featured">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="barcelona-real-estate/" aria-label="Ver proyecto Barcelona Real Estate Intelligence con Power BI">Barcelona Real Estate Intelligence</a>
+  <!-- Skills Section -->
+  <section class="skills-section">
+    <h2 class="skills-title">Stack Técnico</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-name">Backend & Data</div>
+        <div class="skill-list">Python · Django · FastAPI<br>Pandas · NumPy · SimPy</div>
       </div>
-      <div class="link-row featured">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="supply-chain-simulator/" aria-label="Ver simulador de cadena de suministro con Python y SimPy">Supply Chain Simulator</a>
+      <div class="skill-category">
+        <div class="skill-name">IA & ML</div>
+        <div class="skill-list">Scikit-learn · TensorFlow<br>Algoritmos · Optimización</div>
       </div>
-      <div class="link-row featured">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="beegame/" aria-label="Ver juego BeeGame con inteligencia artificial y algoritmo Expectimax">BeeGame</a>
+      <div class="skill-category">
+        <div class="skill-name">Frontend</div>
+        <div class="skill-list">React · JavaScript<br>HTML/CSS · Streamlit</div>
       </div>
-      <div class="link-row featured">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="TorneoYa/" aria-label="Ver aplicación TorneoYa para gestión de torneos con Firebase">TorneoYa</a>
+      <div class="skill-category">
+        <div class="skill-name">Data & Analytics</div>
+        <div class="skill-list">Power BI · DAX · SQL<br>Visualización · ETL</div>
       </div>
+      <div class="skill-category">
+        <div class="skill-name">Cloud & Tools</div>
+        <div class="skill-list">Firebase · Git<br>CI/CD · Deployment</div>
+      </div>
+    </div>
+  </section>
 
-      <hr class="section-divider">
+  <!-- Projects Section -->
+  <section id="proyectos" class="projects-section">
+    <div class="projects-header">
+      <h2 class="projects-title">Proyectos</h2>
+      <p class="projects-subtitle">Desarrollo de software y análisis de datos</p>
+    </div>
+    <div class="project-grid">
+      <!-- Barcelona Real Estate -->
+      <a href="barcelona-real-estate/" class="project-card" aria-label="Ver proyecto Barcelona Real Estate Intelligence con Power BI">
+        <div class="project-card-content">
+          <h3 class="project-card-title">Barcelona Real Estate Intelligence</h3>
+          <p class="project-card-desc">Sistema de análisis de mercado inmobiliario que procesa +10,000 propiedades. Dashboard ejecutivo con modelado predictivo y métricas P&L para identificar oportunidades de inversión.</p>
+          <div class="project-card-tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag">Big Data</span>
+            <span class="tag">Predictivo</span>
+          </div>
+        </div>
+      </a>
 
-      <div class="link-row">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="about/" aria-label="Leer más sobre José Candon Rubio, habilidades y experiencia">Sobre mí</a>
-      </div>
-      <div class="link-row">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" aria-label="Ver perfil profesional de José Candon en LinkedIn, abre en nueva pestaña">LinkedIn</a>
-      </div>
-      <div class="link-row">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="https://github.com/MingosGit" target="_blank" rel="noopener" aria-label="Ver repositorios de código de José Candon en GitHub, abre en nueva pestaña">GitHub</a>
-      </div>
-      <div class="link-row">
-        <span class="dot" aria-hidden="true"></span>
-        <a class="link" href="mailto:josecandonrubio@gmail.com" aria-label="Enviar correo electrónico a José Candon">Email</a>
-      </div>
-    </section>
-  </main>
+      <!-- Supply Chain Simulator -->
+      <a href="supply-chain-simulator/" class="project-card" aria-label="Ver simulador de cadena de suministro con Python y SimPy">
+        <div class="project-card-content">
+          <h3 class="project-card-title">Supply Chain Simulator</h3>
+          <p class="project-card-desc">Simulador de eventos discretos para optimización de inventario. Análisis What-If, dashboards financieros P&L y métricas KPI en tiempo real.</p>
+          <div class="project-card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">SimPy</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">Optimización</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- BeeGame -->
+      <a href="beegame/" class="project-card" aria-label="Ver juego BeeGame con inteligencia artificial y algoritmo Expectimax">
+        <div class="project-card-content">
+          <h3 class="project-card-title">BeeGame</h3>
+          <p class="project-card-desc">Juego de estrategia con IA implementando algoritmo Expectimax, A* pathfinding y teoría de juegos. Proyecto educativo sobre sostenibilidad medioambiental.</p>
+          <div class="project-card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">IA</span>
+            <span class="tag">Pygame</span>
+            <span class="tag">Algoritmos</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- TorneoYa -->
+      <a href="TorneoYa/" class="project-card" aria-label="Ver aplicación TorneoYa para gestión de torneos con Firebase">
+        <div class="project-card-content">
+          <h3 class="project-card-title">TorneoYa</h3>
+          <p class="project-card-desc">Aplicación web para gestión de torneos deportivos. Sistema de brackets dinámicos, autenticación de usuarios y base de datos en tiempo real.</p>
+          <div class="project-card-tags">
+            <span class="tag">React</span>
+            <span class="tag">Firebase</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Real-time</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2 class="contact-title">Contacto</h2>
+    <p class="contact-subtitle">Disponible para colaboraciones y oportunidades profesionales</p>
+    <div class="contact-links">
+      <a href="mailto:josecandonrubio@gmail.com" class="contact-item" aria-label="Enviar correo electrónico a José Candon">
+        Email
+      </a>
+      <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-item" aria-label="Ver perfil profesional de José Candon en LinkedIn">
+        LinkedIn
+      </a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-item" aria-label="Ver repositorios de código de José Candon en GitHub">
+        GitHub
+      </a>
+      <a href="about/" class="contact-item" aria-label="Leer más sobre José Candon Rubio">
+        Sobre mí
+      </a>
+    </div>
+  </section>
 </body>
 </html>

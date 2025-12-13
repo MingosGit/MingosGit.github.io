@@ -28,35 +28,44 @@
   <meta property="twitter:description" content="Desarrollador de software especializado en Python, IA y simulación. Proyectos: BeeGame, Supply Chain Simulator, TorneoYa." />
   <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
   <style>
-    /* ESTILOS ESPECÍFICOS DE LA PÁGINA PRINCIPAL */
+    /* ============================================
+       PÁGINA PRINCIPAL - DISEÑO RENOVADO
+       ============================================ */
 
     body {
       padding: 0;
+      overflow-x: hidden;
     }
 
-    /* NAVEGACIÓN MOBILE-FRIENDLY */
+    /* NAVEGACIÓN FLOTANTE MODERNA */
     .site-header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 1000;
-      background: var(--bg);
-      border-bottom: 1px solid var(--accent-border);
-      padding: var(--space-md) var(--space-lg);
+      background: rgba(239, 217, 180, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--accent-border);
+      padding: 12px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+      max-width: 900px;
+      width: calc(100% - 40px);
+      border-radius: 50px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
     }
 
     .site-logo {
-      font-weight: var(--fw-semibold);
-      font-size: var(--text-lg);
+      font-weight: var(--fw-bold);
+      font-size: var(--text-base);
       color: var(--ink);
       text-decoration: none;
-      transition: color 0.2s ease;
+      transition: all 0.3s ease;
       z-index: 1001;
+      letter-spacing: -0.02em;
     }
 
     .site-logo:hover {
@@ -65,7 +74,7 @@
 
     .site-nav {
       display: flex;
-      gap: var(--space-lg);
+      gap: var(--space-md);
       align-items: center;
     }
 
@@ -73,13 +82,16 @@
       color: var(--ink-soft);
       text-decoration: none;
       font-weight: var(--fw-medium);
-      font-size: var(--text-base);
-      transition: color 0.2s ease;
-      padding: 8px 0;
+      font-size: var(--text-sm);
+      transition: all 0.2s ease;
+      padding: 8px 14px;
+      border-radius: 20px;
+      position: relative;
     }
 
     .site-nav .nav-link:hover {
-      color: var(--accent);
+      color: var(--ink);
+      background: var(--accent-light);
     }
 
     .mobile-menu-toggle {
@@ -90,44 +102,38 @@
       padding: 8px;
       color: var(--ink);
       z-index: 1001;
-      order: 2;
     }
 
     .mobile-menu-toggle svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
     }
 
     @media (max-width: 768px) {
       .site-header {
-        padding: var(--space-md);
-        flex-wrap: nowrap;
-      }
-
-      .site-logo {
-        order: 1;
+        top: 12px;
+        padding: 10px 20px;
+        width: calc(100% - 24px);
       }
 
       .mobile-menu-toggle {
         display: block;
-        order: 2;
       }
 
       .site-nav {
         position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        border-bottom: 1px solid var(--accent-border);
+        top: 70px;
+        left: 12px;
+        right: 12px;
+        background: rgba(239, 217, 180, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--accent-border);
+        border-radius: 20px;
         padding: var(--space-md);
         flex-direction: column;
-        gap: var(--space-sm);
+        gap: 4px;
         display: none;
-        box-shadow: var(--shadow-lg);
-        align-items: stretch;
-        order: 3;
-        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
       }
 
       .site-nav.is-open {
@@ -135,259 +141,464 @@
       }
 
       .site-nav .nav-link {
-        padding: var(--space-sm);
-        border-bottom: 1px solid var(--accent-border);
+        padding: 14px 20px;
+        width: 100%;
+        text-align: center;
+        border-radius: 12px;
       }
     }
 
-    /* HERO SECTION - OPTIMIZADO */
+    /* ============================================
+       HERO - DISEÑO ASIMÉTRICO
+       ============================================ */
     .hero-section {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: clamp(2rem, 8vw, 6rem) var(--space-md);
-      min-height: 60vh;
-      display: flex;
+      padding: 140px var(--space-lg) 60px;
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-2xl);
       align-items: center;
     }
 
     .hero-content {
-      max-width: 100%;
-      width: 100%;
+      position: relative;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: var(--space-md);
+      padding: 8px 16px;
+      background: var(--accent-light);
+      border-radius: 20px;
+      border: 1px solid var(--accent-border);
     }
 
     .hero-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: var(--fw-bold);
-      margin: 0 0 var(--space-md);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+      margin: 0 0 var(--space-lg);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
       color: var(--ink);
     }
 
+    .hero-title .highlight {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      height: 12px;
+      background: var(--accent-light);
+      z-index: -1;
+      border-radius: 2px;
+    }
+
     .hero-tagline {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
       color: var(--ink-soft);
       font-weight: var(--fw-normal);
       margin: 0 0 var(--space-xl);
-      line-height: 1.6;
-      max-width: 700px;
+      line-height: 1.7;
+      max-width: 500px;
     }
 
     .hero-cta {
       display: flex;
       gap: var(--space-sm);
       flex-wrap: wrap;
+      align-items: center;
     }
 
-    .hero-cta .btn-primary,
-    .hero-cta .btn-secondary {
-      background: var(--accent-light);
-      border: 1px solid var(--accent-border);
-      color: var(--ink-soft);
-      padding: 14px 28px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-medium);
-      border-radius: var(--radius-md);
-      box-shadow: none;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .hero-cta .btn-primary:hover,
-    .hero-cta .btn-secondary:hover {
-      background: var(--accent);
+    .hero-cta .btn-primary {
+      background: var(--ink);
+      border: 2px solid var(--ink);
       color: var(--bg);
-      border-color: var(--accent);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-1px);
-    }
-
-    /* SKILLS SECTION - MEJORADO */
-    .skills-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(3rem, 8vw, 5rem) var(--space-md);
-      background: var(--accent-light);
-    }
-
-    .skills-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: var(--fw-semibold);
-      margin: 0 0 var(--space-xl);
-      color: var(--ink);
-      text-align: center;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-lg);
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .skill-category {
-      background: var(--bg);
-      padding: var(--space-lg);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--accent-border);
-      transition: all 0.3s ease;
-    }
-
-    .skill-category:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--accent);
-    }
-
-    .skill-name {
-      font-weight: var(--fw-semibold);
-      font-size: var(--text-lg);
-      color: var(--ink);
-      margin-bottom: var(--space-sm);
-    }
-
-    .skill-list {
+      padding: 16px 32px;
       font-size: var(--text-base);
-      color: var(--ink-soft);
-      line-height: 1.8;
-    }
-
-    /* PROJECTS SECTION - REORGANIZADO */
-    .projects-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(3rem, 8vw, 5rem) var(--space-md);
-    }
-
-    .projects-header {
-      margin-bottom: var(--space-2xl);
-      text-align: center;
-    }
-
-    .projects-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
       font-weight: var(--fw-semibold);
-      margin: 0 0 var(--space-sm);
-      color: var(--ink);
-    }
-
-    .projects-subtitle {
-      font-size: clamp(1rem, 2vw, 1.125rem);
-      color: var(--ink-soft);
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* CONTACT SECTION - MEJORADO */
-    .contact-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(3rem, 8vw, 5rem) var(--space-md);
-      text-align: center;
-      background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 100%);
-      position: relative;
-    }
-
-    .contact-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 4px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    .contact-title {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      font-weight: var(--fw-bold);
-      margin: var(--space-md) 0 var(--space-sm);
-      color: var(--ink);
-      letter-spacing: -0.01em;
-    }
-
-    .contact-subtitle {
-      font-size: clamp(1rem, 2vw, 1.125rem);
-      color: var(--ink-soft);
-      margin: 0 auto var(--space-2xl);
-      line-height: 1.7;
-      max-width: 600px;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-md);
-      flex-wrap: wrap;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .contact-item {
+      border-radius: 50px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      padding: 16px 32px;
-      background: var(--bg);
-      border: 2px solid var(--accent-border);
-      border-radius: 50px;
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: var(--fw-semibold);
-      font-size: var(--text-base);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      gap: 8px;
     }
 
-    .contact-item::before {
+    .hero-cta .btn-primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(111, 93, 70, 0.3);
+    }
+
+    .hero-cta .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent-border);
+      color: var(--ink);
+      padding: 16px 32px;
+      font-size: var(--text-base);
+      font-weight: var(--fw-medium);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .hero-cta .btn-secondary:hover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* Hero Visual Side - Skills integradas */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-content: center;
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--accent-light) 0%, transparent 100%);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--accent-border);
+      max-width: 420px;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: var(--bg);
+      border: 1px solid var(--accent-border);
+      border-radius: 50px;
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--ink);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .skill-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .skill-pill .icon {
+      font-size: 1em;
+    }
+
+    /* ============================================
+       PROJECTS - GRID DESTACADO
+       ============================================ */
+    .projects-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    .section-header-text {
+      max-width: 500px;
+    }
+
+    .section-label {
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: var(--space-xs);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: var(--fw-bold);
+      margin: 0;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .section-link {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.3s ease;
+    }
+
+    .section-link:hover {
+      gap: 10px;
+    }
+
+    /* Projects Grid - Bento Style */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto auto;
+      gap: var(--space-md);
+    }
+
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-lg);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 0;
-      height: 100%;
+      right: 0;
+      height: 4px;
       background: var(--accent);
-      transition: width 0.3s ease;
-      z-index: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
     }
 
-    .contact-item span {
-      position: relative;
-      z-index: 1;
-      transition: color 0.3s ease;
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      border-color: var(--accent);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card.featured {
+      grid-column: span 2;
+      flex-direction: row;
+      gap: var(--space-xl);
+      align-items: center;
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--bg) 100%);
+    }
+
+    .project-card.featured .project-card-content {
+      flex: 1;
+    }
+
+    .project-card.featured .project-card-visual {
+      flex: 0 0 200px;
+      height: 150px;
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border: 1px solid var(--accent-border);
+    }
+
+    .project-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      flex: 1;
+    }
+
+    .project-card-title {
+      font-size: var(--text-lg);
+      font-weight: var(--fw-semibold);
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .project-card.featured .project-card-title {
+      font-size: var(--text-xl);
+    }
+
+    .project-card-desc {
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .project-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: var(--space-sm);
+    }
+
+    .project-card-tags .tag {
+      font-size: 11px;
+      padding: 5px 12px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      border-radius: 20px;
+      color: var(--ink-soft);
+      font-weight: var(--fw-medium);
+    }
+
+    .project-card:hover .tag {
+      border-color: var(--accent);
+    }
+
+    /* ============================================
+       CONTACT - DISEÑO MINIMALISTA
+       ============================================ */
+    .contact-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      padding: var(--space-2xl);
+      background: linear-gradient(135deg, var(--accent-light) 0%, transparent 100%);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--accent-border);
+    }
+
+    .contact-content {
+      max-width: 400px;
+    }
+
+    .contact-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: var(--fw-bold);
+      margin: 0 0 var(--space-md);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .contact-subtitle {
+      font-size: var(--text-base);
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: 18px 24px;
+      background: var(--bg);
+      border: 1px solid var(--accent-border);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: var(--fw-medium);
+      font-size: var(--text-base);
+      transition: all 0.3s ease;
     }
 
     .contact-item:hover {
       border-color: var(--accent);
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      transform: translateX(8px);
+      box-shadow: var(--shadow-md);
     }
 
-    .contact-item:hover::before {
-      width: 100%;
+    .contact-item .icon {
+      font-size: 1.3em;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-light);
+      border-radius: var(--radius-md);
     }
 
-    .contact-item:hover span {
-      color: var(--bg);
+    .contact-item .label {
+      flex: 1;
     }
 
-    .contact-item:active {
-      transform: translateY(-1px) scale(1);
+    .contact-item .arrow {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      color: var(--accent);
     }
 
-    /* RESPONSIVE MOBILE */
-    @media (max-width: 768px) {
+    .contact-item:hover .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ============================================
+       FOOTER SIMPLE
+       ============================================ */
+    .site-footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      text-align: center;
+      border-top: 1px solid var(--accent-border);
+    }
+
+    .footer-text {
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* ============================================
+       RESPONSIVE - TABLET
+       ============================================ */
+    @media (max-width: 900px) {
       .hero-section {
+        grid-template-columns: 1fr;
+        padding: 120px var(--space-md) 50px;
         min-height: auto;
-        padding: var(--space-2xl) var(--space-md);
         text-align: center;
+        gap: var(--space-xl);
       }
 
       .hero-content {
@@ -400,69 +611,330 @@
         max-width: 100%;
       }
 
-      .hero-cta {
+      .hero-visual {
+        order: -1;
         width: 100%;
+      }
+
+      .hero-skills {
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-card.featured {
+        grid-column: span 1;
         flex-direction: column;
+      }
+
+      .project-card.featured .project-card-visual {
+        width: 100%;
+        flex: none;
+        height: 100px;
+      }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-xl);
+      }
+
+      .contact-content {
+        max-width: 100%;
+      }
+
+      .contact-item:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE - MÓVIL
+       ============================================ */
+    @media (max-width: 600px) {
+      /* Header móvil mejorado */
+      .site-header {
+        top: 10px;
+        padding: 10px 16px;
+        width: calc(100% - 20px);
+        border-radius: 16px;
+      }
+
+      .site-logo {
+        font-size: var(--text-sm);
+      }
+
+      .site-nav {
+        top: 60px;
+        left: 10px;
+        right: 10px;
+        padding: var(--space-sm);
+        border-radius: 16px;
+      }
+
+      .site-nav .nav-link {
+        padding: 12px 16px;
+        font-size: var(--text-sm);
+      }
+
+      /* Hero móvil */
+      .hero-section {
+        padding: 100px var(--space-sm) 32px;
+        gap: var(--space-lg);
+      }
+
+      .hero-label {
+        font-size: 11px;
+        padding: 6px 12px;
+        margin-bottom: var(--space-sm);
+      }
+
+      .hero-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        margin-bottom: var(--space-md);
+      }
+
+      .hero-title .highlight::after {
+        bottom: 4px;
+        height: 8px;
+      }
+
+      .hero-tagline {
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-lg);
+        line-height: 1.6;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
       }
 
       .hero-cta .btn-primary,
       .hero-cta .btn-secondary {
         width: 100%;
-        text-align: center;
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: var(--text-sm);
       }
 
-      .skills-section {
-        padding: var(--space-2xl) var(--space-md);
+      /* Skills en hero móvil */
+      .hero-skills {
+        padding: var(--space-sm);
+        gap: 8px;
+        border-radius: var(--radius-lg);
+        max-width: 100%;
       }
 
-      .skills-grid {
-        grid-template-columns: 1fr;
+      .skill-pill {
+        padding: 8px 12px;
+        font-size: 12px;
+        gap: 5px;
+      }
+
+      .skill-pill .icon {
+        font-size: 0.95em;
+      }
+
+      /* Projects móvil */
+      .projects-section {
+        padding: var(--space-lg) var(--space-sm);
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-lg);
+      }
+
+      .section-label {
+        font-size: 10px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .section-link {
+        font-size: var(--text-xs);
+      }
+
+      .projects-grid {
+        gap: var(--space-sm);
+      }
+
+      .project-card {
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+      }
+
+      .project-card.featured {
+        padding: var(--space-md);
         gap: var(--space-md);
       }
 
-      .skill-category {
-        padding: var(--space-md);
+      .project-card.featured .project-card-visual {
+        height: 80px;
+        font-size: 2rem;
+        border-radius: var(--radius-md);
       }
 
-      .projects-section {
-        padding: var(--space-2xl) var(--space-md);
+      .project-card-title {
+        font-size: var(--text-base);
       }
 
+      .project-card.featured .project-card-title {
+        font-size: var(--text-lg);
+      }
+
+      .project-card-desc {
+        font-size: var(--text-xs);
+        line-height: 1.5;
+      }
+
+      .project-card-tags {
+        gap: 6px;
+        padding-top: var(--space-xs);
+      }
+
+      .project-card-tags .tag {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
+
+      /* Contact móvil */
       .contact-section {
-        padding: var(--space-2xl) var(--space-md);
+        padding: var(--space-lg) var(--space-sm);
+      }
+
+      .contact-wrapper {
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        gap: var(--space-lg);
+      }
+
+      .contact-title {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-sm);
+      }
+
+      .contact-subtitle {
+        font-size: var(--text-sm);
+        line-height: 1.5;
       }
 
       .contact-links {
-        flex-direction: column;
-        align-items: stretch;
+        gap: 10px;
       }
 
       .contact-item {
-        width: 100%;
-        justify-content: center;
+        padding: 14px 16px;
+        gap: var(--space-sm);
+        border-radius: var(--radius-md);
+        font-size: var(--text-sm);
+      }
+
+      .contact-item .icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1em;
+        border-radius: var(--radius-sm);
+      }
+
+      .contact-item .label {
+        font-size: var(--text-sm);
+      }
+
+      .contact-item .arrow {
+        display: none;
+      }
+
+      /* Footer móvil */
+      .site-footer {
+        padding: var(--space-md) var(--space-sm);
+      }
+
+      .footer-text {
+        font-size: var(--text-xs);
       }
     }
 
-    /* MEJORAS PEQUEÑAS PANTALLAS */
-    @media (max-width: 480px) {
+    /* ============================================
+       RESPONSIVE - MÓVIL PEQUEÑO
+       ============================================ */
+    @media (max-width: 380px) {
       .site-header {
-        padding: var(--space-sm) var(--space-md);
+        padding: 8px 12px;
       }
 
       .hero-section {
-        padding: var(--space-xl) var(--space-md);
+        padding: 90px var(--space-xs) 24px;
       }
 
-      .skills-section,
-      .projects-section,
-      .contact-section {
-        padding: var(--space-xl) var(--space-md);
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .hero-skills {
+        gap: 6px;
+        padding: 10px;
+      }
+
+      .skill-pill {
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+
+      .project-card {
+        padding: var(--space-sm);
+      }
+
+      .contact-wrapper {
+        padding: var(--space-sm);
+      }
+
+      .contact-item {
+        padding: 12px 14px;
+      }
+
+      .contact-item .icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    /* ============================================
+       MEJORAS TÁCTILES MÓVIL
+       ============================================ */
+    @media (hover: none) and (pointer: coarse) {
+      .project-card:hover,
+      .skill-pill:hover,
+      .contact-item:hover {
+        transform: none;
+      }
+
+      .project-card:active {
+        transform: scale(0.98);
+      }
+
+      .contact-item:active {
+        background: var(--accent-light);
+      }
+
+      .hero-cta .btn-primary:active,
+      .hero-cta .btn-secondary:active {
+        transform: scale(0.98);
       }
     }
   </style>
 </head>
 <body>
-  <!-- Navegación Global -->
+  <!-- Navegación Flotante -->
   <header class="site-header">
     <a href="/" class="site-logo">José Candon</a>
     <button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" onclick="toggleMenu()">
@@ -471,62 +943,59 @@
       </svg>
     </button>
     <nav class="site-nav" id="mainNav">
-      <a href="/#proyectos" class="nav-link">Proyectos</a>
+      <a href="#proyectos" class="nav-link">Proyectos</a>
       <a href="/about/" class="nav-link">Sobre mí</a>
       <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
       <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="nav-link">LinkedIn</a>
     </nav>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Section - Diseño Asimétrico -->
   <section class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">José Candon Rubio</h1>
-      <p class="hero-tagline">Desarrollador especializado en Python, análisis de datos e inteligencia artificial. Construyo soluciones técnicas para problemas complejos.</p>
+      <span class="hero-label">Software Developer</span>
+      <h1 class="hero-title">Hola, soy <span class="highlight">José Candon</span></h1>
+      <p class="hero-tagline">Desarrollo soluciones con Python, análisis de datos e inteligencia artificial. Especializado en transformar datos en decisiones.</p>
       
       <div class="hero-cta">
-        <a href="mailto:josecandonrubio@gmail.com" class="btn-primary">Contacto</a>
+        <a href="mailto:josecandonrubio@gmail.com" class="btn-primary">Hablemos →</a>
         <a href="#proyectos" class="btn-secondary">Ver proyectos</a>
       </div>
     </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section class="skills-section">
-    <h2 class="skills-title">Stack Técnico</h2>
-    <div class="skills-grid">
-      <div class="skill-category">
-        <div class="skill-name">Backend & Data</div>
-        <div class="skill-list">Python · Django · FastAPI<br>Pandas · NumPy · SimPy</div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-name">IA & ML</div>
-        <div class="skill-list">Scikit-learn · TensorFlow<br>Algoritmos · Optimización</div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-name">Frontend</div>
-        <div class="skill-list">React · JavaScript<br>HTML/CSS · Streamlit</div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-name">Data & Analytics</div>
-        <div class="skill-list">Power BI · DAX · SQL<br>Visualización · ETL</div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-name">Cloud & Tools</div>
-        <div class="skill-list">Firebase · Git<br>CI/CD · Deployment</div>
+    
+    <div class="hero-visual">
+      <div class="hero-skills">
+        <span class="skill-pill"><span class="icon">🐍</span> Python</span>
+        <span class="skill-pill"><span class="icon">🤖</span> Machine Learning</span>
+        <span class="skill-pill"><span class="icon">📊</span> Power BI</span>
+        <span class="skill-pill"><span class="icon">⚛️</span> React</span>
+        <span class="skill-pill"><span class="icon">🔥</span> Firebase</span>
+        <span class="skill-pill"><span class="icon">📈</span> Data Analysis</span>
+        <span class="skill-pill"><span class="icon">🗄️</span> SQL</span>
+        <span class="skill-pill"><span class="icon">⚡</span> FastAPI</span>
+        <span class="skill-pill"><span class="icon">🎮</span> Pygame</span>
+        <span class="skill-pill"><span class="icon">📉</span> DAX</span>
+        <span class="skill-pill"><span class="icon">🔧</span> Git</span>
+        <span class="skill-pill"><span class="icon">☁️</span> Cloud</span>
       </div>
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- Projects Section - Grid Destacado -->
   <section id="proyectos" class="projects-section">
-    <div class="projects-header">
-      <h2 class="projects-title">Proyectos</h2>
-      <p class="projects-subtitle">Desarrollo de software y análisis de datos</p>
+    <div class="section-header">
+      <div class="section-header-text">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">Proyectos Destacados</h2>
+      </div>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="section-link">
+        Ver todos en GitHub →
+      </a>
     </div>
-    <div class="project-grid">
-      <!-- Barcelona Real Estate -->
-      <a href="barcelona-real-estate/" class="project-card" aria-label="Ver proyecto Barcelona Real Estate Intelligence con Power BI">
+    
+    <div class="projects-grid">
+      <!-- Barcelona Real Estate - Featured -->
+      <a href="barcelona-real-estate/" class="project-card featured" aria-label="Ver proyecto Barcelona Real Estate Intelligence con Power BI">
         <div class="project-card-content">
           <h3 class="project-card-title">Barcelona Real Estate Intelligence</h3>
           <p class="project-card-desc">Sistema de análisis de mercado inmobiliario que procesa +10,000 propiedades. Dashboard ejecutivo con modelado predictivo y métricas P&L para identificar oportunidades de inversión.</p>
@@ -537,18 +1006,18 @@
             <span class="tag">Predictivo</span>
           </div>
         </div>
+        <div class="project-card-visual">📊</div>
       </a>
 
       <!-- Supply Chain Simulator -->
       <a href="supply-chain-simulator/" class="project-card" aria-label="Ver simulador de cadena de suministro con Python y SimPy">
         <div class="project-card-content">
           <h3 class="project-card-title">Supply Chain Simulator</h3>
-          <p class="project-card-desc">Simulador de eventos discretos para optimización de inventario. Análisis What-If, dashboards financieros P&L y métricas KPI en tiempo real.</p>
+          <p class="project-card-desc">Simulador de eventos discretos para optimización de inventario con análisis What-If y dashboards financieros.</p>
           <div class="project-card-tags">
             <span class="tag">Python</span>
             <span class="tag">SimPy</span>
             <span class="tag">Streamlit</span>
-            <span class="tag">Optimización</span>
           </div>
         </div>
       </a>
@@ -557,12 +1026,11 @@
       <a href="beegame/" class="project-card" aria-label="Ver juego BeeGame con inteligencia artificial y algoritmo Expectimax">
         <div class="project-card-content">
           <h3 class="project-card-title">BeeGame</h3>
-          <p class="project-card-desc">Juego de estrategia con IA implementando algoritmo Expectimax, A* pathfinding y teoría de juegos. Proyecto educativo sobre sostenibilidad medioambiental.</p>
+          <p class="project-card-desc">Juego de estrategia con IA usando Expectimax y A* pathfinding. Proyecto educativo sobre sostenibilidad.</p>
           <div class="project-card-tags">
             <span class="tag">Python</span>
             <span class="tag">IA</span>
             <span class="tag">Pygame</span>
-            <span class="tag">Algoritmos</span>
           </div>
         </div>
       </a>
@@ -571,11 +1039,10 @@
       <a href="TorneoYa/" class="project-card" aria-label="Ver aplicación TorneoYa para gestión de torneos con Firebase">
         <div class="project-card-content">
           <h3 class="project-card-title">TorneoYa</h3>
-          <p class="project-card-desc">Aplicación web para gestión de torneos deportivos. Sistema de brackets dinámicos, autenticación de usuarios y base de datos en tiempo real.</p>
+          <p class="project-card-desc">App web para gestión de torneos deportivos con brackets dinámicos y base de datos en tiempo real.</p>
           <div class="project-card-tags">
             <span class="tag">React</span>
             <span class="tag">Firebase</span>
-            <span class="tag">JavaScript</span>
             <span class="tag">Real-time</span>
           </div>
         </div>
@@ -583,25 +1050,38 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section - Diseño Lateral -->
   <section class="contact-section">
-    <h2 class="contact-title">¿Hablamos?</h2>
-    <p class="contact-subtitle">Estoy disponible para colaboraciones, proyectos freelance y oportunidades profesionales. ¡No dudes en contactarme!</p>
-    <div class="contact-links">
-      <a href="mailto:josecandonrubio@gmail.com" class="contact-item" aria-label="Enviar correo electrónico a José Candon">
-        <span>📧 Email</span>
-      </a>
-      <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-item" aria-label="Ver perfil profesional de José Candon en LinkedIn">
-        <span>💼 LinkedIn</span>
-      </a>
-      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-item" aria-label="Ver repositorios de código de José Candon en GitHub">
-        <span>💻 GitHub</span>
-      </a>
-      <a href="about/" class="contact-item" aria-label="Leer más sobre José Candon Rubio">
-        <span>👤 Sobre mí</span>
-      </a>
+    <div class="contact-wrapper">
+      <div class="contact-content">
+        <h2 class="contact-title">¿Colaboramos?</h2>
+        <p class="contact-subtitle">Disponible para proyectos freelance, colaboraciones y oportunidades profesionales.</p>
+      </div>
+      
+      <div class="contact-links">
+        <a href="mailto:josecandonrubio@gmail.com" class="contact-item" aria-label="Enviar correo electrónico">
+          <span class="icon">📧</span>
+          <span class="label">josecandonrubio@gmail.com</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-item" aria-label="Ver perfil en LinkedIn">
+          <span class="icon">💼</span>
+          <span class="label">LinkedIn</span>
+          <span class="arrow">→</span>
+        </a>
+        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-item" aria-label="Ver perfil en GitHub">
+          <span class="icon">💻</span>
+          <span class="label">GitHub</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
   </section>
+
+  <!-- Footer Simple -->
+  <footer class="site-footer">
+    <p class="footer-text">© 2025 José Candon Rubio</p>
+  </footer>
 
   <script>
     function toggleMenu() {

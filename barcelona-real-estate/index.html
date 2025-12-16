@@ -149,6 +149,10 @@
     .btn-wrapper {
       text-align: center;
       margin-top: var(--space-md);
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn-powerbi {
@@ -177,6 +181,32 @@
       font-size: 12px;
     }
 
+    .btn-download {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      text-decoration: none;
+      border: 2px solid var(--accent);
+      border-radius: var(--radius-md);
+      font-weight: var(--fw-semibold);
+      font-size: var(--text-sm);
+      letter-spacing: 0.3px;
+      transition: all var(--transition-base);
+    }
+
+    .btn-download:hover {
+      background: transparent;
+      color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-download::after {
+      content: " ⬇";
+      font-size: 12px;
+    }
+
     @media (max-width: 768px) {
       .dashboard-wrapper {
         padding: var(--space-sm);
@@ -186,9 +216,17 @@
         font-size: 11px;
       }
       
-      .btn-powerbi {
+      .btn-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .btn-powerbi,
+      .btn-download {
         font-size: 13px;
         padding: 8px 16px;
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -233,6 +271,7 @@
         </div>
         <p class="dashboard-note">💡 Utilice las pestañas del reporte para alternar entre las vistas "Mercado" e "Inteligencia"</p>
         <div class="btn-wrapper">
+          <a href="../Media/barcelona-real-estate.pbix" download class="btn-download" aria-label="Descargar dashboard de Barcelona Real Estate en formato pbix">Descargar Informe</a>
           <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi" aria-label="Abrir dashboard de Barcelona Real Estate en pantalla completa en Power BI, abre en nueva pestaña">Abrir en pantalla completa</a>
         </div>
       </div>

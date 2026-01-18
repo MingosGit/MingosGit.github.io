@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Plantilla base para páginas del portfolio de José Candon" />
+  <title>Título de la Página - José Candon</title>
+  <link rel="icon" type="image/png" href="../Media/favicon.png" />
+  <link rel="preload" as="style" href="../styles/design-system.css" />
+  <link rel="stylesheet" href="../styles/design-system.css" />
+  <link rel="stylesheet" href="../styles/site-styles.css" />
+</head>
+<body>
+  <!-- Navegación Flotante -->
+  <header class="site-header">
+    <a href="../" class="site-logo">José Candon</a>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
+        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" onclick="toggleMenu()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="site-nav" id="mainNav">
+      <a href="../#proyectos" class="nav-link">Proyectos</a>
+      <a href="../about/" class="nav-link">Sobre mí</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="nav-link">LinkedIn</a>
+    </nav>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="main-container">
+    <section class="section">
+      <!-- Encabezado de Sección -->
+      <div class="section-header">
+        <p class="section-label">Categoría</p>
+        <h1 class="section-title">Título Principal</h1>
+        <p class="section-description">
+          Descripción breve de la página o sección. Explica de qué trata y por qué es importante.
+        </p>
+      </div>
+
+      <!-- Ejemplo: Card Simple -->
+      <div class="card" style="margin-bottom: var(--space-lg);">
+        <h2 style="margin-top: 0;">Card de Contenido</h2>
+        <p>
+          Esta es una tarjeta con el estilo del portfolio. Tiene efectos hover automáticos,
+          se adapta al tema oscuro, y tiene la barra superior gradiente al pasar el mouse.
+        </p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--space-md);">
+          <span class="badge">🐍 Python</span>
+          <span class="badge">⚛️ React</span>
+          <span class="badge">📊 Data</span>
+        </div>
+      </div>
+
+      <!-- Ejemplo: Botones -->
+      <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-lg);">
+        <a href="#" class="btn btn-primary">Acción Principal →</a>
+        <a href="#" class="btn btn-secondary">Acción Secundaria</a>
+      </div>
+
+      <!-- Ejemplo: Grid de Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-md);">
+        <div class="card">
+          <h3 style="margin-top: 0;">Card 1</h3>
+          <p>Contenido de ejemplo para demostrar el grid responsive.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">Card 2</h3>
+          <p>En móvil estas cards se apilan verticalmente.</p>
+        </div>
+        <div class="card">
+          <h3 style="margin-top: 0;">Card 3</h3>
+          <p>El diseño es 100% responsive automáticamente.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p class="footer-text">© 2025 José Candon Rubio</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="../scripts/theme.js"></script>
+</body>
+</html>

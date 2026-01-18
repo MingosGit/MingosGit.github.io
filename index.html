@@ -30,6 +30,24 @@
   <meta property="twitter:title" content="José Candon Rubio - Portafolio" />
   <meta property="twitter:description" content="Desarrollador de software especializado en Python, IA y simulación. Proyectos: BeeGame, Supply Chain Simulator, TorneoYa." />
   <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
+  
+  <!-- Script de tema (debe ejecutarse ANTES del render) -->
+  <script>
+    (function() {
+      // Detectar preferencia del sistema
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = systemPrefersDark ? 'dark' : 'light';
+      
+      // Aplicar tema inmediatamente
+      document.documentElement.setAttribute('data-theme', theme);
+      
+      // Guardar para que el toggle funcione
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', theme);
+      }
+    })();
+  </script>
+  
   <style>
     /* ============================================
        PÁGINA PRINCIPAL - DISEÑO CON PERSONALIDAD
@@ -1462,22 +1480,17 @@
       }
     }
 
-    // Cargar tema guardado
-    (function() {
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+    // Actualizar iconos según el tema actual
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
       
-      if (savedTheme === 'dark') {
-        document.addEventListener('DOMContentLoaded', () => {
-          const sunIcon = document.querySelector('.sun-icon');
-          const moonIcon = document.querySelector('.moon-icon');
-          if (sunIcon && moonIcon) {
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-          }
-        });
+      if (currentTheme === 'dark' && sunIcon && moonIcon) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
       }
-    })();
+    });
 
     function toggleMenu() {
       const nav = document.getElementById('mainNav');

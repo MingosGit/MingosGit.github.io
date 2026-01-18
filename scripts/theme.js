@@ -28,13 +28,16 @@ function toggleTheme() {
 }
 
 /**
- * Cargar tema guardado al iniciar
+ * Cargar tema guardado o detectar preferencia del sistema
  */
 (function() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  const savedTheme = localStorage.getItem('theme');
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
   
-  if (savedTheme === 'dark') {
+  document.documentElement.setAttribute('data-theme', theme);
+  
+  if (theme === 'dark') {
     document.addEventListener('DOMContentLoaded', () => {
       const sunIcon = document.querySelector('.sun-icon');
       const moonIcon = document.querySelector('.moon-icon');

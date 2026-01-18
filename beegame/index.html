@@ -3,186 +3,691 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Juego de estrategia ecológico con IA simbólica: Expectimax, A* y teoría de juegos. Python y Pygame para concienciación medioambiental." />
+  <meta name="description" content="BeeGame - Juego de estrategia con IA simbólica: Expectimax, A* y teoría de juegos para concienciación medioambiental" />
+  <meta name="keywords" content="BeeGame, IA, Expectimax, A*, Python, Pygame, machine learning" />
+  <meta name="author" content="José Candon Rubio" />
   <title>BeeGame - Simulación Ecológica con IA</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
   <link rel="stylesheet" href="../styles/design-system.css" />
   
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://josecrub.com/beegame" />
-  <meta property="og:title" content="BeeGame - Simulación Ecológica con IA" />
-  <meta property="og:description" content="Juego de estrategia con Expectimax, A* y teoría de juegos. Concienciación sobre las abejas y el medio ambiente." />
-  <meta property="og:image" content="https://josecrub.com/Media/Perview.png" />
+  <!-- Script de tema -->
+  <script>
+    (function() {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = systemPrefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', theme);
+      }
+    })();
+  </script>
   
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://josecrub.com/beegame" />
-  <meta property="twitter:title" content="BeeGame - Simulación Ecológica con IA" />
-  <meta property="twitter:description" content="Juego de estrategia con Expectimax, A* y teoría de juegos. Concienciación sobre las abejas y el medio ambiente." />
-  <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
   <style>
-    /* ESTILOS ESPECÍFICOS DE BEEGAME */
+    /* ============================================
+       PÁGINA PRINCIPAL - DISEÑO CON PERSONALIDAD
+       ============================================ */
 
-    html, body {
-      height: 100%;
-      margin: 0;
+    :root {
+      --color-primary: #ff6b35;
+      --color-secondary: #004e89;
+      --color-accent: #f77f00;
+      --color-dark: #1a1a2e;
+      --color-light: #f8f9fa;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --shadow-color: rgba(102, 126, 234, 0.4);
+      
+      /* Variables de tema */
+      --bg-primary: #f8f9fa;
+      --bg-secondary: #ffffff;
+      --bg-gradient: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a5568;
+      --border-color: rgba(102, 126, 234, 0.15);
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 255, 255, 0.8);
     }
-    
+
+    [data-theme="dark"] {
+      --bg-primary: #0f0f1e;
+      --bg-secondary: #1a1a2e;
+      --bg-gradient: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e0;
+      --border-color: rgba(102, 126, 234, 0.25);
+      --card-bg: rgba(26, 26, 46, 0.6);
+      --nav-bg: rgba(26, 26, 46, 0.95);
+      --shadow-color: rgba(102, 126, 234, 0.5);
+      --gradient-primary: linear-gradient(135deg, #7c8fef 0%, #9370c7 100%);
+      --gradient-accent: linear-gradient(135deg, #60b5fc 0%, #20d4f4 100%);
+    }
+
     body {
       padding: 0;
+      overflow-x: hidden;
+      background: var(--bg-gradient);
+      position: relative;
+      transition: background 0.3s ease;
     }
 
-    .container {
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+      animation: float 30s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(5deg); }
+      66% { transform: translate(-20px, 20px) rotate(-5deg); }
+    }
+
+    /* NAVEGACIÓN FLOTANTE CON PERSONALIDAD */
+    .site-header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       max-width: 900px;
-      padding: var(--space-xl) var(--space-md);
+      width: calc(100% - 40px);
+      border-radius: 50px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      animation: slideDown 0.6s ease-out;
     }
 
-    .subtitle {
-      color: var(--ink-soft);
+    @keyframes slideDown {
+      from {
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    [data-theme="dark"] .site-header {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-color: rgba(102, 126, 234, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .site-logo {
+      font-weight: var(--fw-bold);
+      font-size: var(--text-base);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      z-index: 1001;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .site-logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .site-logo:hover::after {
+      width: 100%;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .site-nav .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: var(--fw-medium);
+      font-size: var(--text-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-nav .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 20px;
+      z-index: -1;
+    }
+
+    .site-nav .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .site-nav .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--ink);
+      z-index: 1001;
+    }
+
+    .mobile-menu-toggle svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(102, 126, 234, 0.1);
+      transform: rotate(20deg) scale(1.1);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        top: 12px;
+        padding: 10px 20px;
+        width: calc(100% - 24px);
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .site-nav {
+        position: fixed;
+        top: 70px;
+        left: 12px;
+        right: 12px;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--accent-border);
+        border-radius: 20px;
+        padding: var(--space-md);
+        flex-direction: column;
+        gap: 4px;
+        display: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      }
+
+      .site-nav.is-open {
+        display: flex;
+      }
+
+      .site-nav .nav-link {
+        padding: 14px 20px;
+        width: 100%;
+        text-align: center;
+        border-radius: 12px;
+      }
+    }
+
+    .content-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px var(--space-lg) 60px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      margin-bottom: var(--space-xl);
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+      gap: 12px;
+    }
+
+    .hero-section {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: var(--fw-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: white;
+      padding: 10px 20px;
+      background: var(--gradient-primary);
+      border-radius: 30px;
+      box-shadow: 0 4px 15px var(--shadow-color);
+      margin-bottom: var(--space-md);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: var(--fw-bold);
       margin: 0 0 var(--space-lg);
-      font-weight: var(--fw-normal);
-      opacity: 0.85;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      margin: 0 0 var(--space-xl);
+      line-height: 1.7;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-image {
       width: 100%;
-      max-width: 500px;
-      max-height: 400px;
+      max-width: 700px;
       height: auto;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      margin: 0 auto 40px;
-      display: block;
-      object-fit: contain;
-    }
-
-    h1 {
-      font-size: var(--title-lg);
-    }
-
-    h2 {
-      font-weight: 650;
-      margin: var(--space-xl) 0 var(--space-sm);
-    }
-
-    h3 {
-      margin: var(--space-lg) 0 var(--space-sm);
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: var(--space-md);
-      margin: var(--space-lg) 0;
-    }
-
-    .feature-card {
-      background: var(--accent-light);
-      border: 1px solid var(--accent-border);
-    }
-
-    .feature-emoji {
-      font-size: 36px;
-      margin-bottom: var(--space-sm);
-      display: block;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 20px 60px var(--shadow-color);
+      margin: 0 auto var(--space-xl);
+      border: 3px solid var(--border-color);
     }
 
     .cta-buttons {
       display: flex;
       gap: var(--space-sm);
-      margin: 40px 0;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-2xl);
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: var(--gradient-primary);
+      border: none;
       color: white;
-      box-shadow: var(--shadow-button);
+      padding: 18px 36px;
+      font-size: var(--text-base);
+      font-weight: var(--fw-semibold);
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px var(--shadow-color);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+      will-change: transform;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
     .btn-primary:hover {
-      background: var(--accent-hover);
+      background: var(--gradient-primary);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 35px var(--shadow-color);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      color: var(--color-dark);
+      padding: 16px 32px;
+      font-size: var(--text-base);
+      font-weight: var(--fw-medium);
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 0.8s ease-out 0.5s both;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: white;
       transform: translateY(-2px);
-      box-shadow: var(--shadow-button-hover);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: var(--fw-bold);
+      margin: var(--space-2xl) 0 var(--space-lg);
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .content-text {
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin: var(--space-md) 0;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.05) 100%);
+      border-left: 4px solid var(--color-primary);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      margin: var(--space-xl) 0;
+    }
+
+    [data-theme="dark"] .highlight-box {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.08) 100%);
+    }
+
+    .highlight-box p {
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-xl) 0;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px var(--shadow-color);
+      border-color: rgba(102, 126, 234, 0.5);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    [data-theme="dark"] .feature-card {
+      background: rgba(26, 26, 46, 0.4);
+      backdrop-filter: blur(10px);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .feature-emoji {
+      font-size: 3rem;
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: var(--text-lg);
+      color: var(--text-primary);
+      margin: var(--space-sm) 0;
+      font-weight: var(--fw-semibold);
+    }
+
+    .feature-card p {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .subsection-title {
+      font-size: var(--text-xl);
+      font-weight: var(--fw-semibold);
+      color: var(--text-primary);
+      margin: var(--space-xl) 0 var(--space-sm);
+    }
+
+    .content-list {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-md) 0;
+    }
+
+    .content-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: var(--space-sm);
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .content-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--color-primary);
+      font-weight: bold;
     }
 
     .tech-stack {
       display: flex;
       gap: var(--space-sm);
       flex-wrap: wrap;
-      margin: var(--space-md) 0;
+      justify-content: center;
+      margin: var(--space-xl) 0;
     }
 
     .tech-tag {
-      background: rgba(0, 0, 0, 0.08);
-      padding: var(--space-xs) 14px;
-      border-radius: var(--radius-full);
-      font-size: var(--text-xs);
-      font-weight: var(--fw-medium);
-      letter-spacing: 0.2px;
-      transition: all var(--transition-base);
-      border: 1px solid var(--accent-border);
-    }
-    
-    .tech-tag:hover {
-      background: var(--accent);
-      color: var(--bg);
-      transform: translateY(-1px);
+      padding: 10px 20px;
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 50px;
+      font-size: var(--text-sm);
+      font-weight: var(--fw-semibold);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
     }
 
-    .highlight-box p:last-child {
-      margin-bottom: 0;
+    .tech-tag:hover {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+    }
+
+    .site-footer {
+      max-width: 1100px;
+      margin: var(--space-2xl) auto 0;
+      padding: var(--space-lg);
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-text {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin: 0;
     }
 
     @media (max-width: 768px) {
-      .container {
-        padding: var(--space-lg) var(--space-md);
+      .content-wrapper {
+        padding: 120px var(--space-md) 50px;
       }
-      h1 {
-        font-size: 32px;
+
+      .features-grid {
+        grid-template-columns: 1fr;
       }
+
       .cta-buttons {
         flex-direction: column;
       }
-      .btn {
+
+      .btn-primary, .btn-secondary {
         width: 100%;
-        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .content-wrapper {
+        padding: 100px var(--space-sm) 32px;
+      }
+
+      .hero-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+      }
+
+      .section-title {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Navegación Global -->
   <header class="site-header">
     <a href="/" class="site-logo">José Candon</a>
-    <nav class="site-nav">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
+        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="site-nav" id="mainNav">
       <a href="/#proyectos" class="nav-link">Proyectos</a>
       <a href="/about/" class="nav-link">Sobre mí</a>
       <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
   </header>
 
-  <div class="container">
-    <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver al inicio</a>
+  <div class="content-wrapper">
+    <a href="/" class="back-link">Volver al portfolio</a>
 
-    <h1>🐝 BeeGame</h1>
-    <p class="subtitle">Simulación Ecológica con Inteligencia Artificial Simbólica</p>
+    <section class="hero-section">
+      <span class="hero-label">🐝 Proyecto Académico</span>
+      <h1 class="hero-title">BeeGame</h1>
+      <p class="hero-subtitle">Simulación ecológica con Inteligencia Artificial Simbólica: Expectimax, A* y teoría de juegos para concienciación medioambiental</p>
+      
+      <img src="../Media/BeeGame.png" alt="Captura de BeeGame" class="hero-image" loading="lazy" />
 
-    <img src="../Media/BeeGame.png" alt="Captura de pantalla de BeeGame mostrando el tablero de juego con abejas, flores y obstáculos" class="hero-image" loading="lazy" width="500" height="400" />
+      <div class="cta-buttons">
+        <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn-primary">
+          Ver en GitHub →
+        </a>
+        <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn-secondary">
+          Documentación
+        </a>
+      </div>
+    </section>
 
-    <div class="cta-buttons">
-      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary" aria-label="Ver código fuente de BeeGame en GitHub, abre en nueva pestaña">
-        Ver en GitHub
-      </a>
-      <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn btn-secondary" aria-label="Leer documentación completa de BeeGame en GitHub, abre en nueva pestaña">
-        Documentación
-      </a>
-    </div>
-
-    <h2>¿Qué es BeeGame?</h2>
-    <p>
+    <h2 class="section-title">¿Qué es BeeGame?</h2>
+    <p class="content-text">
       <strong>BeeGame</strong> es un juego de estrategia por turnos desarrollado en Python que simula la compleja relación entre las abejas y la actividad humana. El proyecto implementa algoritmos avanzados de <strong>Inteligencia Artificial Simbólica</strong>, incluyendo <strong>Expectimax</strong> con nodos de azar, búsqueda <strong>A*</strong> para pathfinding, y una función heurística multi-componente.
     </p>
 
@@ -190,108 +695,143 @@
       <p><strong>🌍 Objetivo Educativo:</strong> El juego busca concienciar sobre la importancia de las abejas y el medio ambiente a través de una experiencia interactiva, demostrando cómo los pesticidas y obstáculos ambientales afectan la supervivencia de estos insectos vitales para la polinización.</p>
     </div>
 
-    <h2>Características Principales</h2>
-    <div class="features">
+    <h2 class="section-title">Características Principales</h2>
+    <div class="features-grid">
       <div class="feature-card">
         <span class="feature-emoji">🧠</span>
-        <h3 class="feature-title">Algoritmo Expectimax</h3>
-        <p class="feature-desc">Toma de decisiones óptimas considerando probabilidades y nodos de azar para clima y reproducción.</p>
+        <h3>Algoritmo Expectimax</h3>
+        <p>Toma de decisiones óptimas considerando probabilidades y nodos de azar para clima y reproducción.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-emoji">🎯</span>
-        <h3 class="feature-title">A* Pathfinding</h3>
-        <p class="feature-desc">Cálculo de rutas óptimas al rusc evitando obstáculos con heurística de distancia Manhattan.</p>
+        <h3>A* Pathfinding</h3>
+        <p>Cálculo de rutas óptimas al rusc evitando obstáculos con heurística de distancia Manhattan.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-emoji">⚖️</span>
-        <h3 class="feature-title">Teoría de Juegos</h3>
-        <p class="feature-desc">Agente MAX (abeja) vs Agente MIN (humanidad) con restricciones de poda estratégica.</p>
+        <h3>Teoría de Juegos</h3>
+        <p>Agente MAX (abeja) vs Agente MIN (humanidad) con restricciones de poda estratégica.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-emoji">🌦️</span>
-        <h3 class="feature-title">Eventos de Azar</h3>
-        <p class="feature-desc">Sistema climático (lluvia, sol, normal) y reproducción de flores con probabilidades dinámicas.</p>
+        <h3>Eventos de Azar</h3>
+        <p>Sistema climático (lluvia, sol, normal) y reproducción de flores con probabilidades dinámicas.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-emoji">📊</span>
-        <h3 class="feature-title">Heurística Compleja</h3>
-        <p class="feature-desc">Función de evaluación con 7 componentes ponderados para análisis de estados del juego.</p>
+        <h3>Heurística Compleja</h3>
+        <p>Función de evaluación con 7 componentes ponderados para análisis de estados del juego.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-emoji">🎮</span>
-        <h3 class="feature-title">3 Modos de Juego</h3>
-        <p class="feature-desc">Jugador manual, IA básica aleatoria, o Expectimax avanzado para ambos agentes.</p>
+        <h3>3 Modos de Juego</h3>
+        <p>Jugador manual, IA básica aleatoria, o Expectimax avanzado para ambos agentes.</p>
       </div>
     </div>
 
-    <h2>Mecánicas del Juego</h2>
+    <h2 class="section-title">Mecánicas del Juego</h2>
 
-    <h3>🐝 La Abeja (Agente MAX)</h3>
-    <ul>
+    <h3 class="subsection-title">🐝 La Abeja (Agente MAX)</h3>
+    <ul class="content-list">
       <li><strong>Vida:</strong> 100 puntos (muere al llegar a 0)</li>
       <li><strong>Energía:</strong> 100 puntos (se gasta al moverse y recolectar)</li>
       <li><strong>Néctar:</strong> Capacidad de 50 unidades (objetivo: acumular néctar en el rusc)</li>
       <li><strong>Acciones:</strong> Moverse, polinizar flores, descansar, volver al rusc con A*</li>
     </ul>
 
-    <h3>👥 La Humanidad (Agente MIN)</h3>
-    <ul>
+    <h3 class="subsection-title">👥 La Humanidad (Agente MIN)</h3>
+    <ul class="content-list">
       <li><strong>Pesticidas:</strong> Contamina flores (mueren al acumular 3 pesticidas)</li>
       <li><strong>Obstáculos:</strong> Bloquea casillas (máximo 4 simultáneos con eliminación FIFO)</li>
       <li><strong>Restricciones:</strong> Pesticidas solo en radio 2 de la abeja, obstáculos solo en radio 3 del rusc</li>
     </ul>
 
-    <h3>🌦️ Eventos Climáticos (Cada 4 turnos)</h3>
-    <ul>
+    <h3 class="subsection-title">🌦️ Eventos Climáticos (Cada 4 turnos)</h3>
+    <ul class="content-list">
       <li><strong>☔ Lluvia (10%):</strong> Reduce 1 pesticida de todas las flores</li>
       <li><strong>☀️ Sol (15%):</strong> Aumenta probabilidad de reproducción al 40%</li>
       <li><strong>🌤️ Normal (75%):</strong> Sin efectos especiales</li>
     </ul>
 
-    <h2>Tecnologías Utilizadas</h2>
+    <h2 class="section-title">Tecnologías Utilizadas</h2>
     <div class="tech-stack">
-      <span class="tech-tag">Python 3.12.3</span>
-      <span class="tech-tag">Pygame 2.6.0</span>
-      <span class="tech-tag">Expectimax Algorithm</span>
+      <span class="tech-tag">Python 3.12</span>
+      <span class="tech-tag">Pygame 2.6</span>
+      <span class="tech-tag">Expectimax</span>
       <span class="tech-tag">A* Pathfinding</span>
       <span class="tech-tag">Game Theory</span>
       <span class="tech-tag">Heuristic Functions</span>
     </div>
 
-    <h2>Instalación y Uso</h2>
-    <p>Para ejecutar el juego localmente:</p>
-    <ul>
-      <li>Clona el repositorio desde <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" style="color: var(--accent); font-weight: 600;">GitHub</a></li>
-      <li>Instala Pygame: <code>pip install pygame</code></li>
-      <li>Ejecuta: <code>python main.py</code></li>
-    </ul>
-
     <div class="highlight-box">
       <p><strong>📚 Conceptos de IA Aplicados:</strong> Este proyecto demuestra búsqueda informada (A*), extensión de Minimax con nodos probabilísticos (Expectimax), modelado de incertidumbre, poda estratégica, y optimización de funciones heurísticas con pesos ajustables.</p>
     </div>
 
-    <h2>Estructura del Proyecto</h2>
-    <p>El código está organizado profesionalmente en módulos:</p>
-    <ul>
-      <li><strong>src/</strong> - Módulos principales (bee, board, expectimax, heuristica, etc.)</li>
-      <li><strong>docs/</strong> - Documentación y checklist de objetivos</li>
-      <li><strong>main.py</strong> - Punto de entrada para ejecutar el juego</li>
-      <li><strong>gui_simple.py</strong> - Interfaz gráfica con Pygame</li>
-    </ul>
-
     <div class="cta-buttons">
-      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn-primary">
         Explorar Código en GitHub
       </a>
-      <a href="../index.html" class="btn btn-secondary">
-        Volver al Portafolio
+      <a href="/" class="btn-secondary">
+        Volver al Portfolio
       </a>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <p class="footer-text">© 2025 José Candon Rubio</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      if (newTheme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      if (currentTheme === 'dark' && sunIcon && moonIcon) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    });
+
+    function toggleMenu() {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('is-open');
+    }
+
+    document.querySelectorAll('.site-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mainNav').classList.remove('is-open');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const nav = document.getElementById('mainNav');
+      const toggle = document.querySelector('.mobile-menu-toggle');
+      if (nav && toggle && !nav.contains(e.target) && !toggle.contains(e.target)) {
+        nav.classList.remove('is-open');
+      }
+    });
+  </script>
 </body>
 </html>

@@ -609,10 +609,17 @@
 
     /* FOOTER */
     .site-footer {
+      max-width: 1100px;
+      margin: var(--space-2xl) auto 0;
+      padding: var(--space-lg);
       text-align: center;
-      padding: var(--space-xl) var(--space-lg);
-      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-text {
       font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin: 0;
     }
 
     /* RESPONSIVE */
@@ -680,9 +687,13 @@
         class="theme-toggle" 
         aria-label="Cambiar tema"
         title="Cambiar tema claro/oscuro">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <svg class="moon-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
       </button>
     </div>
@@ -1020,7 +1031,7 @@
 
   <!-- Footer Simple -->
   <footer class="site-footer">
-    <p>© 2025 José Candon Rubio</p>
+    <p class="footer-text">© 2025 José Candon Rubio</p>
   </footer>
 
   <script>
@@ -1031,6 +1042,17 @@
       
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
+      
+      // Cambiar ícono
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      if (newTheme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
       
       // Animación suave
       document.documentElement.style.transition = 'background 0.3s ease';
@@ -1044,6 +1066,15 @@
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme) {
         document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      
+      // Actualizar ícono según tema actual
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      if (currentTheme === 'dark' && sunIcon && moonIcon) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
       }
     });
   </script>

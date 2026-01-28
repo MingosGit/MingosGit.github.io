@@ -223,6 +223,91 @@
       height: 20px;
     }
 
+    /* HAMBURGER MENU */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 24px;
+      padding: 20px;
+      width: calc(100% - 40px);
+      max-width: 400px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      z-index: 999;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    [data-theme="dark"] .mobile-menu {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-menu .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: var(--fw-medium);
+      font-size: var(--text-base);
+      padding: 14px 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .mobile-menu .nav-link:hover {
+      background: var(--gradient-primary);
+      color: white;
+      transform: translateX(4px);
+    }
+
     /* CONTAINER */
     .container {
       max-width: 1100px;
@@ -463,6 +548,14 @@
     }
 
     /* TABLA DE RESULTADOS */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 32px 0;
+      border-radius: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .results-table {
       width: 100%;
       border-collapse: collapse;
@@ -470,7 +563,7 @@
       border-radius: 16px;
       overflow: hidden;
       border: 2px solid var(--border-color);
-      margin: 32px 0;
+      margin: 0;
     }
 
     [data-theme="dark"] .results-table {
@@ -696,28 +789,32 @@
       }
 
       .site-nav {
-        gap: var(--space-sm);
+        display: none !important;
       }
 
-      .site-nav .nav-link {
-        font-size: 13px;
-        padding: 6px 12px;
+      .hamburger {
+        display: flex;
       }
 
       .container {
-        padding: 120px var(--space-md) 50px;
+        padding: 140px var(--space-md) 50px;
       }
 
       .main-content {
-        padding: 120px 16px 40px;
+        padding: 140px var(--space-md) 50px;
       }
 
       .project-header {
         margin-bottom: 40px;
       }
 
+      .hero-label,
+      .warning-badge {
+        margin-top: 20px;
+      }
+
       .metrics-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
 
       .image-gallery {
@@ -725,12 +822,19 @@
       }
 
       .results-table {
-        font-size: 14px;
+        font-size: 12px;
+        min-width: 600px;
       }
 
       .results-table th,
       .results-table td {
-        padding: 12px 10px;
+        padding: 8px 10px;
+      }
+
+      .table-wrapper {
+        margin: 24px -20px;
+        padding: 0 20px;
+        border-radius: 0;
       }
     }
 
@@ -755,6 +859,11 @@
 <header class="site-header">
     <a href="/" class="site-logo">José Candon</a>
     <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="hamburger" aria-label="Abrir menú" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
         <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
@@ -770,6 +879,13 @@
       <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
   </header>
+
+  <!-- Menú Móvil -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#proyectos" class="nav-link">Proyectos</a>
+    <a href="/about/" class="nav-link">Sobre mí</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+  </div>
 
   <!-- Contenido Principal -->
   <main class="main-content">
@@ -833,7 +949,8 @@
       </div>
 
       <h3 class="section-title" style="font-size: 1.4rem; margin-top: 48px;">Ranking de Precisión (MAPE)</h3>
-      <table class="results-table">
+      <div class="table-wrapper">
+        <table class="results-table">
         <thead>
           <tr>
             <th>Ranking</th>
@@ -880,7 +997,8 @@
             <td>Muy bueno*</td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
       <p class="section-text" style="font-size: 0.9rem; font-style: italic;">
         * Tesla presenta mayor volatilidad inherente, justificando un MAPE más elevado. Valores MAPE < 5% se consideran excepcionales en predicción financiera.
       </p>
@@ -1076,6 +1194,13 @@ Callbacks: Early Stopping (patience=5), ModelCheckpoint
   </div>
 
   <script>
+    function toggleMobileMenu() {
+      const hamburger = document.querySelector('.hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    }
+
     function toggleTheme() {
       const html = document.documentElement;
       const currentTheme = html.getAttribute('data-theme');
@@ -1141,6 +1266,17 @@ Callbacks: Early Stopping (patience=5), ModelCheckpoint
         if (e.key === 'Escape') {
           closeLightbox();
         }
+      });
+
+      // Cerrar menú móvil al hacer clic en un enlace
+      const mobileMenuLinks = document.querySelectorAll('.mobile-menu .nav-link');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          const hamburger = document.querySelector('.hamburger');
+          const mobileMenu = document.getElementById('mobileMenu');
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        });
       });
     });
   </script>

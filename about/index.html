@@ -4,339 +4,1199 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="José Candon Rubio - Desarrollador Full-Stack especializado en Python, IA, Data Science, Power BI y React. Portfolio de proyectos y habilidades técnicas." />
+  <meta name="keywords" content="José Candon, desarrollador, Python, IA, machine learning, data science, Power BI, React, Firebase, portfolio" />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
   <title>Sobre mí - José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../Media/favicon.png" />
+  <link rel="preload" as="style" href="../styles/design-system.css" />
   <link rel="stylesheet" href="../styles/design-system.css" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://josecrub.com/about/" />
+  <meta property="og:title" content="Sobre mí - José Candon Rubio" />
+  <meta property="og:description" content="Desarrollador Full-Stack especializado en Python, IA, Data Science y Business Intelligence." />
+  <meta property="og:image" content="https://josecrub.com/Media/Perview.png" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://josecrub.com/about/" />
+  <meta property="twitter:title" content="Sobre mí - José Candon Rubio" />
+  <meta property="twitter:description" content="Desarrollador Full-Stack especializado en Python, IA, Data Science y Business Intelligence." />
+  <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
+  
+  <!-- Script de tema -->
+  <script>
+    (function() {
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = systemPrefersDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', theme);
+      }
+    })();
+  </script>
+  
   <style>
-    /* ESTILOS ESPECÍFICOS DE LA PÁGINA ABOUT */
-    .container {
-      max-width: 800px;
+    /* ============================================
+       ABOUT PAGE - DISEÑO MODERNO
+       ============================================ */
+
+    :root {
+      --color-primary: #ff6b35;
+      --color-secondary: #004e89;
+      --color-accent: #f77f00;
+      --color-dark: #1a1a2e;
+      --color-light: #f8f9fa;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --shadow-color: rgba(102, 126, 234, 0.4);
+      
+      --bg-primary: #f8f9fa;
+      --bg-secondary: #ffffff;
+      --bg-gradient: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a5568;
+      --border-color: rgba(102, 126, 234, 0.15);
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 255, 255, 0.8);
     }
 
-    .profile-header {
+    [data-theme="dark"] {
+      --bg-primary: #0f0f1e;
+      --bg-secondary: #1a1a2e;
+      --bg-gradient: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e0;
+      --border-color: rgba(102, 126, 234, 0.25);
+      --card-bg: rgba(26, 26, 46, 0.6);
+      --nav-bg: rgba(26, 26, 46, 0.95);
+      --shadow-color: rgba(102, 126, 234, 0.5);
+      --gradient-primary: linear-gradient(135deg, #7c8fef 0%, #9370c7 100%);
+      --gradient-accent: linear-gradient(135deg, #60b5fc 0%, #20d4f4 100%);
+    }
+
+    body {
+      padding: 0;
+      overflow-x: hidden;
+      background: var(--bg-gradient);
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+      animation: float 30s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(5deg); }
+      66% { transform: translate(-20px, 20px) rotate(-5deg); }
+    }
+
+    /* NAVEGACIÓN FLOTANTE */
+    .site-header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      width: calc(100% - 40px);
+      border-radius: 50px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    [data-theme="dark"] .site-header {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-color: rgba(102, 126, 234, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .site-logo {
+      font-weight: var(--fw-bold);
+      font-size: var(--text-base);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      z-index: 1001;
+      letter-spacing: -0.02em;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .site-nav .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: var(--fw-medium);
+      font-size: var(--text-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .site-nav .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 20px;
+      z-index: -1;
+    }
+
+    .site-nav .nav-link:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .site-nav .nav-link:hover::before {
+      opacity: 1;
+    }
+
+    .site-nav .nav-link.active::before {
+      opacity: 1;
+    }
+
+    .site-nav .nav-link.active {
+      color: white;
+    }
+
+    .theme-toggle {
+      display: flex;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(102, 126, 234, 0.1);
+      transform: rotate(20deg) scale(1.1);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* HAMBURGER MENU */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 24px;
+      padding: 20px;
+      width: calc(100% - 40px);
+      max-width: 400px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      z-index: 999;
+    }
+
+    [data-theme="dark"] .mobile-menu {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-menu .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: var(--fw-medium);
+      font-size: var(--text-base);
+      padding: 14px 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .mobile-menu .nav-link:hover {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 140px 24px 60px;
+    }
+
+    /* PROFILE HERO */
+    .profile-hero {
       display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 32px;
-      align-items: start;
-      margin-bottom: 48px;
+      grid-template-columns: 180px 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 80px;
+      padding: 48px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--gradient-primary);
+    }
+
+    [data-theme="dark"] .profile-hero {
+      background: rgba(26, 26, 46, 0.4);
+      backdrop-filter: blur(10px);
+      border-color: rgba(102, 126, 234, 0.2);
     }
 
     .profile-avatar {
-      width: 140px;
-      height: 140px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
-      box-shadow: var(--shadow-lg);
-      flex-shrink: 0;
       object-fit: cover;
-      border: 3px solid var(--accent-border);
+      border: 4px solid transparent;
+      background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+                  var(--gradient-primary) border-box;
+      box-shadow: 0 8px 30px var(--shadow-color);
+      transition: transform 0.4s ease;
     }
 
-    .profile-info h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
+    .profile-avatar:hover {
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .profile-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: white;
+      padding: 8px 20px;
+      background: var(--gradient-primary);
+      border-radius: 30px;
+      width: fit-content;
+      box-shadow: 0 4px 15px var(--shadow-color);
+    }
+
+    .profile-name {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      margin: 0;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
     }
 
     .profile-tagline {
-      font-size: 17px;
-      color: var(--accent);
-      font-weight: 550;
-      margin: 0 0 16px;
-    }
-
-    .bio {
-      font-size: var(--text-base);
-      line-height: var(--lh-relaxed);
-      color: var(--ink-soft);
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      font-weight: 500;
       margin: 0;
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 10px;
-      margin-top: 20px;
+    .profile-bio {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin: 8px 0 0;
+      max-width: 600px;
     }
 
-    .skill-tag {
-      padding: 10px 16px;
-      background: var(--accent-light);
-      border: 1px solid var(--accent-border);
-      border-radius: var(--radius-md);
+    /* SECTIONS */
+    .section {
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 700;
+      margin: 0 0 32px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 5px;
+      height: 32px;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+    }
+
+    .section-text {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .section-text strong {
+      color: var(--text-primary);
+    }
+
+    /* KNOWLEDGE CARDS */
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .knowledge-card {
+      padding: 32px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .knowledge-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    [data-theme="dark"] .knowledge-card {
+      background: rgba(26, 26, 46, 0.4);
+      backdrop-filter: blur(10px);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .knowledge-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow-color);
+      border-color: rgba(102, 126, 234, 0.5);
+    }
+
+    .knowledge-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .knowledge-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .knowledge-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .knowledge-card p strong {
+      color: var(--text-primary);
+    }
+
+    /* SKILLS SECTION */
+    .skills-category {
+      margin-bottom: 40px;
+    }
+
+    .skills-category h3 {
       font-size: 14px;
       font-weight: 600;
-      text-align: center;
-      color: var(--ink);
-      transition: all var(--transition-base);
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--bg-primary);
+      border: 2px solid var(--border-color);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: default;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
-    .skill-tag:hover {
-      background: var(--accent);
-      color: var(--bg);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-      border-color: var(--accent);
+    .skill-pill:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 20px var(--shadow-color);
+      border-color: transparent;
+      background: var(--gradient-primary);
+      color: white;
     }
 
+    .skill-pill .icon {
+      font-size: 1.1em;
+      transition: transform 0.3s ease;
+    }
+
+    .skill-pill:hover .icon {
+      transform: rotate(10deg) scale(1.2);
+    }
+
+    [data-theme="dark"] .skill-pill {
+      background: rgba(26, 26, 46, 0.6);
+      border-color: rgba(102, 126, 234, 0.2);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* PROJECTS MINI GRID */
+    .projects-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .project-mini-card {
+      padding: 28px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-mini-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    [data-theme="dark"] .project-mini-card {
+      background: rgba(26, 26, 46, 0.4);
+      backdrop-filter: blur(10px);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .project-mini-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px var(--shadow-color);
+      border-color: rgba(102, 126, 234, 0.5);
+    }
+
+    .project-mini-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-mini-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .project-mini-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0 0 16px;
+      line-height: 1.6;
+    }
+
+    .project-mini-card .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-mini-card .tech-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 14px;
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      border-radius: 20px;
+      color: var(--color-secondary);
+      transition: all 0.3s ease;
+    }
+
+    .project-mini-card:hover .tech-tag {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* CONTACT CARD */
     .contact-card {
-      background: var(--accent-light);
-      border: 2px solid var(--accent-border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      margin-top: 48px;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      padding: 48px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.05) 100%);
+      border-radius: var(--radius-xl);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+      margin-top: 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .contact-card h2 {
-      margin: 0 0 20px;
-      font-size: 24px;
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.15), transparent 70%);
+      animation: float 15s ease-in-out infinite;
+    }
+
+    [data-theme="dark"] .contact-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.08) 100%);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .contact-content h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin: 0 0 12px;
+      color: var(--text-primary);
+    }
+
+    .contact-content p {
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.7;
     }
 
     .contact-links {
       display: flex;
+      flex-direction: column;
       gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
     }
 
     .contact-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: var(--ink);
-      color: var(--bg);
+      gap: 16px;
+      padding: 18px 28px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
       text-decoration: none;
-      border-radius: var(--radius-md);
+      color: var(--text-primary);
       font-weight: 600;
       font-size: 15px;
-      transition: all var(--transition-base);
-      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 0;
     }
 
     .contact-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .contact-btn:focus-visible {
-      outline: 3px solid var(--ink);
-      outline-offset: 2px;
+      transform: translateY(-4px) translateX(4px);
+      box-shadow: 0 12px 30px var(--shadow-color);
+      border-color: rgba(102, 126, 234, 0.5);
+      color: white;
     }
 
+    .contact-btn:hover::before {
+      opacity: 1;
+    }
+
+    .contact-btn .icon {
+      font-size: 1.4rem;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-btn:hover .icon {
+      transform: scale(1.2);
+    }
+
+    .contact-btn .label {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .contact-btn .arrow {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .contact-btn:hover .arrow {
+      transform: translateX(6px);
+    }
+
+    [data-theme="dark"] .contact-btn {
+      background: rgba(26, 26, 46, 0.6);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      max-width: 1100px;
+      margin: 60px auto 0;
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .profile-header {
+      .site-header {
+        top: 12px;
+        padding: 10px 20px;
+        width: calc(100% - 24px);
+      }
+
+      .site-nav {
+        display: none !important;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .main-content {
+        padding: 120px 20px 40px;
+      }
+
+      .profile-hero {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 24px;
+        gap: 32px;
+        padding: 32px 24px;
       }
 
       .profile-avatar {
         margin: 0 auto;
+        width: 150px;
+        height: 150px;
       }
 
-      .skills-grid {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      .profile-label {
+        margin: 0 auto;
+      }
+
+      .knowledge-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 32px;
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-name {
+        font-size: 1.8rem;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+      }
+
+      .skill-pill {
+        padding: 10px 16px;
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Navegación Global -->
+  <!-- Navegación Flotante -->
   <header class="site-header">
-    <a href="/" class="site-logo">Sobre mí</a>
+    <a href="/" class="site-logo">José Candon</a>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="hamburger" aria-label="Abrir menú" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
+        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+      </button>
+    </div>
     <nav class="site-nav">
       <a href="/#proyectos" class="nav-link">Proyectos</a>
       <a href="/about/" class="nav-link active">Sobre mí</a>
       <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+      <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="nav-link">LinkedIn</a>
     </nav>
   </header>
 
-  <div class="container">
-    <a href="../index.html" class="back-link" aria-label="Volver a la página principal del portfolio">Volver</a>
+  <!-- Menú Móvil -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#proyectos" class="nav-link">Proyectos</a>
+    <a href="/about/" class="nav-link">Sobre mí</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="nav-link">LinkedIn</a>
+  </div>
+
+  <!-- Contenido Principal -->
+  <main class="main-content">
     
-    <div class="profile-header">
-      <img src="../Media/profile.png" alt="José Candon Rubio" class="profile-avatar" width="140" height="140" />
+    <!-- Profile Hero -->
+    <section class="profile-hero">
+      <img src="../Media/profile.png" alt="José Candon Rubio" class="profile-avatar" width="180" height="180" />
       <div class="profile-info">
-        <h1>José Candon Rubio</h1>
+        <span class="profile-label">Software Developer</span>
+        <h1 class="profile-name">José Candon Rubio</h1>
         <p class="profile-tagline">Desarrollador Full-Stack · Python & IA · Data Science</p>
-        <p class="bio">
+        <p class="profile-bio">
           Desarrollador especializado en construir soluciones de software que combinan análisis de datos, 
           inteligencia artificial y diseño de experiencia de usuario. Mi enfoque está en transformar 
           problemas complejos en aplicaciones intuitivas y sistemas eficientes.
         </p>
       </div>
-    </div>
+    </section>
 
+    <!-- Sobre Mí -->
     <section class="section">
-      <h2>Sobre mí</h2>
-      <p>
+      <h2 class="section-title">Sobre mí</h2>
+      <p class="section-text">
         Desarrollador full-stack con enfoque en análisis de datos e inteligencia artificial. 
         He construido proyectos personales que incluyen <strong>sistemas de Business Intelligence</strong> 
         analizando +10,000 registros inmobiliarios, <strong>simuladores empresariales</strong> con 
         optimización automática, y <strong>juegos con IA</strong> implementando algoritmos avanzados.
       </p>
-      <p>
+      <p class="section-text">
         Mi stack técnico combina <strong>Python</strong> para backend y análisis (SimPy, Pandas, NumPy), 
         <strong>JavaScript/React</strong> para interfaces web, y <strong>Power BI/DAX</strong> para 
         visualización de datos. He implementado algoritmos como <strong>Expectimax</strong>, 
         <strong>A* pathfinding</strong> y modelado predictivo en proyectos académicos y personales.
       </p>
-      <p>
+      <p class="section-text">
         Me motiva crear software con propósito: herramientas que resuelven problemas reales de 
         optimización, análisis de datos, o toma de decisiones. Cada proyecto es una oportunidad 
         para aprender y aplicar conceptos de ciencias de la computación, matemáticas y diseño de software.
       </p>
     </section>
 
+    <!-- Áreas de Conocimiento -->
     <section class="section">
-      <h2>Áreas de Conocimiento</h2>
-      <div class="highlight-box">
-        <h3>Business Intelligence & Análisis de Datos</h3>
-        <p>
-          Desarrollo de dashboards con <strong>Power BI</strong> y <strong>DAX</strong>. Modelado dimensional, 
-          ETL pipelines, y visualizaciones interactivas. Análisis de grandes volúmenes de datos con 
-          machine learning integrado.
-        </p>
-      </div>
-
-      <div class="highlight-box">
-        <h3>Simulación y Optimización</h3>
-        <p>
-          Implementación de <strong>simuladores de eventos discretos</strong> con SimPy. Optimización mediante 
-          grid search, análisis What-If, y cálculo de métricas financieras. Dashboards con Streamlit 
-          y visualización Plotly.
-        </p>
-      </div>
-
-      <div class="highlight-box">
-        <h3>Inteligencia Artificial</h3>
-        <p>
-          Algoritmos de IA: <strong>Expectimax</strong> con nodos probabilísticos, 
-          <strong>A* pathfinding</strong> con heurísticas, y teoría de juegos. 
-          Proyectos académicos aplicando conceptos de búsqueda informada y toma de decisiones.
-        </p>
-      </div>
-
-      <div class="highlight-box">
-        <h3>Desarrollo Web Full-Stack</h3>
-        <p>
-          Aplicaciones <strong>React</strong> con <strong>Firebase</strong> (autenticación, Firestore). 
-          Diseño responsive, componentes reutilizables, y sistemas de diseño con accesibilidad WCAG AA.
-        </p>
-      </div>
-    </section>
-      <h2>Stack Tecnológico</h2>
-      
-      <h3>Lenguajes & Frameworks</h3>
-      <div class="skills-grid">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">React</span>
-        <span class="skill-tag">HTML5</span>
-        <span class="skill-tag">CSS3</span>
-        <span class="skill-tag">Node.js</span>
-      </div>
-
-      <h3>Data Science & BI</h3>
-      <div class="skills-grid">
-        <span class="skill-tag">Power BI</span>
-        <span class="skill-tag">DAX</span>
-        <span class="skill-tag">Pandas</span>
-        <span class="skill-tag">NumPy</span>
-        <span class="skill-tag">Plotly</span>
-        <span class="skill-tag">Matplotlib</span>
-      </div>
-
-      <h3>Simulación & IA</h3>
-      <div class="skills-grid">
-        <span class="skill-tag">SimPy</span>
-        <span class="skill-tag">Expectimax</span>
-        <span class="skill-tag">A* Algorithm</span>
-        <span class="skill-tag">Pygame</span>
-        <span class="skill-tag">Streamlit</span>
-      </div>
-
-      <h3>Cloud & DevOps</h3>
-      <div class="skills-grid">
-        <span class="skill-tag">Firebase</span>
-        <span class="skill-tag">Firestore</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">GitHub</span>
-        <span class="skill-tag">Streamlit Cloud</span>
-      </div>
-
-      <h3>Metodologías</h3>
-      <div class="skills-grid">
-        <span class="skill-tag">ETL Pipelines</span>
-        <span class="skill-tag">Star Schema</span>
-        <span class="skill-tag">Grid Search</span>
-        <span class="skill-tag">WCAG AA</span>
-        <span class="skill-tag">Responsive Design</span>
+      <h2 class="section-title">Áreas de Conocimiento</h2>
+      <div class="knowledge-grid">
+        <div class="knowledge-card">
+          <h3>📊 Business Intelligence & Análisis</h3>
+          <p>
+            Desarrollo de dashboards con <strong>Power BI</strong> y <strong>DAX</strong>. Modelado dimensional, 
+            ETL pipelines, y visualizaciones interactivas. Análisis de grandes volúmenes de datos con 
+            machine learning integrado.
+          </p>
+        </div>
+        
+        <div class="knowledge-card">
+          <h3>⚙️ Simulación y Optimización</h3>
+          <p>
+            Implementación de <strong>simuladores de eventos discretos</strong> con SimPy. Optimización mediante 
+            grid search, análisis What-If, y cálculo de métricas financieras. Dashboards con Streamlit y visualización Plotly.
+          </p>
+        </div>
+        
+        <div class="knowledge-card">
+          <h3>🤖 Inteligencia Artificial</h3>
+          <p>
+            Algoritmos de IA: <strong>Expectimax</strong> con nodos probabilísticos, 
+            <strong>A* pathfinding</strong> con heurísticas, y teoría de juegos. 
+            Proyectos aplicando conceptos de búsqueda informada y toma de decisiones.
+          </p>
+        </div>
+        
+        <div class="knowledge-card">
+          <h3>💻 Desarrollo Web Full-Stack</h3>
+          <p>
+            Aplicaciones <strong>React</strong> con <strong>Firebase</strong> (autenticación, Firestore). 
+            Diseño responsive, componentes reutilizables, y sistemas de diseño con accesibilidad WCAG AA.
+          </p>
+        </div>
       </div>
     </section>
 
+    <!-- Stack Tecnológico -->
     <section class="section">
-      <h2>Proyectos Destacados</h2>
+      <h2 class="section-title">Stack Tecnológico</h2>
       
-      <div class="highlight-box" style="margin-bottom: var(--space-md);">
-        <h3>📊 Barcelona Real Estate Intelligence</h3>
-        <p style="margin-bottom: var(--space-xs);">
-          Sistema de Business Intelligence que descodifica el mercado inmobiliario barcelonés mediante análisis 
-          de +10,000 propiedades. Dashboard Power BI con modelado dimensional y machine learning integrado.
-        </p>
-        <p style="font-size: var(--text-sm); color: var(--accent); margin: 0;">
-          <strong>Tech:</strong> Power BI, DAX, Power Query M, AI Decomposition Tree, Star Schema
-        </p>
+      <div class="skills-category">
+        <h3>Lenguajes & Frameworks</h3>
+        <div class="skills-grid">
+          <span class="skill-pill"><span class="icon">🐍</span> Python</span>
+          <span class="skill-pill"><span class="icon">⚡</span> JavaScript</span>
+          <span class="skill-pill"><span class="icon">⚛️</span> React</span>
+          <span class="skill-pill"><span class="icon">🌐</span> HTML5</span>
+          <span class="skill-pill"><span class="icon">🎨</span> CSS3</span>
+          <span class="skill-pill"><span class="icon">💚</span> Node.js</span>
+        </div>
       </div>
 
-      <div class="highlight-box" style="margin-bottom: var(--space-md);">
-        <h3>📦 Supply Chain Simulator</h3>
-        <p style="margin-bottom: var(--space-xs);">
-          Simulador profesional con tablero financiero P&L que optimiza políticas de inventario mediante eventos 
-          discretos. Análisis What-If interactivo y cálculo automático de EOQ (Economic Order Quantity).
-        </p>
-        <p style="font-size: var(--text-sm); color: var(--accent); margin: 0;">
-          <strong>Tech:</strong> Python, SimPy, Streamlit, Plotly, Pandas, Optimización Grid Search
-        </p>
+      <div class="skills-category">
+        <h3>Data Science & BI</h3>
+        <div class="skills-grid">
+          <span class="skill-pill"><span class="icon">📊</span> Power BI</span>
+          <span class="skill-pill"><span class="icon">📈</span> DAX</span>
+          <span class="skill-pill"><span class="icon">🐼</span> Pandas</span>
+          <span class="skill-pill"><span class="icon">🔢</span> NumPy</span>
+          <span class="skill-pill"><span class="icon">📉</span> Plotly</span>
+          <span class="skill-pill"><span class="icon">📋</span> Matplotlib</span>
+        </div>
       </div>
 
-      <div class="highlight-box" style="margin-bottom: var(--space-md);">
-        <h3>🐝 BeeGame</h3>
-        <p style="margin-bottom: var(--space-xs);">
-          Juego de estrategia con IA simbólica que implementa Expectimax con nodos de azar, A* pathfinding 
-          y teoría de juegos. Función heurística multi-componente con 7 pesos ajustables.
-        </p>
-        <p style="font-size: var(--text-sm); color: var(--accent); margin: 0;">
-          <strong>Tech:</strong> Python, Pygame, Expectimax Algorithm, A* Pathfinding, Game Theory
-        </p>
+      <div class="skills-category">
+        <h3>Simulación & IA</h3>
+        <div class="skills-grid">
+          <span class="skill-pill"><span class="icon">🔄</span> SimPy</span>
+          <span class="skill-pill"><span class="icon">🎯</span> Expectimax</span>
+          <span class="skill-pill"><span class="icon">🗺️</span> A* Algorithm</span>
+          <span class="skill-pill"><span class="icon">🎮</span> Pygame</span>
+          <span class="skill-pill"><span class="icon">🚀</span> Streamlit</span>
+        </div>
       </div>
 
-      <div class="highlight-box">
-        <h3>🏆 TorneoYa</h3>
-        <p style="margin-bottom: var(--space-xs);">
-          Aplicación web full-stack para gestión de torneos deportivos con sistema de brackets dinámicos, 
-          autenticación de usuarios y actualizaciones en tiempo real.
-        </p>
-        <p style="font-size: var(--text-sm); color: var(--accent); margin: 0;">
-          <strong>Tech:</strong> React, Firebase, Firestore, Authentication, Responsive Design
-        </p>
+      <div class="skills-category">
+        <h3>Cloud & DevOps</h3>
+        <div class="skills-grid">
+          <span class="skill-pill"><span class="icon">🔥</span> Firebase</span>
+          <span class="skill-pill"><span class="icon">🗄️</span> Firestore</span>
+          <span class="skill-pill"><span class="icon">🔧</span> Git</span>
+          <span class="skill-pill"><span class="icon">💻</span> GitHub</span>
+          <span class="skill-pill"><span class="icon">☁️</span> Streamlit Cloud</span>
+        </div>
+      </div>
+
+      <div class="skills-category">
+        <h3>Metodologías</h3>
+        <div class="skills-grid">
+          <span class="skill-pill"><span class="icon">🔀</span> ETL Pipelines</span>
+          <span class="skill-pill"><span class="icon">⭐</span> Star Schema</span>
+          <span class="skill-pill"><span class="icon">🔍</span> Grid Search</span>
+          <span class="skill-pill"><span class="icon">♿</span> WCAG AA</span>
+          <span class="skill-pill"><span class="icon">📱</span> Responsive Design</span>
+        </div>
       </div>
     </section>
 
-    <div class="contact-card">
-      <h2>Conecta conmigo</h2>
+    <!-- Proyectos Destacados -->
+    <section class="section">
+      <h2 class="section-title">Proyectos Destacados</h2>
+      <div class="projects-mini-grid">
+        <a href="../barcelona-real-estate/" class="project-mini-card">
+          <h4>📊 Barcelona Real Estate Intelligence</h4>
+          <p>Sistema de Business Intelligence que descodifica el mercado inmobiliario barcelonés mediante análisis de +10,000 propiedades con modelado dimensional.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Power BI</span>
+            <span class="tech-tag">DAX</span>
+            <span class="tech-tag">Star Schema</span>
+          </div>
+        </a>
+        
+        <a href="../supply-chain-simulator/" class="project-mini-card">
+          <h4>📦 Supply Chain Simulator</h4>
+          <p>Simulador profesional con tablero financiero P&L que optimiza políticas de inventario mediante eventos discretos y análisis What-If.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">SimPy</span>
+            <span class="tech-tag">Streamlit</span>
+          </div>
+        </a>
+        
+        <a href="../beegame/" class="project-mini-card">
+          <h4>🐝 BeeGame</h4>
+          <p>Juego de estrategia con IA simbólica que implementa Expectimax con nodos de azar, A* pathfinding y teoría de juegos.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Pygame</span>
+            <span class="tech-tag">IA</span>
+          </div>
+        </a>
+        
+        <a href="../TorneoYa/" class="project-mini-card">
+          <h4>🏆 TorneoYa</h4>
+          <p>Aplicación web full-stack para gestión de torneos deportivos con sistema de brackets dinámicos y actualizaciones en tiempo real.</p>
+          <div class="tech-tags">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Firebase</span>
+            <span class="tech-tag">Real-time</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact Card -->
+    <section class="contact-card">
+      <div class="contact-content">
+        <h2>¿Colaboramos?</h2>
+        <p>Disponible para proyectos freelance, colaboraciones y oportunidades profesionales.</p>
+      </div>
       <div class="contact-links">
-        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-btn" aria-label="Conectar con José Candon en LinkedIn, abre en nueva pestaña">
-          LinkedIn
+        <a href="mailto:josecandonrubio@gmail.com" class="contact-btn">
+          <span class="icon">📧</span>
+          <span class="label">josecandonrubio@gmail.com</span>
+          <span class="arrow">→</span>
         </a>
-        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-btn" aria-label="Ver proyectos de José Candon en GitHub, abre en nueva pestaña">
-          GitHub
+        <a href="https://www.linkedin.com/in/jose-candon/" target="_blank" rel="noopener" class="contact-btn">
+          <span class="icon">💼</span>
+          <span class="label">LinkedIn</span>
+          <span class="arrow">→</span>
         </a>
-        <a href="mailto:josecandonrubio@gmail.com" class="contact-btn" aria-label="Enviar correo electrónico a José Candon">
-          Email
+        <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="contact-btn">
+          <span class="icon">💻</span>
+          <span class="label">GitHub</span>
+          <span class="arrow">→</span>
         </a>
       </div>
-    </div>
-  </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-text">© 2026 José Candon Rubio</p>
+  </footer>
+
+  <script>
+    // Sistema de tema oscuro
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      
+      if (newTheme === 'dark') {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    }
+
+    // Menú móvil
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
+    // Aplicar tema guardado al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+      
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const sunIcon = document.querySelector('.sun-icon');
+      const moonIcon = document.querySelector('.moon-icon');
+      if (currentTheme === 'dark' && sunIcon && moonIcon) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+
+      // Cerrar menú móvil al hacer clic fuera
+      document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+        if (!menu || !hamburger) return;
+        const isClickInsideMenu = menu.contains(e.target);
+        const isClickOnHamburger = hamburger.contains(e.target);
+        
+        if (!isClickInsideMenu && !isClickOnHamburger && menu.classList.contains('active')) {
+          menu.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      });
+
+      // Cerrar menú móvil al hacer clic en un link
+      const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          const menu = document.getElementById('mobileMenu');
+          const hamburger = document.querySelector('.hamburger');
+          if (menu && hamburger) {
+            menu.classList.remove('active');
+            hamburger.classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

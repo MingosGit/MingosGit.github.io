@@ -1,0 +1,72 @@
+JOSÉ CANDON RUBIO
+Desarrollador Full-Stack · Python & IA · Data Science
+
+Desarrollador especializado en construir soluciones de software que combinan análisis de datos, inteligencia artificial y diseño de experiencia de usuario. Mi enfoque está en transformar problemas complejos en aplicaciones intuitivas y sistemas eficientes.
+
+---
+
+SOBRE MÍ
+
+Desarrollador full-stack con enfoque en análisis de datos e inteligencia artificial. He construido proyectos personales que incluyen sistemas de Business Intelligence analizando +10,000 registros inmobiliarios, simuladores empresariales con optimización automática, y juegos con IA implementando algoritmos avanzados.
+
+Mi stack técnico combina Python para backend y análisis (SimPy, Pandas, NumPy), JavaScript/React para interfaces web, y Power BI/DAX para visualización de datos. He implementado algoritmos como Expectimax, A* pathfinding y modelado predictivo en proyectos académicos y personales.
+
+Me motiva crear software con propósito: herramientas que resuelven problemas reales de optimización, análisis de datos, o toma de decisiones. Cada proyecto es una oportunidad para aprender y aplicar conceptos de ciencias de la computación, matemáticas y diseño de software.
+
+---
+
+ÁREAS DE CONOCIMIENTO
+
+Business Intelligence & Análisis de Datos
+Desarrollo de dashboards con Power BI y DAX. Modelado dimensional, ETL pipelines, y visualizaciones interactivas. Análisis de grandes volúmenes de datos con machine learning integrado.
+
+Simulación y Optimización
+Implementación de simuladores de eventos discretos con SimPy. Optimización mediante grid search, análisis What-If, y cálculo de métricas financieras. Dashboards con Streamlit y visualización Plotly.
+
+Inteligencia Artificial
+Algoritmos de IA: Expectimax con nodos probabilísticos, A* pathfinding con heurísticas, y teoría de juegos. Proyectos académicos aplicando conceptos de búsqueda informada y toma de decisiones.
+
+Desarrollo Web Full-Stack
+Aplicaciones React con Firebase (autenticación, Firestore). Diseño responsive, componentes reutilizables, y sistemas de diseño con accesibilidad WCAG AA.
+
+---
+
+STACK TECNOLÓGICO
+
+Lenguajes & Frameworks: Python, JavaScript, React, HTML5, CSS3, Node.js
+
+Data Science & BI: Power BI, DAX, Pandas, NumPy, Plotly, Matplotlib
+
+Simulación & IA: SimPy, Expectimax, A* Algorithm, Pygame, Streamlit
+
+Cloud & DevOps: Firebase, Firestore, Git, GitHub, Streamlit Cloud
+
+Metodologías: ETL Pipelines, Star Schema, Grid Search, WCAG AA, Responsive Design
+
+---
+
+PROYECTOS DESTACADOS
+
+📊 Barcelona Real Estate Intelligence
+Sistema de Business Intelligence que descodifica el mercado inmobiliario barcelonés mediante análisis de +10,000 propiedades. Dashboard Power BI con modelado dimensional y machine learning integrado.
+Tech: Power BI, DAX, Power Query M, AI Decomposition Tree, Star Schema
+
+📦 Supply Chain Simulator
+Simulador profesional con tablero financiero P&L que optimiza políticas de inventario mediante eventos discretos. Análisis What-If interactivo y cálculo automático de EOQ (Economic Order Quantity).
+Tech: Python, SimPy, Streamlit, Plotly, Pandas, Optimización Grid Search
+
+🐝 BeeGame
+Juego de estrategia con IA simbólica que implementa Expectimax con nodos de azar, A* pathfinding y teoría de juegos. Función heurística multi-componente con 7 pesos ajustables.
+Tech: Python, Pygame, Expectimax Algorithm, A* Pathfinding, Game Theory
+
+🏆 TorneoYa
+Aplicación web full-stack para gestión de torneos deportivos con sistema de brackets dinámicos, autenticación de usuarios y actualizaciones en tiempo real.
+Tech: React, Firebase, Firestore, Authentication, Responsive Design
+
+---
+
+CONTACTO
+
+LinkedIn: linkedin.com/in/jose-candon/
+GitHub: github.com/MingosGit
+Email: josecandonrubio@gmail.com

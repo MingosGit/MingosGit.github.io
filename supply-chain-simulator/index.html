@@ -222,6 +222,21 @@
       height: 20px;
     }
 
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--ink);
+      z-index: 1001;
+    }
+
+    .mobile-menu-toggle svg {
+      width: 22px;
+      height: 22px;
+    }
+
     /* HERO SECTION */
     .hero-section {
       max-width: 1100px;
@@ -664,24 +679,117 @@
       margin: 0;
     }
 
+    /* HAMBURGER MENU */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      border-radius: 24px;
+      padding: 20px;
+      width: calc(100% - 40px);
+      max-width: 400px;
+      box-shadow: 0 8px 32px var(--shadow-color);
+      z-index: 999;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    [data-theme="dark"] .mobile-menu {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-menu .nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: var(--fw-medium);
+      font-size: var(--text-base);
+      padding: 14px 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .mobile-menu .nav-link:hover {
+      background: var(--gradient-primary);
+      color: white;
+      transform: translateX(4px);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .site-header {
+        top: 12px;
         padding: 10px 20px;
-        width: calc(100% - 32px);
+        width: calc(100% - 24px);
+      }
+
+      .mobile-menu-toggle {
+        display: block;
       }
 
       .site-nav {
-        gap: var(--space-sm);
+        display: none !important;
       }
 
-      .site-nav .nav-link {
-        font-size: 13px;
-        padding: 6px 12px;
+      .hamburger {
+        display: flex;
       }
 
       .hero-section {
         padding: 120px var(--space-md) 60px;
+      }
+
+      .hero-label {
+        margin-top: 20px;
       }
 
       .content-section {
@@ -738,6 +846,11 @@
                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
       </button>
+      <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
     <nav class="site-nav">
       <a href="/#proyectos" class="nav-link">Proyectos</a>
@@ -745,6 +858,13 @@
       <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
     </nav>
   </header>
+
+  <!-- Menú Móvil -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#proyectos" class="nav-link">Proyectos</a>
+    <a href="/about/" class="nav-link">Sobre mí</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+  </div>
 
   <!-- Hero Section -->
   <section class="hero-section">
@@ -1109,6 +1229,13 @@
       }, 300);
     }
 
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
     // Aplicar tema guardado al cargar
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme');
@@ -1124,6 +1251,33 @@
         sunIcon.style.display = 'none';
         moonIcon.style.display = 'block';
       }
+
+      // Cerrar menú móvil al hacer clic fuera
+      document.addEventListener('click', (e) => {
+        const menu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+        if (!menu || !hamburger) return;
+        const isClickInsideMenu = menu.contains(e.target);
+        const isClickOnHamburger = hamburger.contains(e.target);
+        
+        if (!isClickInsideMenu && !isClickOnHamburger && menu.classList.contains('active')) {
+          menu.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      });
+
+      // Cerrar menú móvil al hacer clic en un link
+      const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          const menu = document.getElementById('mobileMenu');
+          const hamburger = document.querySelector('.hamburger');
+          if (menu && hamburger) {
+            menu.classList.remove('active');
+            hamburger.classList.remove('active');
+          }
+        });
+      });
     });
   </script>
 </body>

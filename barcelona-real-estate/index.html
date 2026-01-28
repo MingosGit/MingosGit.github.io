@@ -565,6 +565,199 @@
       font-size: 14px;
     }
 
+    /* DOWNLOAD NOTICE */
+    .download-notice {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%);
+      border: 2px solid rgba(255, 107, 53, 0.3);
+      border-radius: 20px;
+      padding: 32px;
+      margin: 0 0 32px;
+      text-align: center;
+    }
+
+    [data-theme="dark"] .download-notice {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.1) 100%);
+      border-color: rgba(255, 107, 53, 0.4);
+    }
+
+    .download-notice h3 {
+      font-size: 1.3rem;
+      margin: 0 0 12px;
+      color: #ff6b35;
+    }
+
+    .download-notice p {
+      margin: 0 0 20px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .download-notice p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .download-notice strong {
+      color: var(--text-primary);
+    }
+
+    /* IMAGE GALLERY */
+    .dashboard-preview {
+      margin: 48px 0;
+    }
+
+    .preview-title {
+      font-size: 1.5rem;
+      font-weight: var(--fw-bold);
+      margin: 0 0 32px;
+      color: var(--text-primary);
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    .image-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin: 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallery-item {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: zoom-in;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    [data-theme="dark"] .gallery-item {
+      background: rgba(26, 26, 46, 0.5);
+      border-color: rgba(102, 126, 234, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 20px 50px var(--shadow-color);
+      border-color: rgba(102, 126, 234, 0.6);
+    }
+
+    .gallery-item:hover .gallery-caption {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.02);
+    }
+
+    .gallery-caption {
+      padding: 20px 24px;
+      font-size: 15px;
+      font-weight: var(--fw-semibold);
+      color: var(--text-primary);
+      text-align: center;
+      background: var(--bg-primary);
+      transition: all 0.3s ease;
+      letter-spacing: -0.01em;
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      padding: 20px;
+    }
+
+    .lightbox.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+      cursor: default;
+      animation: zoomIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 32px;
+      color: white;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      line-height: 1;
+      font-weight: 300;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 107, 53, 0.9);
+      border-color: rgba(255, 107, 53, 1);
+      transform: rotate(90deg) scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from { 
+        opacity: 0;
+        backdrop-filter: blur(0);
+      }
+      to { 
+        opacity: 1;
+        backdrop-filter: blur(10px);
+      }
+    }
+
     .btn-download {
       background: var(--gradient-primary);
       border: none;
@@ -673,6 +866,33 @@
 
     <!-- DASHBOARD (DESPUÉS DEL CONTEXTO) -->
     <section class="dashboard-section">
+      <!-- Aviso de Descarga -->
+      <div class="download-notice">
+        <h3>📥 Visualización del Dashboard</h3>
+        <p>
+          <strong>El dashboard embebido requiere autenticación de Power BI.</strong> Para una experiencia óptima, 
+          descargue el archivo <code>.pbix</code> y ábralo con <a href="https://powerbi.microsoft.com/desktop/" target="_blank" rel="noopener" style="color: #ff6b35; text-decoration: underline;">Power BI Desktop</a> (gratuito).
+        </p>
+        <p style="margin-top: 12px;">
+          Esto le permitirá interactuar con todas las visualizaciones, filtros y funcionalidades de IA sin restricciones.
+        </p>
+      </div>
+
+      <!-- Vista Previa del Dashboard -->
+      <div class="dashboard-preview">
+        <h3 class="preview-title">Vista Previa del Dashboard</h3>
+        <div class="image-gallery">
+          <div class="gallery-item" onclick="openLightbox('Media/MercadoActual.png')">
+            <img src="Media/MercadoActual.png" alt="Vista de análisis de mercado con mapa interactivo y gráfico de oportunidades precio vs tamaño">
+            <div class="gallery-caption">📍 Análisis Geoespacial y Oportunidades de Mercado</div>
+          </div>
+          <div class="gallery-item" onclick="openLightbox('Media/SimIA.png')">
+            <img src="Media/SimIA.png" alt="Vista de inteligencia con árbol de descomposición AI y simulación de precios">
+            <div class="gallery-caption">🤖 AI Decomposition Tree y Simulación Predictiva</div>
+          </div>
+        </div>
+      </div>
+
       <div class="dashboard-wrapper">
         <div class="dashboard-container">
           <iframe 
@@ -683,10 +903,10 @@
             aria-label="Dashboard interactivo de Power BI con análisis de mercado inmobiliario de Barcelona">
           </iframe>
         </div>
-        <p class="dashboard-note">💡 Utilice las pestañas del reporte para alternar entre las vistas "Mercado" e "Inteligencia"</p>
+        <p class="dashboard-note">⚠️ La visualización embebida puede requerir inicio de sesión. Se recomienda descargar el archivo para acceso completo.</p>
         <div class="btn-wrapper">
-          <a href="../Media/barcelona-real-estate.pbix" download class="btn-download" aria-label="Descargar dashboard de Barcelona Real Estate en formato pbix">Descargar Informe</a>
-          <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi" aria-label="Abrir dashboard de Barcelona Real Estate en pantalla completa en Power BI, abre en nueva pestaña">Abrir en pantalla completa</a>
+          <a href="../Media/barcelona-real-estate.pbix" download class="btn-download" aria-label="Descargar dashboard de Barcelona Real Estate en formato pbix">Descargar Informe (Recomendado)</a>
+          <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi" aria-label="Abrir dashboard de Barcelona Real Estate en pantalla completa en Power BI, abre en nueva pestaña">Intentar abrir en Power BI</a>
         </div>
       </div>
     </section>
@@ -755,6 +975,12 @@
     <p class="footer-text">© 2025 José Candon Rubio</p>
   </footer>
 
+  <!-- Lightbox para imágenes -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+  </div>
+
   <script>
     function toggleTheme() {
       const html = document.documentElement;
@@ -775,6 +1001,20 @@
       }
     }
 
+    function openLightbox(imgSrc) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightbox.classList.add('active');
+      lightboxImg.src = imgSrc;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const sunIcon = document.querySelector('.sun-icon');
@@ -783,6 +1023,13 @@
         sunIcon.style.display = 'none';
         moonIcon.style.display = 'block';
       }
+
+      // Cerrar lightbox con tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      });
     });
   </script>
 </body>

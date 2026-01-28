@@ -1,47 +1,62 @@
 JOSÉ CANDON RUBIO
-Desarrollador Full-Stack · Python & IA · Data Science
+Estudiante de Ingeniería Informática · Python · Data Science · Cloud (Azure/AWS)
 
-Desarrollador especializado en construir soluciones de software que combinan análisis de datos, inteligencia artificial y diseño de experiencia de usuario. Mi enfoque está en transformar problemas complejos en aplicaciones intuitivas y sistemas eficientes.
+Estudiante de Ingeniería Informática en la UB con experiencia en soporte corporativo crítico (AXA). Especializado en desarrollo con Python, SQL y entornos cloud para la optimización de procesos de negocio. Busco aplicar mis capacidades analíticas en proyectos de transformación digital.
 
 ---
 
 SOBRE MÍ
 
-Desarrollador full-stack con enfoque en análisis de datos e inteligencia artificial. He construido proyectos personales que incluyen sistemas de Business Intelligence analizando +10,000 registros inmobiliarios, simuladores empresariales con optimización automática, y juegos con IA implementando algoritmos avanzados.
+Estudiante de Ingeniería Informática en la Universidad de Barcelona con formación enfocada en Estadística, Programación, Bases de Datos y Estructura de Datos. Cuento con experiencia profesional en soporte corporativo crítico en AXA, donde he desarrollado habilidades en resolución de problemas y atención al detalle.
 
-Mi stack técnico combina Python para backend y análisis (SimPy, Pandas, NumPy), JavaScript/React para interfaces web, y Power BI/DAX para visualización de datos. He implementado algoritmos como Expectimax, A* pathfinding y modelado predictivo en proyectos académicos y personales.
+Mi stack técnico incluye Python (Pandas, NumPy), SQL, R, Java y entornos cloud (Azure/AWS). También tengo formación en Ciberseguridad a través de un CFGS en Administración de Sistemas.
 
-Me motiva crear software con propósito: herramientas que resuelven problemas reales de optimización, análisis de datos, o toma de decisiones. Cada proyecto es una oportunidad para aprender y aplicar conceptos de ciencias de la computación, matemáticas y diseño de software.
+En mi tiempo libre desarrollo proyectos personales que incluyen sistemas de Business Intelligence, simuladores empresariales con optimización automática, y juegos con IA implementando algoritmos como Expectimax y A* pathfinding. Estos proyectos me permiten aplicar y expandir lo aprendido en mi formación académica.
+
+---
+
+FORMACIÓN
+
+Grado en Ingeniería Informática - Universidad de Barcelona (En curso)
+Formación enfocada en Estadística, Programación, Bases de Datos y Estructura de Datos.
+
+CFGS Administración de Sistemas (Perfil Ciberseguridad)
+Conocimientos en seguridad informática, gestión de sistemas y protección de infraestructuras.
+
+---
+
+EXPERIENCIA
+
+Soporte Corporativo Crítico - AXA
+Resolución de incidencias técnicas, atención al detalle y trabajo en entorno corporativo exigente.
 
 ---
 
 ÁREAS DE CONOCIMIENTO
 
-Business Intelligence & Análisis de Datos
-Desarrollo de dashboards con Power BI y DAX. Modelado dimensional, ETL pipelines, y visualizaciones interactivas. Análisis de grandes volúmenes de datos con machine learning integrado.
+Análisis de Datos & BI
+Formación académica en Estadística y Bases de Datos. Proyectos con Power BI, DAX y SQL. Análisis de datos con Python (Pandas, NumPy) y R.
 
-Simulación y Optimización
-Implementación de simuladores de eventos discretos con SimPy. Optimización mediante grid search, análisis What-If, y cálculo de métricas financieras. Dashboards con Streamlit y visualización Plotly.
+Cloud & DevOps
+Experiencia con entornos cloud Azure y AWS. Conocimientos en administración de sistemas y optimización de procesos de negocio adquiridos en entorno corporativo (AXA).
 
-Inteligencia Artificial
-Algoritmos de IA: Expectimax con nodos probabilísticos, A* pathfinding con heurísticas, y teoría de juegos. Proyectos académicos aplicando conceptos de búsqueda informada y toma de decisiones.
+Ciberseguridad
+CFGS en Administración de Sistemas con perfil en Ciberseguridad. Conocimientos en seguridad informática, gestión de sistemas y protección de infraestructuras.
 
-Desarrollo Web Full-Stack
-Aplicaciones React con Firebase (autenticación, Firestore). Diseño responsive, componentes reutilizables, y sistemas de diseño con accesibilidad WCAG AA.
+Programación
+Lenguajes principales: Python, Java, R y SQL. Proyectos personales con JavaScript/React y Firebase. Algoritmos de IA en proyectos académicos.
 
 ---
 
 STACK TECNOLÓGICO
 
-Lenguajes & Frameworks: Python, JavaScript, React, HTML5, CSS3, Node.js
+Lenguajes & Frameworks: Python, Java, R, SQL, JavaScript, React
 
 Data Science & BI: Power BI, DAX, Pandas, NumPy, Plotly, Matplotlib
 
-Simulación & IA: SimPy, Expectimax, A* Algorithm, Pygame, Streamlit
+Cloud & DevOps: Azure, AWS, Firebase, Git, GitHub
 
-Cloud & DevOps: Firebase, Firestore, Git, GitHub, Streamlit Cloud
-
-Metodologías: ETL Pipelines, Star Schema, Grid Search, WCAG AA, Responsive Design
+Simulación & IA (proyectos personales): SimPy, Expectimax, A* Algorithm, Pygame, Streamlit
 
 ---
 

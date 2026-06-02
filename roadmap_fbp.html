@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap → Finance Business Partner · y más allá</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #08080b;
+    --surface: #101018;
+    --card: rgba(23,23,31,0.72);
+    --border: #23232f;
+    --border-soft: rgba(255,255,255,0.06);
+    --accent: #c8f045;   /* lime  */
+    --accent2: #4df0b8;  /* teal  */
+    --accent3: #f0a044;  /* amber */
+    --accent4: #a78bfa;  /* violet*/
+    --accent5: #f06aa0;  /* pink  */
+    --text: #e8e8ec;
+    --muted: #6b6b86;
+    --dim: #9090a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 48px 20px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Ambient glows */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before {
+    width: 520px; height: 520px;
+    top: -180px; left: -120px;
+    background: radial-gradient(circle, rgba(167,139,250,0.16), transparent 70%);
+  }
+  body::after {
+    width: 600px; height: 600px;
+    bottom: -220px; right: -160px;
+    background: radial-gradient(circle, rgba(77,240,184,0.12), transparent 70%);
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ---------- HEADER ---------- */
+  .header { text-align: center; margin-bottom: 14px; }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(22px, 5vw, 40px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .header h1 .dest {
+    background: linear-gradient(100deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .chips {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px auto 0;
+    max-width: 640px;
+  }
+  .chip {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    background: rgba(255,255,255,0.035);
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+  .chip b { color: var(--text); font-weight: 500; }
+
+  /* legend */
+  .legend {
+    max-width: 760px;
+    margin: 26px auto 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i {
+    width: 9px; height: 9px; border-radius: 3px; display: inline-block;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 6px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      var(--accent4) 0%,
+      #6ab87a 14%,
+      var(--accent2) 30%,
+      #7e9be0 46%,
+      var(--accent4) 60%,
+      var(--accent) 74%,
+      var(--accent3) 86%,
+      var(--accent5) 100%);
+    opacity: 0.45;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 26px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .step.visible { opacity: 1; transform: none; }
+
+  .step-dot-wrap {
+    flex-shrink: 0;
+    width: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+
+  .step-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
+    transition: box-shadow .4s ease, transform .4s ease;
+  }
+  .step:hover .step-dot { transform: scale(1.12); }
+
+  .step-eyebrow {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 9px;
+  }
+
+  .step-card {
+    flex: 1;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 17px 19px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+  }
+  .step-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 14px 40px -22px rgba(0,0,0,0.9);
+  }
+
+  .step-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 11px;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15.5px;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-ico {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .step-sub {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.03em;
+  }
+
+  .salary-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .salary-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 6px 13px;
+    min-width: 88px;
+  }
+  .salary-label {
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .salary-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+
+  .step-desc {
+    margin-top: 11px;
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.65;
+    border-top: 1px solid var(--border-soft);
+    padding-top: 11px;
+  }
+
+  .tags-row { margin-top: 9px; }
+  .tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  /* ---------- MASTER BREAK ---------- */
+  .master-break {
+    max-width: 760px;
+    margin: 0 auto 26px;
+    padding-left: 78px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .master-break.visible { opacity: 1; transform: none; }
+
+  .master-card {
+    background: linear-gradient(135deg, rgba(167,139,250,0.10), rgba(77,240,184,0.06));
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 14px;
+    padding: 15px 19px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .master-icon { font-size: 24px; flex-shrink: 0; }
+  .master-text strong {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent4);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .master-text span { font-size: 10.5px; color: var(--dim); line-height: 1.55; }
+
+  /* ---------- STEP COLORS ---------- */
+  .s0 { border-color: #6f6fab; color: #a3a3d6; }
+  .s0-bar::before { background: linear-gradient(var(--accent4), #6f6fab); }
+  .s0 .salary-value { color: #a3a3d6; }
+  .step:hover .step-dot.s0 { box-shadow: 0 0 18px rgba(143,143,200,0.55); }
+
+  .s1 { border-color: #4a9a5e; color: #6ab87a; }
+  .s1-bar::before { background: linear-gradient(#6ab87a, #4a9a5e); }
+  .s1 .salary-value { color: #6ab87a; }
+  .step:hover .step-dot.s1 { box-shadow: 0 0 18px rgba(106,184,122,0.5); }
+
+  .s2 { border-color: #3a8a9a; color: #5abccc; }
+  .s2-bar::before { background: linear-gradient(#5abccc, #3a8a9a); }
+  .s2 .salary-value { color: #5abccc; }
+  .step:hover .step-dot.s2 { box-shadow: 0 0 18px rgba(90,188,204,0.5); }
+
+  .s3 { border-color: #5a72b8; color: #8fa6e6; }
+  .s3-bar::before { background: linear-gradient(#8fa6e6, #5a72b8); }
+  .s3 .salary-value { color: #8fa6e6; }
+  .step:hover .step-dot.s3 { box-shadow: 0 0 18px rgba(143,166,230,0.5); }
+
+  /* FBP — destino objetivo, destacado */
+  .s4 { border-color: var(--accent4); color: var(--accent4); }
+  .s4-bar::before { background: linear-gradient(var(--accent4), #7e6ad0); width: 4px; }
+  .s4 .salary-value { color: var(--accent4); }
+  .step:hover .step-dot.s4 { box-shadow: 0 0 22px rgba(167,139,250,0.65); }
+  .step-card.s4-bar {
+    border-color: rgba(167,139,250,0.45);
+    background: linear-gradient(135deg, rgba(167,139,250,0.10), var(--card));
+  }
+
+  .s5 { border-color: #2eb89a; color: var(--accent2); }
+  .s5-bar::before { background: linear-gradient(var(--accent2), #2eb89a); }
+  .s5 .salary-value { color: var(--accent2); }
+  .step:hover .step-dot.s5 { box-shadow: 0 0 18px rgba(77,240,184,0.5); }
+
+  .s6 { border-color: #a8c93a; color: var(--accent); }
+  .s6-bar::before { background: linear-gradient(var(--accent), #a8c93a); }
+  .s6 .salary-value { color: var(--accent); }
+  .step:hover .step-dot.s6 { box-shadow: 0 0 18px rgba(200,240,69,0.5); }
+
+  .s7 { border-color: #d18a38; color: var(--accent3); }
+  .s7-bar::before { background: linear-gradient(var(--accent3), #d18a38); }
+  .s7 .salary-value { color: var(--accent3); }
+  .step:hover .step-dot.s7 { box-shadow: 0 0 18px rgba(240,160,68,0.5); }
+
+  .s8 { border-color: #d4548a; color: var(--accent5); }
+  .s8-bar::before { background: linear-gradient(var(--accent5), #d4548a); width: 4px; }
+  .s8 .salary-value { color: var(--accent5); }
+  .step:hover .step-dot.s8 { box-shadow: 0 0 22px rgba(240,106,160,0.6); }
+  .step-card.s8-bar {
+    border-color: rgba(240,106,160,0.4);
+    background: linear-gradient(135deg, rgba(240,106,160,0.09), var(--card));
+  }
+
+  /* ---------- TAGS ---------- */
+  .tag-sql  { background: rgba(90,188,204,0.12);  color: #5abccc; }
+  .tag-pbi  { background: rgba(240,160,68,0.12);  color: var(--accent3); }
+  .tag-py   { background: rgba(200,240,69,0.12);  color: var(--accent); }
+  .tag-sap  { background: rgba(167,139,250,0.12); color: var(--accent4); }
+  .tag-fin  { background: rgba(77,240,184,0.12);  color: var(--accent2); }
+  .tag-mgmt { background: rgba(240,106,160,0.13); color: var(--accent5); }
+  .tag-na   { background: rgba(150,150,180,0.1);  color: var(--dim); }
+  .tag-bonus{ background: rgba(255,215,90,0.14);  color: #ffd75a; border: 1px solid rgba(255,215,90,0.25); }
+
+  /* ---------- INFINITY TERMINAL ---------- */
+  .infinity {
+    max-width: 760px;
+    margin: 4px auto 0;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .infinity.visible { opacity: 1; transform: none; }
+
+  .inf-line-wrap {
+    flex-shrink: 0;
+    width: 58px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .inf-fade {
+    position: absolute;
+    left: 28px;
+    top: -10px;
+    width: 2px;
+    height: 120px;
+    background: repeating-linear-gradient(to bottom,
+      var(--accent5) 0 6px, transparent 6px 14px);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+    transform: translateX(-50%);
+  }
+  .inf-symbol {
+    position: absolute;
+    left: 28px;
+    top: 96px;
+    transform: translateX(-50%);
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    background: linear-gradient(100deg, var(--accent5), var(--accent4), var(--accent2));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: .7; } 50% { opacity: 1; } }
+
+  .inf-text {
+    padding-top: 90px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 460px;
+  }
+  .inf-text strong {
+    font-family: 'Syne', sans-serif;
+    color: var(--text);
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- FOOTER / DISCLAIMER ---------- */
+  .footer {
+    max-width: 760px;
+    margin: 56px auto 0;
+    padding: 16px 18px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    font-size: 9.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .footer b { color: var(--dim); }
+  .footer a { color: var(--accent2); text-decoration: none; }
+
+  @media (max-width: 520px) {
+    body { padding: 32px 14px 60px; }
+    .timeline::before, .inf-fade, .inf-symbol { left: 20px; }
+    .step-dot-wrap, .inf-line-wrap { width: 44px; }
+    .master-break { padding-left: 60px; }
+    .inf-text { padding-top: 86px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">Plan de carrera · Finanzas</div>
+    <h1>DRP Intern → <span class="dest">Finance Business Partner</span></h1>
+    <div class="chips">
+      <span class="chip"><b>Coty</b> · Barcelona</span>
+      <span class="chip">Inicio <b>1 jul 2026</b></span>
+      <span class="chip">23 años</span>
+      <span class="chip">Ing. Informática · mención económicas</span>
+      <span class="chip">€ bruto anual</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#a3a3d6"></i>Base / prácticas</span>
+    <span><i style="background:#5abccc"></i>Analytics & Control</span>
+    <span><i style="background:var(--accent4)"></i>Objetivo: Business Partner</span>
+    <span><i style="background:var(--accent3)"></i>Liderazgo financiero</span>
+  </div>
+
+  <!-- ===== BLOQUE 1 ===== -->
+  <div class="timeline">
+
+    <!-- STEP 0 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s0">0</div>
+      </div>
+      <div class="step-card s0-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Jul 2026 · 1000h</div>
+            <div class="step-title"><span class="step-ico">🎯</span>DRP Intern</div>
+            <div class="step-sub">Coty · Global Planning Hub (Supply Chain / Demand & Replenishment)</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Beca</span>
+              <span class="salary-value s0">~1.000–1.150€/mes</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Tu base. Las 1000h del convenio (≈ 8–9 meses) son tu puerta de entrada. Aquí no se gana dinero, se gana <b>reputación interna</b>: aprende SAP, demuestra que eres más que el becario y pide visibilidad en reuniones de negocio, no solo en tareas técnicas. El objetivo real de este paso es <b>la conversión</b>.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-sql">SQL</span>
+          <span class="tag tag-pbi">Power BI</span>
+          <span class="tag tag-py">Python</span>
+          <span class="tag tag-na">Excel avanzado</span>
+          <span class="tag tag-sap">SAP (intro)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s1">1</div>
+      </div>
+      <div class="step-card s1-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2027–2028</div>
+            <div class="step-title"><span class="step-ico">📊</span>Supply / Finance Analyst</div>
+            <div class="step-sub">Coty · Contratación directa post-prácticas</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Entrada</span>
+              <span class="salary-value s1">25–30k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">+1–2 años</span>
+              <span class="salary-value s1">32–40k€</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Consolidas. El primer contrato indefinido. Aquí demuestras que entiendes el negocio, no solo los datos. Empieza a hablar el idioma de Finance: márgenes, P&L, forecast, budget. Momento clave para pedir el <b>pase a SAP FI/CO</b> y empezar a tender puentes hacia el equipo financiero.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-sql">SQL</span>
+          <span class="tag tag-pbi">Power BI</span>
+          <span class="tag tag-sap">SAP FI/CO</span>
+          <span class="tag tag-fin">P&L básico</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s2">2</div>
+      </div>
+      <div class="step-card s2-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2028–2030</div>
+            <div class="step-title"><span class="step-ico">🧮</span>FP&A Analyst / Financial Controller</div>
+            <div class="step-sub">Coty · El movimiento horizontal clave</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Junior</span>
+              <span class="salary-value s2">35–42k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Mid</span>
+              <span class="salary-value s2">45–55k€</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          El salto más importante del camino. Pasas de analizar datos a ser responsable de <b>resultados financieros reales</b>: budgeting, variance analysis, cierre mensual. Sin pisar este escalón no se llega a Finance BP. Tu ventaja técnica (datos + automatización) aquí destaca de verdad.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-fin">Budgeting</span>
+          <span class="tag tag-fin">Variance analysis</span>
+          <span class="tag tag-sap">SAP avanzado</span>
+          <span class="tag tag-na">Forecasting</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MASTER BREAK -->
+  <div class="master-break">
+    <div class="master-card">
+      <div class="master-icon">🎓</div>
+      <div class="master-text">
+        <strong>Momento ideal para el máster · 2029–2030 (a tiempo parcial mientras trabajas)</strong>
+        <span>Con experiencia real en Controller/FP&A entras al máster con base sólida y sales como candidato senior. Business Analytics o Finance: ESADE, UPF-BSM o IESE. No lo hagas antes: vale mucho más con galones que recién salido.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BLOQUE 2 ===== -->
+  <div class="timeline">
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s3">3</div>
+      </div>
+      <div class="step-card s3-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2030–2032</div>
+            <div class="step-title"><span class="step-ico">📈</span>Senior Financial Controller</div>
+            <div class="step-sub">Coty · Post-máster o progresión interna</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Rango</span>
+              <span class="salary-value s3">50–65k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Extra</span>
+              <span class="salary-value s3">+bonus</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Ya gestionas un área o categoría de negocio. Presentas a management y tienes interlocución directa con directores. El máster acelera la progresión a Sr en 1–2 años en vez de 3–4. Empieza a aparecer el <b>bonus variable</b> (10–15%).
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-fin">Reporting ejecutivo</span>
+          <span class="tag tag-fin">Business cases</span>
+          <span class="tag tag-mgmt">Gestión stakeholders</span>
+          <span class="tag tag-bonus">Bonus 10–15%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 — OBJETIVO -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s4">4</div>
+      </div>
+      <div class="step-card s4-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2032–2035</div>
+            <div class="step-title"><span class="step-ico">🤝</span>Finance Business Partner</div>
+            <div class="step-sub">Coty · El destino que te marcaste</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Entrada</span>
+              <span class="salary-value s4">55–65k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Consolidado</span>
+              <span class="salary-value s4">66–72k€</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Asesor financiero de un área de negocio (Marketing, Supply, Comercial). No reportas datos: <b>influyes en decisiones estratégicas</b>. Aquí es donde tu perfil IT + economía + datos marca diferencia real frente a perfiles solo de ADE. Llegar aquí no es el final del camino: es donde empieza lo interesante.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-mgmt">Influencia estratégica</span>
+          <span class="tag tag-fin">P&L completo</span>
+          <span class="tag tag-mgmt">C-level interaction</span>
+          <span class="tag tag-sap">SAP master</span>
+          <span class="tag tag-bonus">Bonus 15–20%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s5">5</div>
+      </div>
+      <div class="step-card s5-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2035–2038</div>
+            <div class="step-title"><span class="step-ico">⭐</span>Senior Finance Business Partner</div>
+            <div class="step-sub">Coty / multinacional FMCG · Referente del área</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Rango</span>
+              <span class="salary-value s5">70–90k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Extra</span>
+              <span class="salary-value s5">+bonus</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Eres el partner financiero de una unidad grande o de varios negocios. Mentorizas a BPs junior y tu palabra pesa en el comité. A partir de aquí, cada salto suele pasar por <b>gestionar equipo</b> o por moverte entre multinacionales para acelerar.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-mgmt">Liderazgo de área</span>
+          <span class="tag tag-fin">Estrategia financiera</span>
+          <span class="tag tag-mgmt">Mentoring</span>
+          <span class="tag tag-bonus">Bonus 20%+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s6">6</div>
+      </div>
+      <div class="step-card s6-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2038–2041</div>
+            <div class="step-title"><span class="step-ico">👥</span>Finance / FP&A Manager</div>
+            <div class="step-sub">Gestión de equipo · responsable de función</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Rango</span>
+              <span class="salary-value s6">75–100k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Extra</span>
+              <span class="salary-value s6">+bonus / LTI</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Primer rol claramente de <b>gestión de personas</b>: diriges un equipo de analistas/BPs y eres dueño de un proceso financiero completo (planning, closing, business support de toda una región o división). Aquí decides si tu camino es de profundidad técnica o de liderazgo puro.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-mgmt">Gestión de equipo</span>
+          <span class="tag tag-fin">Ownership de proceso</span>
+          <span class="tag tag-mgmt">Presupuesto de área</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s7">7</div>
+      </div>
+      <div class="step-card s7-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2041–2046</div>
+            <div class="step-title"><span class="step-ico">🏛️</span>Head of Finance / Finance Director</div>
+            <div class="step-sub">Dirección financiera de país, región o división</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Rango</span>
+              <span class="salary-value s7">90–140k€</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Extra</span>
+              <span class="salary-value s7">+bonus / LTI</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          Reportas a la dirección general o al CFO de grupo. Eres responsable de los números de toda una unidad y te sientas en el comité de dirección. El paquete deja de ser solo salario: <b>bonus alto + incentivos a largo plazo (acciones)</b>.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-mgmt">Comité de dirección</span>
+          <span class="tag tag-fin">P&L de la unidad</span>
+          <span class="tag tag-mgmt">Liderazgo de función</span>
+          <span class="tag tag-bonus">Bonus 25–35% + LTI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="step">
+      <div class="step-dot-wrap">
+        <div class="step-dot s8">8</div>
+      </div>
+      <div class="step-card s8-bar">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">2046 en adelante</div>
+            <div class="step-title"><span class="step-ico">👑</span>CFO / VP Finance</div>
+            <div class="step-sub">Dirección financiera de grupo · el horizonte</div>
+          </div>
+          <div class="salary-row">
+            <div class="salary-badge">
+              <span class="salary-label">Rango</span>
+              <span class="salary-value s8">130–220k€+</span>
+            </div>
+            <div class="salary-badge">
+              <span class="salary-label">Total comp.</span>
+              <span class="salary-value s8">+bonus + equity</span>
+            </div>
+          </div>
+        </div>
+        <div class="step-desc">
+          La cúspide de la función financiera: estrategia, capital, relación con board e inversores. En una multinacional el paquete total puede superar holgadamente las cifras base con bonus y acciones. Pocos llegan, pero <b>el camino existe</b> — y empieza con esas 1000h en 2026.
+        </div>
+        <div class="tags-row">
+          <span class="tag tag-mgmt">Estrategia corporativa</span>
+          <span class="tag tag-fin">Capital & M&A</span>
+          <span class="tag tag-mgmt">Board / inversores</span>
+          <span class="tag tag-bonus">Total comp 200k€+</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFINITY -->
+  <div class="infinity">
+    <div class="inf-line-wrap">
+      <div class="inf-fade"></div>
+      <div class="inf-symbol">∞</div>
+    </div>
+    <div class="inf-text">
+      <strong>El recorrido no termina aquí</strong>
+      Consejería, advisory, tu propio proyecto, docencia, inversión... A partir de cierto punto el techo lo pones tú, no el organigrama. Lo que importa hoy: <b>el siguiente escalón, no el último</b>.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <b>Sobre las cifras:</b> los sueldos son <b>estimaciones de mercado</b> (Barcelona, multinacional FMCG, bruto anual), no cifras oficiales de Coty. Fuentes: Glassdoor, Michael Page / Page Personnel, PayScale, Jobted e Indeed (datos 2025–2026). Los rangos reales varían según negocio, desempeño y negociación; los tramos altos incluyen bonus y, en dirección, incentivos a largo plazo (acciones).<br>
+    <b>Sobre las fechas:</b> orientativas, ancladas al inicio de prácticas (1 jul 2026). La velocidad real depende de la conversión post-beca, vacantes internas y movimientos entre empresas.
+  </div>
+
+</div>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.step, .master-break, .infinity').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

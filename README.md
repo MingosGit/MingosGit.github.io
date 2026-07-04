@@ -1,22 +1,31 @@
-# @josecrub's Personal Webpage
+# josecrub.com
 
-Este es el repositorio de la página web personal de @josecrub, un espacio para compartir proyectos, enlaces útiles y una breve descripción personal.
+Portfolio personal de **José Candon Rubio** — datos, business intelligence y supply chain en Barcelona.
 
-## Características
+Sitio estático servido con GitHub Pages en [josecrub.com](https://josecrub.com/).
 
-- Diseño responsivo adaptado para dispositivos móviles.
-- Enlaces directos a redes sociales y proyectos personales.
-- Animaciones CSS para una experiencia de usuario dinámica y moderna.
+## Estructura
 
-## Tecnologías Utilizadas
+```
+index.html                    Home: hero, proyectos, perfil y contacto
+about/                        Sobre mí: trayectoria, áreas y stack
+barcelona-real-estate/        Case study — BI con Power BI
+supply-chain-simulator/       Case study — simulación de eventos discretos
+finpredict-rnn/               Case study — LSTM para series temporales
+beegame/                      Case study — IA simbólica (Expectimax, A*)
+TorneoYa/                     Landing propia de la app TorneoYa
+styles/main.css               Design system del portfolio
+scripts/main.js               Interacciones (menú, reveals, preview, lightbox)
+```
 
-- HTML5
-- CSS3
-- Flexbox para la disposición de elementos.
+## Diseño
 
-## Enlaces a Redes Sociales
+Editorial oscuro: tipografía display expandida (Archivo), acentos en serif itálica
+(Instrument Serif), metadatos en monoespaciada (IBM Plex Mono) y un único color
+de acento.
 
-- [Instagram](https://www.instagram.com/josecrub/)
-- [Google Drive](https://drive.google.com/drive/u/0/folders/1nD7HDT8sZyuix58YG4BRQxWlZ0rHgh7b)
-- [GitHub](https://github.com/MingosGit)
+## Contacto
 
+- Email: josecandonrubio@gmail.com
+- GitHub: [@MingosGit](https://github.com/MingosGit)
+- LinkedIn: [jose-candon](https://www.linkedin.com/in/jose-candon/)

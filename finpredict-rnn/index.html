@@ -3,957 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="FinPredict-RNN - Sistema de predicción de series temporales financieras con LSTM profundo. Proyecto educativo de machine learning y análisis cuantitativo." />
-  <meta name="keywords" content="LSTM, machine learning, series temporales, predicción, Python, TensorFlow, finanzas, investigación" />
+  <meta name="description" content="FinPredict-RNN — sistema educativo de predicción de series temporales financieras con LSTM profunda. 5 acciones analizadas, MAPE 2,10%–7,55%." />
   <meta name="author" content="José Candon Rubio" />
   <meta name="robots" content="index, follow" />
-  <title>FinPredict-RNN - José Candon</title>
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/finpredict-rnn/" />
+  <title>FinPredict-RNN — José Candon Rubio</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
-  <link rel="preload" as="style" href="../styles/design-system.css" />
-  <link rel="stylesheet" href="../styles/design-system.css" />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://josecrub.com/finpredict-rnn" />
-  <meta property="og:title" content="FinPredict-RNN - Predicción con LSTM" />
-  <meta property="og:description" content="Sistema de predicción de series temporales financieras con arquitectura LSTM profunda. Proyecto educativo de investigación en machine learning." />
-  <meta property="og:image" content="https://josecrub.com/Media/Perview.png" />
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://josecrub.com/finpredict-rnn" />
-  <meta property="twitter:title" content="FinPredict-RNN - Predicción con LSTM" />
-  <meta property="twitter:description" content="Sistema de predicción de series temporales financieras con arquitectura LSTM profunda. Proyecto educativo de investigación en machine learning." />
-  <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
-  
-  <!-- Script de tema -->
-  <script>
-    (function() {
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = systemPrefersDark ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      if (!localStorage.getItem('theme')) {
-        localStorage.setItem('theme', theme);
-      }
-    })();
-  </script>
-  
-  <style>
-    /* ============================================
-       FINPREDICT-RNN - DISEÑO MODERNO
-       ============================================ */
 
-    :root {
-      --color-primary: #ff6b35;
-      --color-secondary: #004e89;
-      --color-accent: #f77f00;
-      --color-dark: #1a1a2e;
-      --color-light: #f8f9fa;
-      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --shadow-color: rgba(102, 126, 234, 0.4);
-      
-      --bg-primary: #f8f9fa;
-      --bg-secondary: #ffffff;
-      --bg-gradient: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a5568;
-      --border-color: rgba(102, 126, 234, 0.15);
-      --card-bg: #ffffff;
-      --nav-bg: rgba(255, 255, 255, 0.8);
-    }
-
-    [data-theme="dark"] {
-      --bg-primary: #0f0f1e;
-      --bg-secondary: #1a1a2e;
-      --bg-gradient: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
-      --text-primary: #ffffff;
-      --text-secondary: #cbd5e0;
-      --border-color: rgba(102, 126, 234, 0.25);
-      --card-bg: rgba(26, 26, 46, 0.6);
-      --nav-bg: rgba(26, 26, 46, 0.95);
-      --shadow-color: rgba(102, 126, 234, 0.5);
-      --gradient-primary: linear-gradient(135deg, #7c8fef 0%, #9370c7 100%);
-      --gradient-accent: linear-gradient(135deg, #60b5fc 0%, #20d4f4 100%);
-    }
-
-    body {
-      padding: 0;
-      overflow-x: hidden;
-      background: var(--bg-gradient);
-      position: relative;
-      transition: background 0.3s ease;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-      animation: float 30s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(5deg); }
-      66% { transform: translate(-20px, 20px) rotate(-5deg); }
-    }
-
-    /* NAVEGACIÓN FLOTANTE */
-    .site-header {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      padding: 12px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 900px;
-      width: calc(100% - 40px);
-      border-radius: 50px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      animation: slideDown 0.6s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    [data-theme="dark"] .site-header {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-
-    .site-logo {
-      font-weight: var(--fw-bold);
-      font-size: var(--text-base);
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      z-index: 1001;
-      letter-spacing: -0.02em;
-    }
-
-    .site-nav {
-      display: flex;
-      gap: var(--space-md);
-      align-items: center;
-    }
-
-    .site-nav .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-sm);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .site-nav .nav-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-primary);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 20px;
-      z-index: -1;
-    }
-
-    .site-nav .nav-link:hover {
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .site-nav .nav-link:hover::before {
-      opacity: 1;
-    }
-
-    .theme-toggle {
-      display: flex;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(102, 126, 234, 0.1);
-      transform: rotate(20deg) scale(1.1);
-    }
-
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* HAMBURGER MENU */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2.5px;
-      background: var(--text-primary);
-      border-radius: 2px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .hamburger:hover {
-      background: rgba(102, 126, 234, 0.1);
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 24px;
-      padding: 20px;
-      width: calc(100% - 40px);
-      max-width: 400px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      z-index: 999;
-      animation: slideDown 0.3s ease-out;
-    }
-
-    [data-theme="dark"] .mobile-menu {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-    }
-
-    .mobile-menu.active {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .mobile-menu .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-base);
-      padding: 14px 20px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .mobile-menu .nav-link:hover {
-      background: var(--gradient-primary);
-      color: white;
-      transform: translateX(4px);
-    }
-
-    /* CONTAINER */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px var(--space-lg) 60px;
-    }
-
-    .main-content {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px 24px 60px;
-    }
-
-    /* HEADER DEL PROYECTO */
-    .project-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .warning-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-      color: white;
-      padding: 8px 20px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-    }
-
-    .project-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      margin: 0 0 16px;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.02em;
-    }
-
-    .project-subtitle {
-      font-size: clamp(1.1rem, 2vw, 1.3rem);
-      color: var(--text-secondary);
-      max-width: 700px;
-      margin: 0 auto 32px;
-      line-height: 1.7;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--gradient-primary);
-      border: none;
-      color: white;
-      padding: 18px 36px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-semibold);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 20px var(--shadow-color);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
-    .btn-primary:hover {
-      background: var(--gradient-primary);
-      color: white;
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 12px 40px var(--shadow-color);
-    }
-
-    .btn-primary::after {
-      content: " ↗";
-      font-size: 14px;
-    }
-
-    .btn-secondary {
-      background: white;
-      border: 2px solid rgba(102, 126, 234, 0.3);
-      color: var(--color-dark);
-      padding: 16px 32px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-medium);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
-    }
-
-    [data-theme="dark"] .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(102, 126, 234, 0.3);
-      color: var(--text-primary);
-    }
-
-    [data-theme="dark"] .btn-secondary:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-    }
-
-    /* DISCLAIMER */
-    .disclaimer-box {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%);
-      border: 2px solid rgba(255, 107, 53, 0.3);
-      border-radius: 20px;
-      padding: 32px;
-      margin: 48px 0;
-      text-align: center;
-    }
-
-    [data-theme="dark"] .disclaimer-box {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.1) 100%);
-      border-color: rgba(255, 107, 53, 0.4);
-    }
-
-    .disclaimer-box h3 {
-      font-size: 1.3rem;
-      margin: 0 0 12px;
-      color: #ff6b35;
-    }
-
-    .disclaimer-box p {
-      margin: 0;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* SECCIONES */
-    .section {
-      margin-bottom: 80px;
-    }
-
-    .section-title {
-      font-size: clamp(1.6rem, 3vw, 2rem);
-      font-weight: 700;
-      margin: 0 0 24px;
-      color: var(--text-primary);
-    }
-
-    .section-text {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-
-    /* GRID DE MÉTRICAS */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 32px 0;
-    }
-
-    .metric-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    [data-theme="dark"] .metric-card {
-      background: rgba(26, 26, 46, 0.4);
-      border-color: rgba(102, 126, 234, 0.25);
-    }
-
-    .metric-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    .metric-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .metric-value {
-      font-size: 2.2rem;
-      font-weight: 800;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-    }
-
-    .metric-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 8px;
-    }
-
-    /* TABLA DE RESULTADOS */
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      margin: 32px 0;
-      border-radius: 16px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .results-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--card-bg);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid var(--border-color);
-      margin: 0;
-    }
-
-    [data-theme="dark"] .results-table {
-      background: rgba(26, 26, 46, 0.4);
-      border-color: rgba(102, 126, 234, 0.25);
-    }
-
-    .results-table thead {
-      background: var(--gradient-primary);
-      color: white;
-    }
-
-    .results-table th,
-    .results-table td {
-      padding: 16px 20px;
-      text-align: left;
-    }
-
-    .results-table td {
-      color: var(--text-primary);
-    }
-
-    .results-table th {
-      font-weight: 600;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .results-table tbody tr {
-      border-bottom: 1px solid var(--border-color);
-      transition: background 0.2s ease;
-    }
-
-    .results-table tbody tr:hover {
-      background: rgba(102, 126, 234, 0.05);
-    }
-
-    .results-table tbody tr:last-child {
-      border-bottom: none;
-    }
-
-    .rank-badge {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-      text-align: center;
-      border-radius: 50%;
-      font-size: 12px;
-      font-weight: 700;
-      color: white;
-    }
-
-    .rank-1 { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); color: #333; }
-    .rank-2 { background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%); color: #333; }
-    .rank-3 { background: linear-gradient(135deg, #cd7f32 0%, #e5a772 100%); }
-
-    /* GALERÍA DE IMÁGENES */
-    .image-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin: 40px 0;
-    }
-
-    .gallery-item {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    [data-theme="dark"] .gallery-item {
-      background: rgba(26, 26, 46, 0.4);
-      border-color: rgba(102, 126, 234, 0.25);
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .gallery-caption {
-      padding: 16px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-align: center;
-    }
-
-    /* TECH STACK */
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 24px 0;
-    }
-
-    .tech-badge {
-      padding: 10px 20px;
-      background: rgba(102, 126, 234, 0.1);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 50px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-
-    .tech-badge:hover {
-      background: var(--gradient-primary);
-      color: white;
-      border-color: transparent;
-      transform: translateY(-2px);
-    }
-
-    /* CÓDIGO */
-    .code-block {
-      background: rgba(26, 26, 46, 0.95);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 12px;
-      padding: 24px;
-      margin: 24px 0;
-      overflow-x: auto;
-      font-family: 'Courier New', monospace;
-      font-size: 14px;
-      color: #f8f9fa;
-      line-height: 1.6;
-    }
-
-    /* LIGHTBOX MODAL */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.95);
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .lightbox.active {
-      display: flex;
-    }
-
-    .lightbox img {
-      max-width: 95%;
-      max-height: 95%;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-      cursor: default;
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: white;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.1);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      line-height: 1;
-      font-weight: 300;
-    }
-
-    .lightbox-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: rotate(90deg);
-    }
-
-    .gallery-item img {
-      cursor: zoom-in;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* FOOTER */
-    .site-footer {
-      max-width: 1100px;
-      margin: var(--space-lg) auto 0;
-      padding: var(--space-lg);
-      text-align: center;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .footer-text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .site-header {
-        top: 12px;
-        padding: 10px 20px;
-        width: calc(100% - 24px);
-      }
-
-      .site-nav {
-        display: none !important;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .container {
-        padding: 140px var(--space-md) 50px;
-      }
-
-      .main-content {
-        padding: 140px var(--space-md) 50px;
-      }
-
-      .project-header {
-        margin-bottom: 40px;
-      }
-
-      .hero-label,
-      .warning-badge {
-        margin-top: 20px;
-      }
-
-      .metrics-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .image-gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .results-table {
-        font-size: 12px;
-        min-width: 600px;
-      }
-
-      .results-table th,
-      .results-table td {
-        padding: 8px 10px;
-      }
-
-      .table-wrapper {
-        margin: 24px -20px;
-        padding: 0 20px;
-        border-radius: 0;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .metrics-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-links {
-        flex-direction: column;
-      }
-
-      .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/finpredict-rnn/" />
+  <meta property="og:title" content="FinPredict-RNN — predicción de series temporales con LSTM" />
+  <meta property="og:description" content="Sistema educativo de deep learning aplicado a series financieras: 5 acciones, MAPE 2,10%–7,55%." />
+  <meta property="og:image" content="https://josecrub.com/finpredict-rnn/images/comparison.png" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/main.css" />
 </head>
 <body>
-  <!-- Navegación Flotante -->
-<header class="site-header">
-    <a href="/" class="site-logo">José Candon</a>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <button class="hamburger" aria-label="Abrir menú" onclick="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
-        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-        </svg>
-        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-        </svg>
-      </button>
-    </div>
-    <nav class="site-nav">
-      <a href="/#proyectos" class="nav-link">Proyectos</a>
-      <a href="/about/" class="nav-link">Sobre mí</a>
-      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-    </nav>
-  </header>
 
-  <!-- Menú Móvil -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="/#proyectos" class="nav-link">Proyectos</a>
-    <a href="/about/" class="nav-link">Sobre mí</a>
-    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/#trabajo" class="nav-link"><sup>01</sup>Proyectos</a>
+      <a href="/about/" class="nav-link"><sup>02</sup>Sobre mí</a>
+      <a href="/#contacto" class="nav-link"><sup>03</sup>Contacto</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <button class="nav-burger" aria-label="Abrir menú">Menú</button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="menu-overlay">
+    <a href="/#trabajo"><span class="idx">01</span>Proyectos</a>
+    <a href="/about/"><span class="idx">02</span>Sobre mí</a>
+    <a href="/#contacto"><span class="idx">03</span>Contacto</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
   </div>
 
-  <!-- Contenido Principal -->
-  <main class="main-content">
-    <!-- Header del Proyecto -->
-    <header class="project-header">
-      <span class="warning-badge">Proyecto Educativo</span>
-      <h1 class="project-title">FinPredict-RNN</h1>
-      <p class="project-subtitle">
-        Sistema de predicción de series temporales financieras con arquitectura LSTM profunda. Implementación educativa de deep learning aplicado al análisis cuantitativo.
-      </p>
-      <div class="project-links">
-        <a href="https://github.com/MingosGit/FinPredict-RNN" target="_blank" rel="noopener" class="btn-primary">
-          Ver en GitHub
-        </a>
-        <a href="../" class="btn-secondary">Volver al Portfolio</a>
-      </div>
-    </header>
+  <!-- Cabecera -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/">Inicio</a> / <a href="/#trabajo">Proyectos</a> / <span>03</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      FinPredict<br /><span class="serif-it acid">RNN</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      Red neuronal recurrente <strong>LSTM de 2 capas</strong> para el análisis predictivo de
+      series temporales financieras. Procesa cinco acciones (AAPL, GOOGL, MSFT, TSLA, AMZN)
+      con datos de 2020–2025 y evalúa la precisión con métricas cuantitativas rigurosas.
+    </p>
 
-    <!-- Disclaimer Prominente -->
-    <div class="disclaimer-box">
-      <h3>⚠️ Advertencia Importante</h3>
-      <p><strong>Este proyecto es estrictamente educativo y de investigación.</strong> Los mercados financieros son sistemas complejos, no lineales e impredecibles. Las predicciones generadas NO constituyen asesoramiento financiero ni recomendaciones de inversión. No debe utilizarse para tomar decisiones de inversión reales. Los resultados pasados no garantizan resultados futuros.</p>
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Tipo</dt>
+        <dd>Deep Learning · Investigación</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>TensorFlow · Keras · Python</dd>
+      </div>
+      <div>
+        <dt>Mejor resultado</dt>
+        <dd>MAPE 2,10&nbsp;% (MSFT)</dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd><a href="https://github.com/MingosGit/FinPredict-RNN" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+
+    <div class="note warn" data-reveal>
+      <h3>Proyecto estrictamente educativo</h3>
+      <p>
+        Los mercados financieros son sistemas complejos, no lineales e impredecibles. Las predicciones
+        generadas <strong>no constituyen asesoramiento financiero</strong> ni deben usarse para decisiones
+        de inversión reales. Los resultados pasados no garantizan resultados futuros.
+      </p>
+    </div>
+  </header>
+
+  <!-- Resultados -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>Resultados técnicos</h2>
     </div>
 
-    <!-- Descripción -->
-    <section class="section">
-      <h2 class="section-title">Descripción del Proyecto</h2>
-      <p class="section-text">
-        FinPredict-RNN implementa una arquitectura de red neuronal recurrente (LSTM) de 2 capas para el análisis predictivo de series temporales financieras. El sistema procesa datos históricos de 5 acciones (AAPL, GOOGL, MSFT, TSLA, AMZN) desde 2020-2025, aplicando técnicas avanzadas de deep learning para identificar patrones temporales.
-      </p>
-      <p class="section-text">
-        El proyecto demuestra la aplicación práctica de redes neuronales recurrentes en el ámbito financiero, implementando métricas cuantitativas rigurosas (RMSE, MAE, MAPE) para evaluar la precisión del modelo. Incluye sistema de persistencia de modelos, visualizaciones interactivas y predicción futura de 30 días mediante ventanas deslizantes.
-      </p>
-    </section>
-
-    <!-- Métricas Principales -->
-    <section class="section">
-      <h2 class="section-title">Resultados Técnicos</h2>
-      
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-label">Mejor MAPE</div>
-          <div class="metric-value">2.10%</div>
-          <div class="metric-desc">Microsoft (MSFT)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Acciones Analizadas</div>
-          <div class="metric-value">5</div>
-          <div class="metric-desc">AAPL, GOOGL, MSFT, TSLA, AMZN</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Datos Históricos</div>
-          <div class="metric-value">~1,500</div>
-          <div class="metric-desc">Días por acción (2020-2025)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Arquitectura</div>
-          <div class="metric-value">100-50</div>
-          <div class="metric-desc">Unidades LSTM por capa</div>
-        </div>
+    <div class="stat-grid" data-reveal>
+      <div class="stat">
+        <p class="k">Mejor MAPE</p>
+        <p class="v">2,10%</p>
+        <p class="d">Microsoft (MSFT)</p>
       </div>
+      <div class="stat">
+        <p class="k">Acciones analizadas</p>
+        <p class="v">5</p>
+        <p class="d">AAPL · GOOGL · MSFT · TSLA · AMZN</p>
+      </div>
+      <div class="stat">
+        <p class="k">Datos históricos</p>
+        <p class="v">~1.500</p>
+        <p class="d">Días por acción (2020–2025)</p>
+      </div>
+      <div class="stat">
+        <p class="k">Arquitectura</p>
+        <p class="v">100–50</p>
+        <p class="d">Unidades LSTM por capa</p>
+      </div>
+    </div>
 
-      <h3 class="section-title" style="font-size: 1.4rem; margin-top: 48px;">Ranking de Precisión (MAPE)</h3>
-      <div class="table-wrapper">
-        <table class="results-table">
+    <h3 class="case-h3" data-reveal>Ranking de precisión (MAPE)</h3>
+    <div class="table-wrap" data-reveal>
+      <table class="data">
         <thead>
           <tr>
-            <th>Ranking</th>
+            <th>#</th>
             <th>Ticker</th>
             <th>MAPE</th>
             <th>RMSE</th>
@@ -961,127 +131,129 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><span class="rank-badge rank-1">1</span></td>
+          <tr class="top">
+            <td>01</td>
             <td><strong>MSFT</strong></td>
-            <td>2.10%</td>
-            <td>$11.91</td>
+            <td>2,10%</td>
+            <td>$11,91</td>
             <td>Excepcional</td>
           </tr>
           <tr>
-            <td><span class="rank-badge rank-2">2</span></td>
+            <td>02</td>
             <td><strong>GOOGL</strong></td>
-            <td>2.91%</td>
-            <td>$7.96</td>
+            <td>2,91%</td>
+            <td>$7,96</td>
             <td>Excepcional</td>
           </tr>
           <tr>
-            <td><span class="rank-badge rank-3">3</span></td>
+            <td>03</td>
             <td><strong>AAPL</strong></td>
-            <td>3.29%</td>
-            <td>$9.36</td>
+            <td>3,29%</td>
+            <td>$9,36</td>
             <td>Excepcional</td>
           </tr>
           <tr>
-            <td><span class="rank-badge">4</span></td>
+            <td>04</td>
             <td><strong>AMZN</strong></td>
-            <td>3.61%</td>
-            <td>$9.35</td>
+            <td>3,61%</td>
+            <td>$9,35</td>
             <td>Excepcional</td>
           </tr>
           <tr>
-            <td><span class="rank-badge">5</span></td>
+            <td>05</td>
             <td><strong>TSLA</strong></td>
-            <td>7.55%</td>
-            <td>$33.61</td>
+            <td>7,55%</td>
+            <td>$33,61</td>
             <td>Muy bueno*</td>
           </tr>
         </tbody>
-        </table>
-      </div>
-      <p class="section-text" style="font-size: 0.9rem; font-style: italic;">
-        * Tesla presenta mayor volatilidad inherente, justificando un MAPE más elevado. Valores MAPE < 5% se consideran excepcionales en predicción financiera.
-      </p>
-    </section>
+      </table>
+    </div>
+    <p class="case-p" data-reveal style="font-size:0.88rem;margin-top:14px;">
+      * Tesla presenta mayor volatilidad inherente, lo que justifica un MAPE más elevado.
+      Valores de MAPE &lt; 5&nbsp;% se consideran excepcionales en predicción financiera.
+    </p>
+  </section>
 
-    <!-- Visualizaciones -->
-    <section class="section">
-      <h2 class="section-title">Visualizaciones y Análisis</h2>
-      
-      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 20px;">Comparación de Modelos</h3>
-      <div class="image-gallery">
-        <div class="gallery-item">
-          <img src="images/comparison.png" alt="Comparación de métricas entre acciones" loading="lazy" />
-          <div class="gallery-caption">Comparación RMSE y MAPE entre acciones</div>
-        </div>
-      </div>
+  <!-- Visualizaciones -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>Visualizaciones</h2>
+    </div>
 
-      <h3 class="section-title" style="font-size: 1.3rem; margin: 48px 0 20px;">Predicciones por Acción</h3>
-      <div class="image-gallery">
-        <div class="gallery-item">
-          <img src="images/AAPL_predictions.png" alt="Predicciones AAPL vs precios reales" loading="lazy" />
-          <div class="gallery-caption">AAPL - Predicción vs Real (MAPE: 3.29%)</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/GOOGL_predictions.png" alt="Predicciones GOOGL vs precios reales" loading="lazy" />
-          <div class="gallery-caption">GOOGL - Predicción vs Real (MAPE: 2.91%)</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/MSFT_predictions.png" alt="Predicciones MSFT vs precios reales" loading="lazy" />
-          <div class="gallery-caption">MSFT - Predicción vs Real (MAPE: 2.10%)</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/TSLA_predictions.png" alt="Predicciones TSLA vs precios reales" loading="lazy" />
-          <div class="gallery-caption">TSLA - Predicción vs Real (MAPE: 7.55%)</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/AMZN_predictions.png" alt="Predicciones AMZN vs precios reales" loading="lazy" />
-          <div class="gallery-caption">AMZN - Predicción vs Real (MAPE: 3.61%)</div>
-        </div>
-      </div>
+    <figure class="figure" data-reveal>
+      <img src="images/comparison.png" alt="Comparación de métricas RMSE y MAPE entre las cinco acciones analizadas" loading="lazy" />
+      <figcaption>Comparación de RMSE y MAPE entre acciones</figcaption>
+    </figure>
 
-      <h3 class="section-title" style="font-size: 1.3rem; margin: 48px 0 20px;">Predicción Futura (30 días)</h3>
-      <div class="image-gallery">
-        <div class="gallery-item">
-          <img src="images/AAPL_future.png" alt="Predicción futura AAPL 30 días" loading="lazy" />
-          <div class="gallery-caption">AAPL - Proyección 30 días</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/GOOGL_future.png" alt="Predicción futura GOOGL 30 días" loading="lazy" />
-          <div class="gallery-caption">GOOGL - Proyección 30 días</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/MSFT_future.png" alt="Predicción futura MSFT 30 días" loading="lazy" />
-          <div class="gallery-caption">MSFT - Proyección 30 días</div>
-        </div>
-      </div>
+    <h3 class="case-h3" data-reveal>Predicción vs realidad</h3>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="images/MSFT_predictions.png" alt="Predicciones de MSFT frente a precios reales" loading="lazy" />
+        <figcaption>MSFT — MAPE 2,10&nbsp;%</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/GOOGL_predictions.png" alt="Predicciones de GOOGL frente a precios reales" loading="lazy" />
+        <figcaption>GOOGL — MAPE 2,91&nbsp;%</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/AAPL_predictions.png" alt="Predicciones de AAPL frente a precios reales" loading="lazy" />
+        <figcaption>AAPL — MAPE 3,29&nbsp;%</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/AMZN_predictions.png" alt="Predicciones de AMZN frente a precios reales" loading="lazy" />
+        <figcaption>AMZN — MAPE 3,61&nbsp;%</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/TSLA_predictions.png" alt="Predicciones de TSLA frente a precios reales" loading="lazy" />
+        <figcaption>TSLA — MAPE 7,55&nbsp;%</figcaption>
+      </figure>
+    </div>
 
-      <h3 class="section-title" style="font-size: 1.3rem; margin: 48px 0 20px;">Historial de Entrenamiento</h3>
-      <div class="image-gallery">
-        <div class="gallery-item">
-          <img src="images/AAPL_training.png" alt="Curva de pérdida entrenamiento AAPL" loading="lazy" />
-          <div class="gallery-caption">AAPL - Convergencia del modelo</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/GOOGL_training.png" alt="Curva de pérdida entrenamiento GOOGL" loading="lazy" />
-          <div class="gallery-caption">GOOGL - Convergencia del modelo</div>
-        </div>
-        <div class="gallery-item">
-          <img src="images/AMZN_training.png" alt="Curva de pérdida entrenamiento AMZN" loading="lazy" />
-          <div class="gallery-caption">AMZN - Convergencia del modelo</div>
-        </div>
-      </div>
-    </section>
+    <h3 class="case-h3" data-reveal>Proyección a 30 días (ventanas deslizantes)</h3>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="images/AAPL_future.png" alt="Predicción futura de AAPL a 30 días" loading="lazy" />
+        <figcaption>AAPL — proyección 30 días</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/GOOGL_future.png" alt="Predicción futura de GOOGL a 30 días" loading="lazy" />
+        <figcaption>GOOGL — proyección 30 días</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/MSFT_future.png" alt="Predicción futura de MSFT a 30 días" loading="lazy" />
+        <figcaption>MSFT — proyección 30 días</figcaption>
+      </figure>
+    </div>
 
-    <!-- Arquitectura Técnica -->
-    <section class="section">
-      <h2 class="section-title">Arquitectura del Modelo</h2>
-      <p class="section-text">
-        Red neuronal recurrente de 2 capas LSTM con regularización dropout para prevenir overfitting:
-      </p>
-      
-      <div class="code-block">
-Input (60, 1)                    # 60 días de historia
+    <h3 class="case-h3" data-reveal>Convergencia del entrenamiento</h3>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="images/AAPL_training.png" alt="Curva de pérdida del entrenamiento de AAPL" loading="lazy" />
+        <figcaption>AAPL — curva de pérdida</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/GOOGL_training.png" alt="Curva de pérdida del entrenamiento de GOOGL" loading="lazy" />
+        <figcaption>GOOGL — curva de pérdida</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="images/AMZN_training.png" alt="Curva de pérdida del entrenamiento de AMZN" loading="lazy" />
+        <figcaption>AMZN — curva de pérdida</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Arquitectura -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>Arquitectura del modelo</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      Red recurrente de 2 capas LSTM con regularización dropout para prevenir overfitting:
+    </p>
+    <div class="code-block" data-reveal>Input (60, 1)                    # 60 días de historia
     ↓
 LSTM(100 units, return_sequences=True)
     ↓
@@ -1095,184 +267,64 @@ Dense(25)                        # Capa de compresión
     ↓
 Dense(1)                         # Predicción del precio
 
-Optimizador: Adam
-Función de pérdida: Mean Squared Error
-Callbacks: Early Stopping (patience=5), ModelCheckpoint
-      </div>
+Optimizador : Adam
+Pérdida     : Mean Squared Error
+Callbacks   : EarlyStopping(patience=5) · ModelCheckpoint</div>
 
-      <h3 class="section-title" style="font-size: 1.3rem; margin-top: 40px;">Stack Tecnológico</h3>
-      <div class="tech-stack">
-        <span class="tech-badge">TensorFlow / Keras</span>
-        <span class="tech-badge">NumPy</span>
-        <span class="tech-badge">Pandas</span>
-        <span class="tech-badge">scikit-learn</span>
-        <span class="tech-badge">Matplotlib</span>
-        <span class="tech-badge">yfinance</span>
-        <span class="tech-badge">Python 3.8+</span>
-      </div>
-    </section>
+    <ul class="case-list" data-reveal>
+      <li><strong>Multi-ticker:</strong> análisis simultáneo de 5 acciones con comparación automática</li>
+      <li><strong>Persistencia:</strong> guardado y carga automática de modelos entrenados (.keras)</li>
+      <li><strong>Métricas:</strong> RMSE, MAE y MAPE para evaluación rigurosa</li>
+      <li><strong>Predicción futura:</strong> proyección de 30 días con ventanas deslizantes</li>
+      <li><strong>Configuración centralizada:</strong> todos los parámetros ajustables desde <code>config.py</code></li>
+    </ul>
 
-    <!-- Características -->
-    <section class="section">
-      <h2 class="section-title">Características Implementadas</h2>
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Multi-Ticker</div>
-          <div class="metric-desc">Análisis simultáneo de 5 acciones con comparación automática</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Persistencia</div>
-          <div class="metric-desc">Guardado/carga automática de modelos entrenados (.keras)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Métricas Cuantitativas</div>
-          <div class="metric-desc">RMSE, MAE y MAPE para evaluación rigurosa</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Predicción Futura</div>
-          <div class="metric-desc">Proyección de 30 días con ventanas deslizantes</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Early Stopping</div>
-          <div class="metric-desc">Prevención de overfitting con patience=5</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value" style="font-size: 1rem;">Config Centralizada</div>
-          <div class="metric-desc">Parámetros ajustables desde config.py</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Limitaciones -->
-    <section class="section">
-      <h2 class="section-title">Limitaciones y Consideraciones</h2>
-      <p class="section-text">
-        Es fundamental comprender las limitaciones inherentes de este tipo de sistemas:
-      </p>
-      <ul style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; list-style-position: outside; padding-left: 24px;">
-      <style>
-        .section ul li { color: var(--text-secondary); }
-        .section ul li strong { color: var(--text-primary); }
-      </style>
-        <li><strong>Datos de prueba vs. predicción real:</strong> El MAPE refleja rendimiento en datos históricos conocidos, no garantiza resultados en datos futuros desconocidos.</li>
-        <li><strong>Riesgo de overfitting:</strong> Modelos con precisión muy alta pueden memorizar patrones históricos sin capacidad de generalización.</li>
-        <li><strong>Eventos no modelados:</strong> Noticias, crisis económicas, cambios regulatorios, eventos geopolíticos no están capturados en el modelo.</li>
-        <li><strong>No linealidad de mercados:</strong> Los mercados financieros son sistemas complejos con comportamiento caótico y emergente.</li>
-        <li><strong>Costos de transacción:</strong> Comisiones, spreads, slippage y costos de oportunidad no están considerados.</li>
-      </ul>
-    </section>
-
-    <!-- Footer con enlaces -->
-    <div style="text-align: center; padding: 60px 0 40px; border-top: 2px solid var(--border-color); margin-top: 80px;">
-      <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 1.05rem;">
-        <strong>Este proyecto NO debe utilizarse para inversión real.</strong><br />
-        Consulte a un asesor financiero certificado antes de tomar decisiones de inversión.
-      </p>
-      <div class="project-links">
-        <a href="https://github.com/MingosGit/FinPredict-RNN" target="_blank" rel="noopener" class="btn-primary">
-          Ver Código en GitHub
-        </a>
-        <a href="../" class="btn-secondary">Volver al Portfolio</a>
-      </div>
+    <div class="chip-row" data-reveal>
+      <span>TensorFlow / Keras</span><span>NumPy</span><span>Pandas</span><span>scikit-learn</span><span>Matplotlib</span><span>yfinance</span><span>Python 3.8+</span>
     </div>
-  </main>
+  </section>
 
-  <footer class="site-footer">
-    <p class="footer-text">© 2025 José Candon Rubio</p>
+  <!-- Limitaciones -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Limitaciones</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      Parte del rigor del proyecto es documentar lo que este tipo de sistemas <strong>no</strong> puede hacer:
+    </p>
+    <ul class="case-list" data-reveal>
+      <li><strong>Datos de prueba ≠ predicción real:</strong> el MAPE refleja rendimiento sobre datos históricos conocidos, no garantiza nada sobre datos futuros.</li>
+      <li><strong>Riesgo de overfitting:</strong> una precisión muy alta puede indicar memorización de patrones sin capacidad de generalización.</li>
+      <li><strong>Eventos no modelados:</strong> noticias, crisis económicas, cambios regulatorios o eventos geopolíticos quedan fuera del modelo.</li>
+      <li><strong>No linealidad:</strong> los mercados son sistemas complejos con comportamiento caótico y emergente.</li>
+      <li><strong>Costes de transacción:</strong> comisiones, spreads, slippage y costes de oportunidad no están considerados.</li>
+    </ul>
+    <div class="btn-row" data-reveal>
+      <a href="https://github.com/MingosGit/FinPredict-RNN" target="_blank" rel="noopener" class="btn btn-solid">Ver código en GitHub ↗</a>
+    </div>
+  </section>
+
+  <!-- Siguiente proyecto -->
+  <a href="../beegame/" class="next-project">
+    <span class="lbl">Siguiente proyecto — 04</span>
+    <span class="name">BeeGame</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/#trabajo">Todos los proyectos →</a>
+    </div>
   </footer>
 
-  <!-- Lightbox para imágenes -->
-  <div class="lightbox" id="lightbox">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="Vista ampliada">
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <button class="close">Cerrar ✕</button>
+    <img alt="" />
   </div>
 
-  <script>
-    function toggleMobileMenu() {
-      const hamburger = document.querySelector('.hamburger');
-      const mobileMenu = document.getElementById('mobileMenu');
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      
-      if (newTheme === 'dark') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-      }
-    }
-
-    function openLightbox(imgSrc) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightboxImg.src = imgSrc;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      const lightbox = document.getElementById('lightbox');
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      
-      if (currentTheme === 'dark' && sunIcon && moonIcon) {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      }
-
-      // Agregar evento click a todas las imágenes de la galería
-      const galleryImages = document.querySelectorAll('.gallery-item img');
-      galleryImages.forEach(img => {
-        img.addEventListener('click', function() {
-          openLightbox(this.src);
-        });
-      });
-
-      // Cerrar lightbox al hacer clic en el fondo
-      const lightbox = document.getElementById('lightbox');
-      lightbox.addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeLightbox();
-        }
-      });
-
-      // Cerrar lightbox con tecla Escape
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          closeLightbox();
-        }
-      });
-
-      // Cerrar menú móvil al hacer clic en un enlace
-      const mobileMenuLinks = document.querySelectorAll('.mobile-menu .nav-link');
-      mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          const hamburger = document.querySelector('.hamburger');
-          const mobileMenu = document.getElementById('mobileMenu');
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-        });
-      });
-    });
-  </script>
+  <script src="../scripts/main.js" defer></script>
 </body>
 </html>

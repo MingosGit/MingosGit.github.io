@@ -3,1273 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Simulador profesional de cadena de suministro con tablero P&L y optimización automática. Python, SimPy y análisis What-If para reducción de costes." />
-  <meta name="keywords" content="supply chain, simulación, inventario, Python, SimPy, P&L, optimización" />
+  <meta name="description" content="Supply Chain Simulator — simulador de eventos discretos con Python y SimPy para optimizar políticas de inventario, con tablero financiero P&L y análisis what-if." />
   <meta name="author" content="José Candon Rubio" />
-  <title>Supply Chain Simulator - José Candon</title>
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/supply-chain-simulator/" />
+  <title>Supply Chain Simulator — José Candon Rubio</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
-  <link rel="preload" as="style" href="../styles/design-system.css" />
-  <link rel="stylesheet" href="../styles/design-system.css" />
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://josecrub.com/supply-chain-simulator" />
-  <meta property="og:title" content="Supply Chain Simulator - Optimización de Inventario" />
-  <meta property="og:description" content="Simulador profesional de cadena de suministro con tablero financiero P&L. Eventos discretos con SimPy y Python." />
-  <meta property="og:image" content="https://josecrub.com/Media/Perview.png" />
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://josecrub.com/supply-chain-simulator" />
-  <meta property="twitter:title" content="Supply Chain Simulator - Optimización de Inventario" />
-  <meta property="twitter:description" content="Simulador profesional de cadena de suministro con tablero financiero P&L. Eventos discretos con SimPy y Python." />
-  <meta property="twitter:image" content="https://josecrub.com/Media/Perview.png" />
-  
-  <!-- Script de tema (debe ejecutarse ANTES del render) -->
-  <script>
-    (function() {
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = systemPrefersDark ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      if (!localStorage.getItem('theme')) {
-        localStorage.setItem('theme', theme);
-      }
-    })();
-  </script>
-  
-  <style>
-    /* ============================================
-       ESTILOS SUPPLY CHAIN SIMULATOR
-       ============================================ */
 
-    :root {
-      --color-primary: #ff6b35;
-      --color-secondary: #004e89;
-      --color-accent: #f77f00;
-      --color-dark: #1a1a2e;
-      --color-light: #f8f9fa;
-      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --shadow-color: rgba(102, 126, 234, 0.4);
-      
-      --bg-primary: #f8f9fa;
-      --bg-secondary: #ffffff;
-      --bg-gradient: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a5568;
-      --border-color: rgba(102, 126, 234, 0.15);
-      --card-bg: #ffffff;
-      --nav-bg: rgba(255, 255, 255, 0.8);
-    }
-
-    [data-theme="dark"] {
-      --bg-primary: #0f0f1e;
-      --bg-secondary: #1a1a2e;
-      --bg-gradient: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
-      --text-primary: #ffffff;
-      --text-secondary: #cbd5e0;
-      --border-color: rgba(102, 126, 234, 0.25);
-      --card-bg: rgba(26, 26, 46, 0.6);
-      --nav-bg: rgba(26, 26, 46, 0.95);
-      --shadow-color: rgba(102, 126, 234, 0.5);
-      --gradient-primary: linear-gradient(135deg, #7c8fef 0%, #9370c7 100%);
-      --gradient-accent: linear-gradient(135deg, #60b5fc 0%, #20d4f4 100%);
-    }
-
-    body {
-      padding: 0;
-      overflow-x: hidden;
-      background: var(--bg-gradient);
-      position: relative;
-      transition: background 0.3s ease;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-      animation: float 30s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(5deg); }
-      66% { transform: translate(-20px, 20px) rotate(-5deg); }
-    }
-
-    /* NAVEGACIÓN FLOTANTE */
-    .site-header {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      padding: 12px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 900px;
-      width: calc(100% - 40px);
-      border-radius: 50px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      animation: slideDown 0.6s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    [data-theme="dark"] .site-header {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-
-    .site-logo {
-      font-weight: var(--fw-bold);
-      font-size: var(--text-base);
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      z-index: 1001;
-      letter-spacing: -0.02em;
-    }
-
-    .site-nav {
-      display: flex;
-      gap: var(--space-md);
-      align-items: center;
-    }
-
-    .site-nav .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-sm);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .site-nav .nav-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-primary);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 20px;
-      z-index: -1;
-    }
-
-    .site-nav .nav-link:hover {
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .site-nav .nav-link:hover::before {
-      opacity: 1;
-    }
-
-    .theme-toggle {
-      display: flex;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(102, 126, 234, 0.1);
-      transform: rotate(20deg) scale(1.1);
-    }
-
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--ink);
-      z-index: 1001;
-    }
-
-    .mobile-menu-toggle svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    /* HERO SECTION */
-    .hero-section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px var(--space-lg) 60px;
-      text-align: center;
-    }
-
-    .hero-label {
-      display: inline-block;
-      font-size: var(--text-xs);
-      font-weight: var(--fw-semibold);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: white;
-      margin-bottom: var(--space-md);
-      padding: 10px 20px;
-      background: var(--gradient-primary);
-      border-radius: 30px;
-      border: none;
-      box-shadow: 0 4px 15px var(--shadow-color);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .hero-title {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: var(--fw-bold);
-      margin: 0 0 var(--space-lg);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      color: var(--text-primary);
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-title .highlight {
-      position: relative;
-      display: inline-block;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-tagline {
-      font-size: clamp(1.05rem, 2vw, 1.2rem);
-      color: var(--text-secondary);
-      font-weight: var(--fw-normal);
-      margin: 0 auto var(--space-xl);
-      line-height: 1.7;
-      max-width: 700px;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: var(--space-sm);
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-primary {
-      background: var(--gradient-primary) !important;
-      border: none;
-      color: white !important;
-      padding: 18px 36px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-semibold);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 20px var(--shadow-color);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 12px 35px var(--shadow-color);
-    }
-
-    .btn-secondary {
-      background: white;
-      border: 2px solid rgba(102, 126, 234, 0.3);
-      color: var(--color-dark);
-      padding: 16px 32px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-medium);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      cursor: pointer;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
-    }
-
-    [data-theme="dark"] .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(102, 126, 234, 0.3);
-      color: var(--text-primary);
-    }
-
-    [data-theme="dark"] .btn-secondary:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-    }
-
-    /* LOADING NOTICE */
-    .loading-notice {
-      background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.05) 100%);
-      border: 2px solid rgba(79, 172, 254, 0.3);
-      border-radius: 20px;
-      padding: 24px 32px;
-      margin: 0 auto 48px;
-      max-width: 900px;
-      text-align: center;
-      animation: slideIn 0.6s ease-out;
-    }
-
-    [data-theme="dark"] .loading-notice {
-      background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(0, 242, 254, 0.1) 100%);
-      border-color: rgba(79, 172, 254, 0.4);
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .loading-notice h3 {
-      font-size: 1.1rem;
-      margin: 0 0 8px;
-      color: #4facfe;
-      font-weight: 600;
-    }
-
-    .loading-notice p {
-      margin: 0;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      font-size: 0.95rem;
-    }
-
-    /* CONTENT SECTIONS */
-    .content-section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: var(--space-lg) var(--space-lg);
-    }
-
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: var(--fw-bold);
-      margin: 0 0 var(--space-md);
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .section-description {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: var(--space-sm);
-    }
-
-    /* FEATURE GRID */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-md);
-      margin-top: var(--space-md);
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius-xl);
-      padding: var(--space-xl);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    }
-
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    .feature-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    [data-theme="dark"] .feature-card {
-      background: rgba(26, 26, 46, 0.4);
-      backdrop-filter: blur(10px);
-      border-color: rgba(102, 126, 234, 0.2);
-    }
-
-    .feature-icon {
-      font-size: 2.5rem;
-      margin-bottom: var(--space-md);
-      display: block;
-    }
-
-    .feature-title {
-      font-size: var(--text-lg);
-      font-weight: var(--fw-semibold);
-      color: var(--text-primary);
-      margin: 0 0 var(--space-sm);
-    }
-
-    .feature-desc {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* USE CASES */
-    .use-case-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--space-md);
-      margin-top: var(--space-md);
-    }
-
-    .use-case-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      transition: all 0.4s ease;
-    }
-
-    .use-case-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    [data-theme="dark"] .use-case-card {
-      background: rgba(26, 26, 46, 0.4);
-      border-color: rgba(102, 126, 234, 0.2);
-    }
-
-    .use-case-title {
-      font-size: var(--text-lg);
-      font-weight: var(--fw-semibold);
-      color: var(--text-primary);
-      margin: 0 0 var(--space-sm);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    /* SCREENSHOTS */
-    .screenshot-img {
-      width: 100%;
-      max-width: 100%;
-      border-radius: var(--radius-xl);
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
-      margin: var(--space-md) auto;
-      border: 2px solid var(--border-color);
-      transition: all 0.4s ease;
-      display: block;
-    }
-
-    .screenshot-img:hover {
-      transform: scale(1.02);
-      box-shadow: 0 20px 60px var(--shadow-color);
-    }
-
-    .screenshot-title {
-      font-size: var(--text-lg);
-      font-weight: var(--fw-semibold);
-      color: var(--text-primary);
-      margin: var(--space-md) 0 var(--space-sm);
-    }
-
-    .screenshot-caption {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-      margin-top: var(--space-xs);
-      margin-bottom: var(--space-md);
-      font-style: italic;
-    }
-
-    /* TECH STACK */
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: var(--space-md);
-    }
-
-    .tech-tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 12px 20px;
-      background: rgba(102, 126, 234, 0.1);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 50px;
-      font-size: var(--text-sm);
-      font-weight: var(--fw-medium);
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-    }
-
-    .tech-tag:hover {
-      background: var(--gradient-primary);
-      color: white;
-      border-color: transparent;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    /* CTA SECTION */
-    .cta-section {
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.05) 100%);
-      padding: var(--space-lg);
-      border-radius: var(--radius-xl);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
-      text-align: center;
-      margin-top: var(--space-lg);
-    }
-
-    [data-theme="dark"] .cta-section {
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.08) 100%);
-      border-color: rgba(102, 126, 234, 0.3);
-    }
-
-    .cta-section .section-title {
-      margin-bottom: var(--space-md);
-    }
-
-    /* LISTA CON ESTILO */
-    .styled-list {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-md) 0;
-    }
-
-    .styled-list li {
-      padding: 6px 0;
-      padding-left: 32px;
-      position: relative;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .styled-list li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--color-primary);
-      font-weight: var(--fw-bold);
-    }
-
-    .styled-list li strong {
-      color: var(--text-primary);
-    }
-
-    /* FOOTER */
-    .site-footer {
-      max-width: 1100px;
-      margin: var(--space-2xl) auto 0;
-      padding: var(--space-lg);
-      text-align: center;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .footer-text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    /* HAMBURGER MENU */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2.5px;
-      background: var(--text-primary);
-      border-radius: 2px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .hamburger:hover {
-      background: rgba(102, 126, 234, 0.1);
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 24px;
-      padding: 20px;
-      width: calc(100% - 40px);
-      max-width: 400px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      z-index: 999;
-      animation: slideDown 0.3s ease-out;
-    }
-
-    [data-theme="dark"] .mobile-menu {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-    }
-
-    .mobile-menu.active {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .mobile-menu .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-base);
-      padding: 14px 20px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .mobile-menu .nav-link:hover {
-      background: var(--gradient-primary);
-      color: white;
-      transform: translateX(4px);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .site-header {
-        top: 12px;
-        padding: 10px 20px;
-        width: calc(100% - 24px);
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-      }
-
-      .site-nav {
-        display: none !important;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .hero-section {
-        padding: 120px var(--space-md) 60px;
-      }
-
-      .hero-label {
-        margin-top: 20px;
-      }
-
-      .content-section {
-        padding: var(--space-xl) var(--space-md);
-      }
-
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .use-case-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .cta-section {
-        padding: var(--space-xl) var(--space-md);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-cta {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .btn-primary,
-      .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .theme-toggle {
-        padding: 6px;
-      }
-    }
-  </style>
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/supply-chain-simulator/" />
+  <meta property="og:title" content="Supply Chain Simulator" />
+  <meta property="og:description" content="Simulador de eventos discretos con Python y SimPy: políticas de inventario, tablero P&L y análisis what-if." />
+  <meta property="og:image" content="https://josecrub.com/Media/supply-chain-sim/tablero-pl.png" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/main.css" />
 </head>
 <body>
-  <!-- Navegación Flotante -->
-  <header class="site-header">
-    <a href="/" class="site-logo">José Candon</a>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <button 
-        onclick="toggleTheme()" 
-        class="theme-toggle" 
-        aria-label="Cambiar tema"
-        title="Cambiar tema claro/oscuro">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <svg class="moon-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      </button>
-      <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/#trabajo" class="nav-link"><sup>01</sup>Proyectos</a>
+      <a href="/about/" class="nav-link"><sup>02</sup>Sobre mí</a>
+      <a href="/#contacto" class="nav-link"><sup>03</sup>Contacto</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
     </div>
-    <nav class="site-nav">
-      <a href="/#proyectos" class="nav-link">Proyectos</a>
-      <a href="/about/" class="nav-link">Sobre mí</a>
-      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-    </nav>
+    <button class="nav-burger" aria-label="Abrir menú">Menú</button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="menu-overlay">
+    <a href="/#trabajo"><span class="idx">01</span>Proyectos</a>
+    <a href="/about/"><span class="idx">02</span>Sobre mí</a>
+    <a href="/#contacto"><span class="idx">03</span>Contacto</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/">Inicio</a> / <a href="/#trabajo">Proyectos</a> / <span>02</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Supply Chain<br /><span class="serif-it acid">Simulator</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      Simulador de cadena de suministro con <strong>tablero financiero P&amp;L integrado</strong>.
+      Modela un año completo de operaciones con eventos discretos (SimPy) y muestra el impacto
+      de cada decisión de inventario <strong>en euros, no solo en unidades</strong>.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Tipo</dt>
+        <dd>Simulación · App web</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python · SimPy · Streamlit</dd>
+      </div>
+      <div>
+        <dt>Demo</dt>
+        <dd><a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener">App en vivo ↗</a></dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd><a href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+
+    <div class="btn-row" data-reveal>
+      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="btn btn-solid">Abrir simulador ↗</a>
+      <a href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank" rel="noopener" class="btn">Ver código</a>
+    </div>
   </header>
 
-  <!-- Menú Móvil -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="/#proyectos" class="nav-link">Proyectos</a>
-    <a href="/about/" class="nav-link">Sobre mí</a>
-    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-  </div>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <span class="hero-label">Simulación Empresarial</span>
-    <h1 class="hero-title">
-      Supply Chain <span class="highlight">Simulator</span>
-    </h1>
-    <p class="hero-tagline">
-      Simulador profesional de cadena de suministro con tablero financiero P&L integrado. 
-      Optimiza inventario, reduce costes y mejora el nivel de servicio usando simulación de eventos discretos con Python y SimPy.
+  <!-- Qué es -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>Qué hace</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      Permite experimentar con los parámetros clave de una política de inventario —
+      <strong>punto de reorden (ROP)</strong>, <strong>cantidad de pedido (Q)</strong>, lead time,
+      patrones de demanda y estructura de costes — y ver al instante cómo afectan al coste
+      total y al nivel de servicio.
     </p>
-    <div class="hero-cta">
-      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="btn-primary">
-        Abrir Simulador →
-      </a>
-      <a href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank" rel="noopener" class="btn-secondary">
-        Ver en GitHub
-      </a>
+    <p class="case-p" data-reveal>
+      La app carga con datos de demostración pre-ejecutados (<strong>experiencia
+      &laquo;0 segundos&raquo;</strong>): gráficos, métricas financieras y tablero P&amp;L visibles
+      inmediatamente, sin configurar nada.
+    </p>
+
+    <div class="note" data-reveal>
+      <h3>Primera carga</h3>
+      <p>El simulador puede tardar unos segundos en arrancar la primera vez mientras Streamlit Cloud carga las bibliotecas de Python. Después la experiencia es fluida.</p>
     </div>
   </section>
 
-  <!-- Aviso de Carga -->
-  <div class="loading-notice">
-    <h3>Primera Carga</h3>
-    <p>El simulador puede tardar unos segundos en iniciarse por primera vez debido a la carga de las bibliotecas de Python. <strong>¡Ten paciencia!</strong> Una vez cargado, la experiencia será fluida.</p>
-  </div>
-
-  <!-- ¿Qué es? -->
-  <section class="content-section">
-    <h2 class="section-title">¿Qué es?</h2>
-    <p class="section-description">
-      Supply Chain Simulator es una <strong>aplicación empresarial profesional</strong> que permite modelar y analizar 
-      estrategias de gestión de inventario para retail. Con un <strong>tablero financiero P&L integrado</strong>, 
-      visualizas el impacto en euros (no solo unidades) de cada decisión operativa.
-    </p>
-    <p class="section-description">
-      Utilizando simulación de eventos discretos (SimPy), experimentas con parámetros como punto de reorden (ROP), 
-      cantidad económica de pedido (EOQ) y lead time para encontrar la configuración óptima que <strong>minimice 
-      costes y maximice el nivel de servicio</strong>.
-    </p>
-    <p class="section-description">
-      <strong>Experiencia "0 Segundos":</strong> La app carga con datos de demostración pre-ejecutados. 
-      Ves gráficos, métricas financieras y el tablero P&L inmediatamente, sin configurar nada. 
-      Ideal para presentaciones ejecutivas.
-    </p>
-  </section>
-
-  <!-- Características Principales -->
-  <section class="content-section">
-    <h2 class="section-title">Características Principales</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3 class="feature-title">Simulación Realista</h3>
-        <p class="feature-desc">
-          Modela 365 días de operación con diferentes patrones de demanda (uniforme, normal, Poisson) 
-          y factores estacionales configurables.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Tablero Financiero P&L</h3>
-        <p class="feature-desc">
-          Dashboard ejecutivo con métricas en euros (€). Ingresos potenciales, costes operativos, 
-          % impacto en margen y desglose P&L completo. Habla el idioma del CFO.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Carga Instantánea</h3>
-        <p class="feature-desc">
-          Datos semilla pre-cargados. Gráficos y métricas visibles inmediatamente. 
-          Tiempo hasta el "asombro": cero segundos.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Optimización Automática</h3>
-        <p class="feature-desc">
-          El motor de optimización busca la mejor combinación de ROP y Q mediante grid search, 
-          mostrando mapas de calor interactivos.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Diseño Corporativo</h3>
-        <p class="feature-desc">
-          Paleta azul corporativa profesional. Cumple WCAG AA. Gradientes, 
-          toolbar minimalista. Aspecto de aplicación empresarial.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Visualizaciones Interactivas</h3>
-        <p class="feature-desc">
-          Gráficos Plotly dinámicos con tooltips. Evolución de stock, pedidos, distribución 
-          de demanda, análisis de sensibilidad y mapas de calor.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Análisis What-If</h3>
-        <p class="feature-desc">
-          Slider en tiempo real para simular cambios de demanda (+50%, -20%, etc.). 
-          Visualiza el ROI neto instantáneamente con comparación lado a lado.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Comparación de Escenarios</h3>
-        <p class="feature-desc">
-          Compara automáticamente el impacto financiero: Δ Ingresos, Δ Costes, ROI Neto. 
-          Recomendaciones estratégicas según el escenario.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <h3 class="feature-title">Exportación Profesional</h3>
-        <p class="feature-desc">
-          Excel con 3 hojas (Resumen Financiero €, Datos Diarios, Parámetros). 
-          Reportes TXT formateados. Listos para presentaciones ejecutivas.
-        </p>
-      </div>
+  <!-- Capturas -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>La aplicación</h2>
+    </div>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="../Media/supply-chain-sim/tablero-pl.png" alt="Tablero financiero P&L con métricas en euros: ingresos potenciales, costes operativos e impacto en margen" loading="lazy" />
+        <figcaption>Tablero P&amp;L — demanda valorada, coste total e impacto en margen</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/supply-chain-sim/whatif-comparison.png" alt="Análisis what-if: comparación lado a lado entre escenario base y escenario con +50% de demanda" loading="lazy" />
+        <figcaption>What-if interactivo — escenario base vs +50&nbsp;% de demanda, con ROI neto</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/supply-chain-sim/resultados-simulacion.png" alt="Resultados de simulación: tarjetas ejecutivas con coste total, almacenamiento, pedidos y rupturas" loading="lazy" />
+        <figcaption>Resultados de simulación — KPIs ejecutivos</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/supply-chain-sim/eoq-asistente.png" alt="Asistente EOQ con recomendación dinámica de cantidad óptima de pedido" loading="lazy" />
+        <figcaption>Asistente EOQ — recomendación de cantidad óptima en tiempo real</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ¿Cómo Funciona? -->
-  <section class="content-section">
-    <h2 class="section-title">¿Cómo Funciona?</h2>
-    
-    <h3 class="feature-title">1. Configuración de Parámetros</h3>
-    <p class="section-description">
-      Define los parámetros clave de tu política de inventario:
-    </p>
-    <ul class="styled-list">
-      <li><strong>Punto de Reorden (ROP):</strong> Nivel de stock que dispara automáticamente un nuevo pedido</li>
-      <li><strong>Cantidad de Pedido (Q):</strong> Número de unidades solicitadas en cada orden</li>
-      <li><strong>Lead Time:</strong> Tiempo de entrega del proveedor (en días)</li>
-      <li><strong>Patrón de Demanda:</strong> Distribución estadística y factores estacionales</li>
-      <li><strong>Estructura de Costes:</strong> Costes de pedido, almacenamiento y ruptura</li>
+  <!-- Cómo funciona -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>Cómo funciona</h2>
+    </div>
+
+    <h3 class="case-h3" data-reveal>1 — Configuración</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>ROP:</strong> nivel de stock que dispara automáticamente un nuevo pedido</li>
+      <li><strong>Q:</strong> unidades solicitadas en cada orden</li>
+      <li><strong>Lead time:</strong> días de entrega del proveedor</li>
+      <li><strong>Demanda:</strong> distribución estadística (uniforme, normal, Poisson) y estacionalidad</li>
+      <li><strong>Costes:</strong> pedido, almacenamiento y ruptura de stock</li>
     </ul>
 
-    <h3 class="feature-title">2. Simulación de Eventos</h3>
-    <p class="section-description">
-      El motor de simulación (basado en SimPy) ejecuta un año completo de operaciones:
+    <h3 class="case-h3" data-reveal>2 — Simulación de eventos discretos</h3>
+    <p class="case-p" data-reveal>
+      El motor SimPy ejecuta <strong>365 días de operación en menos de un segundo</strong> (vectorización
+      NumPy + procesos concurrentes): genera demanda diaria, gestiona el inventario según la política
+      ROP-Q, y registra pedidos, entregas, rupturas y costes en cada evento.
     </p>
-    <ul class="styled-list">
-      <li>Genera demanda diaria según la distribución configurada</li>
-      <li>Gestiona inventario automáticamente según la política ROP-Q</li>
-      <li>Registra pedidos, entregas y rupturas de stock</li>
-      <li>Calcula costes en cada evento del sistema</li>
-    </ul>
 
-    <h3 class="feature-title">3. Análisis Financiero y Optimización</h3>
-    <p class="section-description">
-      La herramienta analiza los resultados y proporciona:
-    </p>
-    <ul class="styled-list">
-      <li><strong>Tablero P&L:</strong> Ingresos potenciales, costes operativos (€), % impacto en margen</li>
-      <li><strong>What-If Interactivo:</strong> Slider para simular escenarios de demanda (±100%)</li>
-      <li><strong>KPIs ejecutivos:</strong> Nivel de servicio (%), rotación, fill rate, coste total (€)</li>
-      <li><strong>Recomendaciones EOQ:</strong> Cantidad económica de pedido dinámica</li>
-      <li><strong>Análisis de sensibilidad:</strong> Gráficos de impacto de ROP/Q en costes totales</li>
-      <li><strong>Desglose P&L:</strong> Almacenamiento, pedidos, rupturas (€ y %)</li>
+    <h3 class="case-h3" data-reveal>3 — Análisis financiero</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Tablero P&amp;L:</strong> ingresos potenciales, costes operativos y % de impacto en margen</li>
+      <li><strong>What-if:</strong> slider de demanda (0,5x – 2x) con comparación automática y ROI neto</li>
+      <li><strong>KPIs:</strong> nivel de servicio, rotación, fill rate y coste total</li>
+      <li><strong>EOQ dinámico:</strong> cantidad económica de pedido recalculada al cambiar cualquier coste</li>
+      <li><strong>Optimización:</strong> grid search sobre ROP × Q con mapas de calor interactivos</li>
+      <li><strong>Exportación:</strong> Excel de 3 hojas y reportes TXT listos para presentar</li>
     </ul>
   </section>
 
-  <!-- Casos de Uso -->
-  <section class="content-section">
-    <h2 class="section-title">Casos de Uso</h2>
-    <div class="use-case-grid">
-      <div class="use-case-card">
-        <h3 class="use-case-title">Educación</h3>
-        <p class="feature-desc">
-          Perfecto para estudiantes de supply chain, logística u operations management. 
-          Permite experimentar con conceptos teóricos (EOQ, safety stock, lead time) en un entorno seguro.
-        </p>
+  <!-- Retos -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Retos técnicos</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Experiencia 0 segundos</h3>
+        <p>Datos semilla con simulación pre-calculada en el session state: la primera pantalla ya muestra resultados reales, no un formulario vacío.</p>
       </div>
+      <div class="flat-card">
+        <h3>P&amp;L que habla con el CFO</h3>
+        <p>Traducción de unidades a euros: ingresos potenciales, % costes/ingresos y desglose P&amp;L con formato ejecutivo.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Rendimiento</h3>
+        <p>365 días simulados en &lt;1 s gracias a vectorización NumPy y procesos concurrentes de SimPy.</p>
+      </div>
+      <div class="flat-card">
+        <h3>What-if en tiempo real</h3>
+        <p>Comparación automática base vs escenario modificado con Δ ingresos, Δ costes y ROI neto al mover un slider.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Accesibilidad</h3>
+        <p>Theming corporativo con contraste 14,7:1 (WCAG AA), tooltips explicativos y validaciones en tiempo real.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Estado robusto</h3>
+        <p>Session state de Streamlit que preserva resultados entre interacciones y exporta sin pérdida de datos.</p>
+      </div>
+    </div>
 
-      <div class="use-case-card">
-        <h3 class="use-case-title">Retail & E-commerce</h3>
-        <p class="feature-desc">
-          Valida estrategias de inventario con <strong>impacto financiero en euros</strong>. 
-          Simula temporadas altas (estacionalidad Navidad/Verano), promociones y cambios en lead time. 
-          Presenta el P&L al CFO para justificar inversiones.
-        </p>
-      </div>
-
-      <div class="use-case-card">
-        <h3 class="use-case-title">Consultoría</h3>
-        <p class="feature-desc">
-          Herramienta de prototipado rápido para presentar propuestas a clientes. 
-          Demuestra el impacto económico de cambiar políticas de inventario.
-        </p>
-      </div>
+    <div class="chip-row" data-reveal style="margin-top:28px;">
+      <span>Python 3.11</span><span>SimPy</span><span>Streamlit</span><span>Pandas</span><span>NumPy</span><span>Plotly</span><span>Matplotlib</span>
     </div>
   </section>
 
-  <!-- Capturas de Pantalla -->
-  <section class="content-section">
-    <h2 class="section-title">Capturas de Pantalla</h2>
-    
-    <h3 class="screenshot-title">Tablero Financiero P&L</h3>
-    <img src="../Media/supply-chain-sim/tablero-pl.png" 
-         alt="Tablero Financiero P&L con métricas en euros - Dashboard ejecutivo con ingresos potenciales, costes operativos e impacto en margen" 
-         class="screenshot-img"
-         loading="lazy"
-         width="1200"
-         height="675">
-    <p class="screenshot-caption">
-      <strong>Vista completa:</strong> Demanda valorada (9,180€), Coste Total (1,241€), Impacto 13.5% con -86.5% margen. 
-      Desglose P&L en tabla con € y % del total.
-    </p>
+  <!-- Siguiente proyecto -->
+  <a href="../finpredict-rnn/" class="next-project">
+    <span class="lbl">Siguiente proyecto — 03</span>
+    <span class="name">FinPredict-RNN</span>
+  </a>
 
-    <h3 class="screenshot-title">Análisis What-If Interactivo</h3>
-    <img src="../Media/supply-chain-sim/whatif-comparison.png" 
-         alt="Análisis What-If Interactivo - Comparación lado a lado entre escenario base y escenario +50% demanda con ROI neto" 
-         class="screenshot-img"
-         loading="lazy"
-         width="1200"
-         height="675">
-    <p class="screenshot-caption">
-      <strong>Comparativa financiera:</strong> Demanda media (2.5 → 3.8 uds/día), Coste Total delta (-78€), 
-      Nivel Servicio (100.0%), ROI Neto (-832€) con indicador de rentabilidad.
-    </p>
-
-    <h3 class="screenshot-title">Resultados de Simulación</h3>
-    <img src="../Media/supply-chain-sim/resultados-simulacion.png" 
-         alt="Resultados de Simulación - Tarjetas ejecutivas con métricas clave: Coste Total, Almacenamiento, Pedidos y Rupturas" 
-         class="screenshot-img"
-         loading="lazy"
-         width="1200"
-         height="675">
-    <p class="screenshot-caption">
-      <strong>Vista ejecutiva:</strong> 4 tarjetas con gradientes corporativos. Stock promedio, número de pedidos, 
-      y costes con tooltips explicativos.
-    </p>
-
-    <h3 class="screenshot-title">Asistente Inteligente EOQ</h3>
-    <img src="../Media/supply-chain-sim/eoq-asistente.png" 
-         alt="Asistente Inteligente EOQ - Recomendación dinámica de cantidad óptima de pedido con cálculo en tiempo real" 
-         class="screenshot-img"
-         style="max-width: 500px;"
-         loading="lazy">
-    <p class="screenshot-caption">
-      <strong>Ayuda contextual:</strong> El asistente EOQ muestra advertencias cuando la cantidad actual (Q) difiere del óptimo calculado. 
-      Incluye métrica visual con delta vs actual.
-    </p>
-  </section>
-
-  <!-- Stack Tecnológico -->
-  <section class="content-section">
-    <h2 class="section-title">Stack Tecnológico</h2>
-    <div class="tech-stack">
-      <span class="tech-tag">Python 3.11</span>
-      <span class="tech-tag">Streamlit</span>
-      <span class="tech-tag">SimPy</span>
-      <span class="tech-tag">Pandas</span>
-      <span class="tech-tag">NumPy</span>
-      <span class="tech-tag">Plotly</span>
-      <span class="tech-tag">Matplotlib</span>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/#trabajo">Todos los proyectos →</a>
     </div>
-  </section>
-
-  <!-- Desafíos Técnicos -->
-  <section class="content-section">
-    <h2 class="section-title">Desafíos Técnicos Resueltos</h2>
-    <p class="section-description">
-      Durante el desarrollo del simulador, enfrenté varios retos interesantes:
-    </p>
-    <ul class="styled-list">
-      <li>
-        <strong>Experiencia "0 Segundos":</strong> Implementación de datos semilla con simulación automática 
-        al cargar. Session state inicializado con resultados pre-calculados para visualización instantánea
-      </li>
-      <li>
-        <strong>Tablero Financiero P&L:</strong> Diseño de dashboard ejecutivo con métricas en € (no solo unidades). 
-        Cálculo de ingresos potenciales, % costes/ingresos, y desglose P&L con formato profesional
-      </li>
-      <li>
-        <strong>Performance:</strong> Optimización de simulaciones para ejecutar 365 días en <1 segundo 
-        mediante vectorización NumPy y procesos concurrentes SimPy
-      </li>
-      <li>
-        <strong>Diseño Corporativo:</strong> Theming profesional con config.toml (paleta azul #1E3A8A). 
-        Cumplimiento WCAG AA (contraste 14.7:1). Gradientes CSS coherentes en toda la app
-      </li>
-      <li>
-        <strong>UX Profesional:</strong> Interfaz con validaciones en tiempo real, tooltips explicativos, 
-        popovers contextuales, y banner informativo para datos demo
-      </li>
-      <li>
-        <strong>Visualización Avanzada:</strong> Gráficos Plotly dinámicos con paleta corporativa coherente. 
-        Pie charts, histogramas, scatter plots, mapas de calor y análisis de sensibilidad
-      </li>
-      <li>
-        <strong>Análisis What-If en Tiempo Real:</strong> Sistema interactivo con slider (0.5x - 2.0x demanda). 
-        Comparación automática Base vs escenario modificado con cálculo de ROI neto
-      </li>
-      <li>
-        <strong>EOQ Dinámico:</strong> Cálculo reactivo de Cantidad Económica de Pedido que responde 
-        instantáneamente a cambios en demanda, costes de almacenamiento y costes de pedido
-      </li>
-      <li>
-        <strong>Gestión de Estado:</strong> Session state robusto en Streamlit para mantener resultados 
-        entre interacciones. Exportación sin pérdida de datos (Excel con formato €, TXT, CSV)
-      </li>
-    </ul>
-  </section>
-
-  <!-- CTA Final -->
-  <section class="content-section">
-    <div class="cta-section">
-      <h2 class="section-title">Pruébalo Ahora</h2>
-      <p class="section-description" style="margin-bottom: var(--space-lg);">
-        La aplicación está desplegada en Streamlit Cloud y es completamente gratuita. 
-        Experimenta con diferentes estrategias de inventario y visualiza el impacto financiero en tiempo real.
-      </p>
-      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="btn-primary">
-        Abrir Simulador →
-      </a>
-    </div>
-  </section>
-
-  <!-- Footer Simple -->
-  <footer class="site-footer">
-    <p class="footer-text">© 2025 José Candon Rubio</p>
   </footer>
 
-  <script>
-    // Sistema de tema oscuro
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      // Cambiar ícono
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      if (newTheme === 'dark') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-      }
-      
-      // Animación suave
-      document.documentElement.style.transition = 'background 0.3s ease';
-      setTimeout(() => {
-        document.documentElement.style.transition = '';
-      }, 300);
-    }
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <button class="close">Cerrar ✕</button>
+    <img alt="" />
+  </div>
 
-    function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const hamburger = document.querySelector('.hamburger');
-      menu.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    }
-
-    // Aplicar tema guardado al cargar
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-      
-      // Actualizar ícono según tema actual
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      if (currentTheme === 'dark' && sunIcon && moonIcon) {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      }
-
-      // Cerrar menú móvil al hacer clic fuera
-      document.addEventListener('click', (e) => {
-        const menu = document.getElementById('mobileMenu');
-        const hamburger = document.querySelector('.hamburger');
-        if (!menu || !hamburger) return;
-        const isClickInsideMenu = menu.contains(e.target);
-        const isClickOnHamburger = hamburger.contains(e.target);
-        
-        if (!isClickInsideMenu && !isClickOnHamburger && menu.classList.contains('active')) {
-          menu.classList.remove('active');
-          hamburger.classList.remove('active');
-        }
-      });
-
-      // Cerrar menú móvil al hacer clic en un link
-      const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          const menu = document.getElementById('mobileMenu');
-          const hamburger = document.querySelector('.hamburger');
-          if (menu && hamburger) {
-            menu.classList.remove('active');
-            hamburger.classList.remove('active');
-          }
-        });
-      });
-    });
-  </script>
+  <script src="../scripts/main.js" defer></script>
 </body>
 </html>

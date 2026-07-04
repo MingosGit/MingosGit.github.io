@@ -3,47 +3,55 @@
   <!-- Página principal -->
   <url>
     <loc>https://josecrub.com/</loc>
-    <lastmod>2025-12-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  
+
   <!-- Sobre mí -->
   <url>
     <loc>https://josecrub.com/about/</loc>
-    <lastmod>2025-12-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
   <!-- Barcelona Real Estate Intelligence -->
   <url>
     <loc>https://josecrub.com/barcelona-real-estate/</loc>
-    <lastmod>2025-12-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- BeeGame -->
-  <url>
-    <loc>https://josecrub.com/beegame/</loc>
-    <lastmod>2025-12-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
+
   <!-- Supply Chain Simulator -->
   <url>
     <loc>https://josecrub.com/supply-chain-simulator/</loc>
-    <lastmod>2025-12-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
+  <!-- FinPredict-RNN -->
+  <url>
+    <loc>https://josecrub.com/finpredict-rnn/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- BeeGame -->
+  <url>
+    <loc>https://josecrub.com/beegame/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- TorneoYa -->
   <url>
     <loc>https://josecrub.com/TorneoYa/</loc>
-    <lastmod>2025-12-12</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

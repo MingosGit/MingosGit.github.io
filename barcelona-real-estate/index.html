@@ -3,1165 +3,196 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Sistema de Business Intelligence para mercado inmobiliario Barcelona. +10k propiedades analizadas con Power BI, DAX y modelado predictivo." />
-  <title>Barcelona Real Estate Intelligence - José Candon Rubio</title>
+  <meta name="description" content="Barcelona Real Estate Intelligence — sistema de BI que analiza +10.000 propiedades con Power BI, modelado dimensional y machine learning integrado." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/barcelona-real-estate/" />
+  <title>Barcelona Real Estate Intelligence — José Candon Rubio</title>
   <link rel="icon" type="image/png" href="../Media/favicon.png" />
-  <link rel="preconnect" href="https://app.powerbi.com" crossorigin />
-  <link rel="stylesheet" href="../styles/design-system.css" />
-  
+
   <!-- Open Graph -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="article" />
   <meta property="og:url" content="https://josecrub.com/barcelona-real-estate/" />
-  <meta property="og:title" content="Barcelona Real Estate Intelligence System" />
-  <meta property="og:description" content="Descodificando el mercado inmobiliario opaco de Barcelona con IA y Big Data. Más de 10k registros analizados para descubrir patrones ocultos de valoración." />
-  <meta property="og:image" content="https://josecrub.com/Media/Perview.png" />
-  
-  <!-- Script de tema -->
-  <script>
-    (function() {
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = systemPrefersDark ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
-      if (!localStorage.getItem('theme')) {
-        localStorage.setItem('theme', theme);
-      }
-    })();
-  </script>
-  
-  <style>
-    /* ============================================
-       BARCELONA REAL ESTATE - DISEÑO MODERNO
-       ============================================ */
-
-    :root {
-      --color-primary: #ff6b35;
-      --color-secondary: #004e89;
-      --color-accent: #f77f00;
-      --color-dark: #1a1a2e;
-      --color-light: #f8f9fa;
-      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --shadow-color: rgba(102, 126, 234, 0.4);
-      
-      --bg-primary: #f8f9fa;
-      --bg-secondary: #ffffff;
-      --bg-gradient: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a5568;
-      --border-color: rgba(102, 126, 234, 0.15);
-      --card-bg: #ffffff;
-      --nav-bg: rgba(255, 255, 255, 0.8);
-    }
-
-    [data-theme="dark"] {
-      --bg-primary: #0f0f1e;
-      --bg-secondary: #1a1a2e;
-      --bg-gradient: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
-      --text-primary: #ffffff;
-      --text-secondary: #cbd5e0;
-      --border-color: rgba(102, 126, 234, 0.25);
-      --card-bg: rgba(26, 26, 46, 0.6);
-      --nav-bg: rgba(26, 26, 46, 0.95);
-      --shadow-color: rgba(102, 126, 234, 0.5);
-      --gradient-primary: linear-gradient(135deg, #7c8fef 0%, #9370c7 100%);
-      --gradient-accent: linear-gradient(135deg, #60b5fc 0%, #20d4f4 100%);
-    }
-
-    body {
-      padding: 0;
-      overflow-x: hidden;
-      background: var(--bg-gradient);
-      position: relative;
-      transition: background 0.3s ease;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: -50%;
-      right: -50%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-      animation: float 30s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(5deg); }
-      66% { transform: translate(-20px, 20px) rotate(-5deg); }
-    }
-
-    /* NAVEGACIÓN FLOTANTE */
-    .site-header {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      padding: 12px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 900px;
-      width: calc(100% - 40px);
-      border-radius: 50px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      animation: slideDown 0.6s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    [data-theme="dark"] .site-header {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-
-    .site-logo {
-      font-weight: var(--fw-bold);
-      font-size: var(--text-base);
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      z-index: 1001;
-      letter-spacing: -0.02em;
-    }
-
-    .site-nav {
-      display: flex;
-      gap: var(--space-md);
-      align-items: center;
-    }
-
-    .site-nav .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-sm);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .site-nav .nav-link::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-primary);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 20px;
-      z-index: -1;
-    }
-
-    .site-nav .nav-link:hover {
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px var(--shadow-color);
-    }
-
-    .site-nav .nav-link:hover::before {
-      opacity: 1;
-    }
-
-    .theme-toggle {
-      display: flex;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      color: var(--text-primary);
-      transition: all 0.3s ease;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(102, 126, 234, 0.1);
-      transform: rotate(20deg) scale(1.1);
-    }
-
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* CONTAINER */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 140px var(--space-lg) 60px;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      font-weight: var(--fw-medium);
-      margin-bottom: var(--space-xl);
-      transition: all 0.3s ease;
-    }
-
-    .back-link:hover {
-      color: var(--text-primary);
-      gap: 12px;
-    }
-
-    /* HERO */
-    .hero-section {
-      text-align: center;
-      margin-bottom: var(--space-xl);
-    }
-
-    .hero-label {
-      display: inline-block;
-      font-size: var(--text-xs);
-      font-weight: var(--fw-semibold);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: white;
-      padding: 10px 20px;
-      background: var(--gradient-primary);
-      border-radius: 30px;
-      box-shadow: 0 4px 15px var(--shadow-color);
-      margin-bottom: var(--space-md);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: var(--fw-bold);
-      margin: 0 0 var(--space-lg);
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .subtitle {
-      font-size: clamp(1.05rem, 2vw, 1.2rem);
-      color: var(--text-secondary);
-      margin: 0 0 var(--space-xl);
-      line-height: 1.7;
-    }
-
-    .section {
-      margin-bottom: var(--space-2xl);
-    }
-
-    h2 {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: var(--fw-bold);
-      margin: var(--space-2xl) 0 var(--space-lg);
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .section p {
-      font-size: var(--text-base);
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin: var(--space-md) 0;
-    }
-
-    .tech-list {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-md) 0;
-    }
-
-    .tech-list li {
-      position: relative;
-      padding-left: 28px;
-      margin-bottom: var(--space-sm);
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .tech-list li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--color-primary);
-      font-weight: bold;
-    }
-
-    .tech-list li strong {
-      color: var(--text-primary);
-    }
-
-    /* FOOTER */
-    .site-footer {
-      max-width: 1100px;
-      margin: var(--space-2xl) auto 0;
-      padding: var(--space-lg);
-      text-align: center;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .footer-text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    /* HAMBURGER MENU */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .hamburger span {
-      width: 24px;
-      height: 2.5px;
-      background: var(--text-primary);
-      border-radius: 2px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .hamburger:hover {
-      background: rgba(102, 126, 234, 0.1);
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(102, 126, 234, 0.2);
-      border-radius: 24px;
-      padding: 20px;
-      width: calc(100% - 40px);
-      max-width: 400px;
-      box-shadow: 0 8px 32px var(--shadow-color);
-      z-index: 999;
-      animation: slideDown 0.3s ease-out;
-    }
-
-    [data-theme="dark"] .mobile-menu {
-      background: rgba(26, 26, 46, 0.95);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-color: rgba(102, 126, 234, 0.3);
-    }
-
-    .mobile-menu.active {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .mobile-menu .nav-link {
-      color: var(--text-primary);
-      text-decoration: none;
-      font-weight: var(--fw-medium);
-      font-size: var(--text-base);
-      padding: 14px 20px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .mobile-menu .nav-link:hover {
-      background: var(--gradient-primary);
-      color: white;
-      transform: translateX(4px);
-    }
-
-    @media (max-width: 768px) {
-      .site-header {
-        top: 12px;
-        padding: 10px 20px;
-        width: calc(100% - 24px);
-      }
-
-      .site-nav {
-        display: none !important;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-
-      .container {
-        padding: 140px var(--space-md) 50px;
-      }
-
-      .hero-label {
-        margin-top: 20px;
-      }
-    }
-    
-    /* ESTILOS ESPECÍFICOS DE BARCELONA REAL ESTATE */
-    
-    /* ESTILOS ESPECÍFICOS DE BARCELONA REAL ESTATE */
-    
-    /* DASHBOARD EMBED */
-    .dashboard-section {
-      margin: 0 0 var(--space-xl);
-    }
-
-    .dashboard-wrapper {
-      background: var(--card-bg);
-      border-radius: var(--radius-xl);
-      padding: var(--space-lg);
-      border: 2px solid var(--border-color);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-      transition: all 0.4s ease;
-    }
-
-    .dashboard-wrapper:hover {
-      box-shadow: 0 8px 32px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    [data-theme="dark"] .dashboard-wrapper {
-      background: rgba(26, 26, 46, 0.4);
-      backdrop-filter: blur(10px);
-      border-color: rgba(102, 126, 234, 0.2);
-    }
-
-    .dashboard-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* Ratio 16:9 CRÍTICO */
-      height: 0;
-      overflow: hidden;
-      border-radius: var(--radius-lg);
-      background: var(--bg-primary);
-      border: 2px solid var(--border-color);
-    }
-
-    .dashboard-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .dashboard-note {
-      margin-top: var(--space-md);
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      text-align: center;
-      font-style: italic;
-    }
-
-    /* INSIGHT CARDS */
-    .insights-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-md);
-      margin-top: var(--space-xl);
-    }
-    
-    @media (min-width: 769px) {
-      .insights-grid {
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      }
-    }
-
-    .insight-card {
-      background: var(--card-bg);
-      padding: var(--space-xl);
-      border-radius: var(--radius-xl);
-      border: 2px solid var(--border-color);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    }
-
-    .insight-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .insight-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.5);
-    }
-
-    .insight-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    [data-theme="dark"] .insight-card {
-      background: rgba(26, 26, 46, 0.4);
-      backdrop-filter: blur(10px);
-      border-color: rgba(102, 126, 234, 0.2);
-    }
-
-    .insight-number {
-      font-size: var(--text-xs);
-      font-weight: var(--fw-bold);
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1.5px;
-      margin-bottom: var(--space-sm);
-      text-transform: uppercase;
-    }
-
-    .insight-title {
-      font-size: var(--text-lg);
-      font-weight: var(--fw-semibold);
-      margin-bottom: var(--space-sm);
-      color: var(--text-primary);
-      line-height: 1.3;
-    }
-
-    .insight-desc {
-      font-size: var(--text-sm);
-      line-height: 1.7;
-      color: var(--text-secondary);
-    }
-
-    .insight-desc strong {
-      color: var(--text-primary);
-      font-weight: var(--fw-semibold);
-    }
-
-    /* BUTTONS */
-    .btn-wrapper {
-      text-align: center;
-      margin-top: var(--space-lg);
-      display: flex;
-      gap: var(--space-sm);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-powerbi {
-      background: white;
-      border: 2px solid rgba(102, 126, 234, 0.3);
-      color: var(--color-dark);
-      padding: 16px 32px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-medium);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-powerbi:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
-    }
-
-    [data-theme="dark"] .btn-powerbi {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(102, 126, 234, 0.3);
-      color: var(--text-primary);
-    }
-
-    [data-theme="dark"] .btn-powerbi:hover {
-      border-color: var(--color-primary);
-      background: var(--color-primary);
-      color: white;
-    }
-
-    .btn-powerbi::after {
-      content: " ↗";
-      font-size: 14px;
-    }
-
-    /* DOWNLOAD NOTICE */
-    .download-notice {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 140, 66, 0.05) 100%);
-      border: 2px solid rgba(255, 107, 53, 0.3);
-      border-radius: 20px;
-      padding: 32px;
-      margin: 0 0 32px;
-      text-align: center;
-    }
-
-    [data-theme="dark"] .download-notice {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 140, 66, 0.1) 100%);
-      border-color: rgba(255, 107, 53, 0.4);
-    }
-
-    .download-notice h3 {
-      font-size: 1.3rem;
-      margin: 0 0 12px;
-      color: #ff6b35;
-    }
-
-    .download-notice p {
-      margin: 0 0 20px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .download-notice p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .download-notice strong {
-      color: var(--text-primary);
-    }
-
-    /* IMAGE GALLERY */
-    .dashboard-preview {
-      margin: 48px 0;
-    }
-
-    .preview-title {
-      font-size: 1.5rem;
-      font-weight: var(--fw-bold);
-      margin: 0 0 32px;
-      color: var(--text-primary);
-      text-align: center;
-      letter-spacing: -0.02em;
-    }
-
-    .image-gallery {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      margin: 0;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .gallery-item {
-      background: var(--card-bg);
-      border: 2px solid var(--border-color);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: zoom-in;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      position: relative;
-    }
-
-    [data-theme="dark"] .gallery-item {
-      background: rgba(26, 26, 46, 0.5);
-      border-color: rgba(102, 126, 234, 0.3);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 20px 50px var(--shadow-color);
-      border-color: rgba(102, 126, 234, 0.6);
-    }
-
-    .gallery-item:hover .gallery-caption {
-      background: var(--gradient-primary);
-      color: white;
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .gallery-item:hover img {
-      transform: scale(1.02);
-    }
-
-    .gallery-caption {
-      padding: 20px 24px;
-      font-size: 15px;
-      font-weight: var(--fw-semibold);
-      color: var(--text-primary);
-      text-align: center;
-      background: var(--bg-primary);
-      transition: all 0.3s ease;
-      letter-spacing: -0.01em;
-    }
-
-    /* LIGHTBOX MODAL */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.96);
-      backdrop-filter: blur(10px);
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-      padding: 20px;
-    }
-
-    .lightbox.active {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .lightbox img {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
-      cursor: default;
-      animation: zoomIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes zoomIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      font-size: 32px;
-      color: white;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      line-height: 1;
-      font-weight: 300;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .lightbox-close:hover {
-      background: rgba(255, 107, 53, 0.9);
-      border-color: rgba(255, 107, 53, 1);
-      transform: rotate(90deg) scale(1.1);
-    }
-
-    @keyframes fadeIn {
-      from { 
-        opacity: 0;
-        backdrop-filter: blur(0);
-      }
-      to { 
-        opacity: 1;
-        backdrop-filter: blur(10px);
-      }
-    }
-
-    .btn-download {
-      background: var(--gradient-primary);
-      border: none;
-      color: white;
-      padding: 18px 36px;
-      font-size: var(--text-base);
-      font-weight: var(--fw-semibold);
-      border-radius: 50px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 20px var(--shadow-color);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-download::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .btn-download:hover::before {
-      left: 100%;
-    }
-
-    .btn-download:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 12px 35px var(--shadow-color);
-    }
-
-    .btn-download::after {
-      content: " ⬇";
-      font-size: 14px;
-    }
-
-    @media (max-width: 768px) {
-      .dashboard-wrapper {
-        padding: var(--space-sm);
-      }
-      
-      .dashboard-note {
-        font-size: var(--text-xs);
-      }
-      
-      .btn-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      
-      .btn-powerbi,
-      .btn-download {
-        font-size: var(--text-sm);
-        padding: 12px 24px;
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-      }
-    }
-  </style>
+  <meta property="og:title" content="Barcelona Real Estate Intelligence" />
+  <meta property="og:description" content="Sistema de BI que analiza +10.000 propiedades con Power BI, modelado dimensional y machine learning integrado." />
+  <meta property="og:image" content="https://josecrub.com/barcelona-real-estate/Media/MercadoActual.png" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/main.css" />
 </head>
 <body>
-  <!-- Navegación Flotante -->
-  <header class="site-header">
-    <a href="/" class="site-logo">José Candon</a>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <button class="theme-toggle" aria-label="Cambiar tema" onclick="toggleTheme()">
-        <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-        </svg>
-        <svg class="moon-icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-        </svg>
-      </button>
-      <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/#trabajo" class="nav-link"><sup>01</sup>Proyectos</a>
+      <a href="/about/" class="nav-link"><sup>02</sup>Sobre mí</a>
+      <a href="/#contacto" class="nav-link"><sup>03</sup>Contacto</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
     </div>
-    <nav class="site-nav">
-      <a href="/#proyectos" class="nav-link">Proyectos</a>
-      <a href="/about/" class="nav-link">Sobre mí</a>
-      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-    </nav>
+    <button class="nav-burger" aria-label="Abrir menú">Menú</button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="menu-overlay">
+    <a href="/#trabajo"><span class="idx">01</span>Proyectos</a>
+    <a href="/about/"><span class="idx">02</span>Sobre mí</a>
+    <a href="/#contacto"><span class="idx">03</span>Contacto</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/">Inicio</a> / <a href="/#trabajo">Proyectos</a> / <span>01</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Barcelona<br />Real <span class="serif-it acid">Estate</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      Sistema de business intelligence que analiza <strong>más de 10.000 propiedades</strong>
+      de Barcelona para identificar oportunidades de inversión mediante modelado predictivo
+      y análisis multivariable. Dos vistas complementarias: exploración de mercado y
+      simulación financiera con IA.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Tipo</dt>
+        <dd>Business Intelligence</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Power BI · DAX · Power Query M</dd>
+      </div>
+      <div>
+        <dt>Datos</dt>
+        <dd>+10.000 propiedades</dd>
+      </div>
+      <div>
+        <dt>Entregable</dt>
+        <dd><a href="../Media/barcelona-real-estate.pbix" download>Descargar .pbix ↓</a></dd>
+      </div>
+    </dl>
   </header>
 
-  <!-- Menú Móvil -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="/#proyectos" class="nav-link">Proyectos</a>
-    <a href="/about/" class="nav-link">Sobre mí</a>
-    <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub</a>
-  </div>
+  <!-- Dashboard -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>El dashboard</h2>
+    </div>
 
-  <div class="container">
-    
-    <section class="hero-section">
-      <span class="hero-label">Business Intelligence</span>
-      <h1>Barcelona Real Estate Intelligence</h1>
-      <p class="subtitle">Descodificación del mercado inmobiliario mediante IA y Big Data</p>
-    </section>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="Media/MercadoActual.png" alt="Vista de análisis de mercado con mapa interactivo y gráfico de oportunidades precio vs tamaño" loading="lazy" />
+        <figcaption>Análisis geoespacial y oportunidades de mercado</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="Media/SimIA.png" alt="Vista de inteligencia con árbol de descomposición AI y simulación de precios" loading="lazy" />
+        <figcaption>AI Decomposition Tree y simulación predictiva</figcaption>
+      </figure>
+    </div>
 
-    <!-- INTRO Y CONTEXTO -->
-    <section class="section">
-      <p style="font-size: 17px; line-height: 1.7; margin-bottom: 24px;">
-        Sistema de Business Intelligence que analiza <strong>+10,000 propiedades</strong> en Barcelona 
-        para identificar oportunidades de inversión mediante modelado predictivo y análisis multivariable. 
-        El dashboard integra dos vistas complementarias: exploración de mercado y simulación financiera con IA.
-      </p>
-    </section>
-
-    <!-- DASHBOARD (DESPUÉS DEL CONTEXTO) -->
-    <section class="dashboard-section">
-      <!-- Aviso de Descarga -->
-      <div class="download-notice">
-        <h3>Visualización del Dashboard</h3>
-        <p>
-          <strong>El dashboard embebido requiere autenticación de Power BI.</strong> Para una experiencia óptima, 
-          descargue el archivo <code>.pbix</code> y ábralo con <a href="https://powerbi.microsoft.com/desktop/" target="_blank" rel="noopener" style="color: #ff6b35; text-decoration: underline;">Power BI Desktop</a> (gratuito).
-        </p>
-        <p style="margin-top: 12px;">
-          Esto le permitirá interactuar con todas las visualizaciones, filtros y funcionalidades de IA sin restricciones.
-        </p>
-      </div>
-
-      <!-- Vista Previa del Dashboard -->
-      <div class="dashboard-preview">
-        <h3 class="preview-title">Vista Previa del Dashboard</h3>
-        <div class="image-gallery">
-          <div class="gallery-item" onclick="openLightbox('Media/MercadoActual.png')">
-            <img src="Media/MercadoActual.png" alt="Vista de análisis de mercado con mapa interactivo y gráfico de oportunidades precio vs tamaño">
-            <div class="gallery-caption">Análisis Geoespacial y Oportunidades de Mercado</div>
-          </div>
-          <div class="gallery-item" onclick="openLightbox('Media/SimIA.png')">
-            <img src="Media/SimIA.png" alt="Vista de inteligencia con árbol de descomposición AI y simulación de precios">
-            <div class="gallery-caption">AI Decomposition Tree y Simulación Predictiva</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dashboard-wrapper">
-        <div class="dashboard-container">
-          <iframe 
-            title="Barcelona Real Estate Analytics Dashboard Interactivo" 
-            src="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" 
-            frameborder="0"
-            allowFullScreen="true"
-            aria-label="Dashboard interactivo de Power BI con análisis de mercado inmobiliario de Barcelona">
-          </iframe>
-        </div>
-        <p class="dashboard-note">⚠️ La visualización embebida puede requerir inicio de sesión. Se recomienda descargar el archivo para acceso completo.</p>
-        <div class="btn-wrapper">
-          <a href="../Media/barcelona-real-estate.pbix" download class="btn-download" aria-label="Descargar dashboard de Barcelona Real Estate en formato pbix">Descargar Informe (Recomendado)</a>
-          <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn-powerbi" aria-label="Abrir dashboard de Barcelona Real Estate en pantalla completa en Power BI, abre en nueva pestaña">Intentar abrir en Power BI</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- HALLAZGOS CLAVE -->
-    <section class="section">
-      <h2>Hallazgos Clave</h2>
+    <div class="note warn" data-reveal style="margin-top:24px;">
+      <h3>Acceso al informe</h3>
       <p>
-        El análisis cuantitativo revela patrones estructurales no evidentes en el mercado barcelonés 
-        que redefinen los criterios tradicionales de valoración:
+        El dashboard embebido requiere autenticación de Power BI. Para la experiencia completa,
+        <strong>descarga el archivo <code>.pbix</code></strong> y ábrelo con
+        <a href="https://powerbi.microsoft.com/desktop/" target="_blank" rel="noopener">Power BI Desktop</a> (gratuito):
+        tendrás todas las visualizaciones, filtros y funciones de IA sin restricciones.
       </p>
+    </div>
 
-      <div class="insights-grid">
-        <article class="insight-card">
-          <div class="insight-number">HALLAZGO 1</div>
-          <h3 class="insight-title">Primacía de Atributos Cualitativos en Segmentos Premium</h3>
-          <p class="insight-desc">
-            El modelo de regresión identifica que en distritos de alto valor (Eixample, Sant Gervasi), 
-            la <strong>orientación exterior</strong> ejerce mayor peso explicativo sobre el precio (coeficiente β=0.34) 
-            que el número de habitaciones (β=0.21). Una propiedad de 2 dormitorios con orientación óptima 
-            presenta valoración superior (+12%) respecto a una de 3 dormitorios interior. 
-            Implicación estratégica: priorizar luminosidad natural sobre superficie bruta en inversiones premium.
-          </p>
-        </article>
+    <div class="btn-row" data-reveal>
+      <a href="../Media/barcelona-real-estate.pbix" download class="btn btn-solid">Descargar informe ↓</a>
+      <a href="https://app.powerbi.com/reportEmbed?reportId=5f564d16-5d82-4f24-8fff-e1ff02711f6a&autoAuth=true&ctid=a2313cab-b1c3-4f3a-bb11-2157447ddbb4" target="_blank" rel="noopener" class="btn">Abrir en Power BI ↗</a>
+    </div>
+  </section>
 
-        <article class="insight-card">
-          <div class="insight-number">HALLAZGO 2</div>
-          <h3 class="insight-title">Estudios: Máxima Eficiencia Precio/m²</h3>
-          <p class="insight-desc">
-            El análisis incluye propiedades clasificadas como <strong>0 habitaciones</strong> (estudios/lofts), 
-            revelando el precio/m² más elevado del mercado (€5,200 promedio) con umbral de inversión accesible. 
-            Perfil objetivo: inversores con capital limitado que buscan maximizar yield por alquiler de corta estancia 
-            en zonas de alta demanda turística (Ciutat Vella, Gràcia). ROI anualizado proyectado: 7.2% vs 4.8% 
-            en tipologías convencionales.
-          </p>
-        </article>
+  <!-- Hallazgos -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>Hallazgos clave</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      El análisis cuantitativo revela patrones estructurales no evidentes que redefinen
+      los criterios tradicionales de valoración en el mercado barcelonés:
+    </p>
 
-        <article class="insight-card">
-          <div class="insight-number">HALLAZGO 3</div>
-          <h3 class="insight-title">Diferencial de Volatilidad por Zona</h3>
-          <p class="insight-desc">
-            El simulador de escenarios cuantifica la sensibilidad del ROI ante <strong>variaciones del ±10%</strong> 
-            en valoración de mercado (ciclos expansivos/recesivos). Análisis comparativo: barrios consolidados 
-            (Les Corts, Sarrià) exhiben volatilidad de precio 40% inferior vs. zonas emergentes (Poblenou, Besòs). 
-            Coeficiente de variación: 0.18 vs 0.31 respectivamente. Para perfiles de riesgo conservador, 
-            esto establece criterios geográficos de asignación de capital.
-          </p>
-        </article>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Hallazgo 01 — Luz &gt; metros</h3>
+        <p>
+          En distritos premium (Eixample, Sant Gervasi), la <strong>orientación exterior</strong> pesa más
+          en el precio (β=0,34) que el número de habitaciones (β=0,21). Un piso de 2 dormitorios
+          con orientación óptima se valora un <strong>+12&nbsp;%</strong> por encima de uno de 3 interior.
+          Implicación: priorizar luminosidad sobre superficie bruta en inversión premium.
+        </p>
       </div>
-    </section>
+      <div class="flat-card">
+        <h3>Hallazgo 02 — Estudios, máxima eficiencia</h3>
+        <p>
+          Las propiedades de <strong>0 habitaciones</strong> (estudios/lofts) registran el precio/m² más alto
+          del mercado (<strong>€5.200 de media</strong>) con umbral de entrada accesible. ROI anualizado
+          proyectado del <strong>7,2&nbsp;%</strong> frente al 4,8&nbsp;% de tipologías convencionales, ligado
+          a alquiler de corta estancia en Ciutat Vella y Gràcia.
+        </p>
+      </div>
+      <div class="flat-card">
+        <h3>Hallazgo 03 — Volatilidad por zona</h3>
+        <p>
+          El simulador de escenarios (±10&nbsp;% de valoración) muestra que los barrios consolidados
+          (Les Corts, Sarrià) tienen una volatilidad de precio <strong>40&nbsp;% inferior</strong> a las zonas
+          emergentes (Poblenou, Besòs): coeficiente de variación 0,18 vs 0,31. Criterio geográfico
+          claro para perfiles de riesgo conservador.
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <!-- STACK TÉCNICO -->
-    <section class="section">
-      <h2>Stack Técnico</h2>
-      <p>Infraestructura de datos y herramientas analíticas implementadas:</p>
-      <ul class="tech-list">
-        <li><strong>ETL Pipeline (Power Query M):</strong> Procesamiento de +10k registros con normalización de entidades duplicadas por distrito y estandarización de taxonomía de tipologías inmobiliarias inconsistentes.</li>
-        <li><strong>Modelado Dimensional (Star Schema):</strong> Arquitectura con tabla de hechos central (Propiedades) relacionada con dimensiones conformadas (Ubicación, Características Físicas, Dimensión Temporal) optimizada para agregaciones DAX de alto rendimiento.</li>
-        <li><strong>Capa de Cálculo DAX:</strong> Medidas dinámicas para precio/m² ponderado por superficie, cálculo de percentiles de mercado y proyecciones What-If mediante parámetros de campo con propagación automática de cambios.</li>
-        <li><strong>AI Decomposition Tree:</strong> Motor de machine learning integrado que ejecuta análisis de drivers multivariable mediante algoritmos de partición recursiva sobre el espacio dimensional completo.</li>
-      </ul>
-    </section>
-  </div>
+  <!-- Stack técnico -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>Cómo está construido</h2>
+    </div>
+    <ul class="case-list" data-reveal>
+      <li><strong>ETL con Power Query M:</strong> procesamiento de +10k registros, normalización de entidades duplicadas por distrito y estandarización de la taxonomía de tipologías inmobiliarias.</li>
+      <li><strong>Modelado dimensional (star schema):</strong> tabla de hechos central (Propiedades) relacionada con dimensiones conformadas — ubicación, características físicas y tiempo — optimizada para agregaciones DAX de alto rendimiento.</li>
+      <li><strong>Capa de cálculo DAX:</strong> medidas dinámicas de precio/m² ponderado por superficie, percentiles de mercado y proyecciones what-if con parámetros de campo.</li>
+      <li><strong>AI Decomposition Tree:</strong> análisis de drivers multivariable mediante particionamiento recursivo sobre el espacio dimensional completo.</li>
+    </ul>
+    <div class="chip-row" data-reveal>
+      <span>Power BI</span><span>DAX</span><span>Power Query M</span><span>Star Schema</span><span>AI Decomposition Tree</span>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <p class="footer-text">© 2025 José Candon Rubio</p>
+  <!-- Siguiente proyecto -->
+  <a href="../supply-chain-simulator/" class="next-project">
+    <span class="lbl">Siguiente proyecto — 02</span>
+    <span class="name">Supply Chain Simulator</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/#trabajo">Todos los proyectos →</a>
+    </div>
   </footer>
 
-  <!-- Lightbox para imágenes -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <button class="close">Cerrar ✕</button>
+    <img alt="" />
   </div>
 
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      // Cambiar icono
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      if (newTheme === 'dark') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-      }
-    }
-
-    function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const hamburger = document.querySelector('.hamburger');
-      menu.classList.toggle('active');
-      hamburger.classList.toggle('active');
-    }
-
-    function openLightbox(imgSrc) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightbox.classList.add('active');
-      lightboxImg.src = imgSrc;
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      const lightbox = document.getElementById('lightbox');
-      lightbox.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      if (currentTheme === 'dark' && sunIcon && moonIcon) {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-      }
-
-      // Cerrar lightbox con tecla Escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeLightbox();
-        }
-      });
-
-      // Cerrar menú móvil al hacer clic fuera
-      document.addEventListener('click', (e) => {
-        const menu = document.getElementById('mobileMenu');
-        const hamburger = document.querySelector('.hamburger');
-        const isClickInsideMenu = menu.contains(e.target);
-        const isClickOnHamburger = hamburger.contains(e.target);
-        
-        if (!isClickInsideMenu && !isClickOnHamburger && menu.classList.contains('active')) {
-          menu.classList.remove('active');
-          hamburger.classList.remove('active');
-        }
-      });
-
-      // Cerrar menú móvil al hacer clic en un link
-      const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          const menu = document.getElementById('mobileMenu');
-          const hamburger = document.querySelector('.hamburger');
-          menu.classList.remove('active');
-          hamburger.classList.remove('active');
-        });
-      });
-    });
-  </script>
+  <script src="../scripts/main.js" defer></script>
 </body>
 </html>

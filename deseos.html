@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de deseos · 2026 → 2033</title>
+<script>document.documentElement.classList.add('js');</script>
+<!--
+  Cómo mantenerlo:
+  · Marcar un deseo como cumplido → añade data-done="AAAA-MM-DD" a su .step
+  · Cambiar un plazo → edita data-deadline y el badge "Límite"
+  · La vista general, el marcador "Hoy" y el "Quedan" se calculan solos.
+-->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #08080b;
+    --card: rgba(23,23,31,0.72);
+    --border: #23232f;
+    --border-soft: rgba(255,255,255,0.06);
+    --lang: #4df0b8;   /* idiomas       — teal   */
+    --music: #a78bfa;  /* instrumentos  — violet */
+    --life: #f0a044;   /* cosas a hacer — amber  */
+    --now: #c8f045;    /* hoy           — lime   */
+    --late: #f06a6a;
+    --text: #e8e8ec;
+    --muted: #6b6b86;
+    --dim: #9090a8;
+  }
+
+  /* Cada categoría define su color; el resto de estilos tira de estas variables */
+  .cat-lang  { --c: #4df0b8; --c-deep: #2eb89a; --c-soft: rgba(77,240,184,0.12);  --c-mid: rgba(77,240,184,0.32);  --c-glow: rgba(77,240,184,0.5); }
+  .cat-music { --c: #a78bfa; --c-deep: #7e6ad0; --c-soft: rgba(167,139,250,0.12); --c-mid: rgba(167,139,250,0.34); --c-glow: rgba(167,139,250,0.55); }
+  .cat-life  { --c: #f0a044; --c-deep: #d18a38; --c-soft: rgba(240,160,68,0.12);  --c-mid: rgba(240,160,68,0.32);  --c-glow: rgba(240,160,68,0.5); }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 48px 20px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Ambient glows */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before {
+    width: 520px; height: 520px;
+    top: -180px; left: -120px;
+    background: radial-gradient(circle, rgba(240,160,68,0.13), transparent 70%);
+  }
+  body::after {
+    width: 600px; height: 600px;
+    bottom: -220px; right: -160px;
+    background: radial-gradient(circle, rgba(167,139,250,0.14), transparent 70%);
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ---------- HEADER ---------- */
+  .header { text-align: center; margin-bottom: 14px; }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(26px, 6vw, 44px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .header h1 .dest {
+    background: linear-gradient(100deg, var(--life), var(--lang) 55%, var(--music));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .chips {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px auto 0;
+    max-width: 640px;
+  }
+  .chip {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    background: rgba(255,255,255,0.035);
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+  .chip b { color: var(--text); font-weight: 500; }
+
+  /* legend */
+  .legend {
+    max-width: 760px;
+    margin: 26px auto 28px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i {
+    width: 9px; height: 9px; border-radius: 3px; display: inline-block;
+  }
+  .legend i.round { border-radius: 50%; }
+
+  /* ---------- VISTA GENERAL (barra) ---------- */
+  .overview {
+    max-width: 760px;
+    margin: 0 auto 48px;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 19px 12px;
+  }
+  .ov-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .ov { display: flex; gap: 14px; }
+
+  .ov-labels {
+    flex-shrink: 0;
+    width: 108px;
+    padding-top: 22px;
+  }
+  .ov-label {
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    color: var(--dim);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color .2s ease;
+  }
+  .ov-label:hover { color: var(--c); }
+  .ov-label.done::after { content: ' ✓'; color: var(--c); }
+
+  .ov-tracks {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    padding: 22px 0 20px;
+  }
+
+  .ov-tick {
+    position: absolute;
+    top: 2px;
+    font-size: 9px;
+    color: var(--muted);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .ov-tick .short { display: none; }
+  .ov-grid {
+    position: absolute;
+    top: 18px;
+    bottom: 20px;
+    width: 1px;
+    background: var(--border-soft);
+  }
+
+  .ov-row { position: relative; height: 20px; }
+  .ov-bar {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--c-soft), var(--c-mid));
+    transition: box-shadow .3s ease;
+  }
+  .ov-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: inherit;
+    background: var(--c);
+  }
+  .ov-end {
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--c);
+  }
+  .ov-row.done .ov-end { background: var(--c); }
+  .ov-row.late .ov-end { border-color: var(--late); }
+  .ov-row:hover .ov-bar { box-shadow: 0 0 12px var(--c-glow); }
+
+  .ov-now {
+    position: absolute;
+    top: 18px;
+    bottom: 20px;
+    width: 0;
+    border-left: 1px dashed var(--now);
+    z-index: 2;
+  }
+  .ov-now span {
+    position: absolute;
+    bottom: -17px;
+    left: 0;
+    transform: translateX(-50%);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--now);
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 6px;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom,
+      var(--life) 0%,
+      var(--life) 28%,
+      var(--lang) 46%,
+      var(--music) 62%,
+      var(--lang) 80%,
+      var(--music) 100%);
+    opacity: 0.4;
+  }
+
+  /* Separador de año */
+  .year {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 36px 0 18px;
+    position: relative;
+  }
+  .year-dot-wrap, .now-dot-wrap, .step-dot-wrap {
+    flex-shrink: 0;
+    width: 58px;
+    display: flex;
+    justify-content: center;
+  }
+  .year-dot {
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+    background: var(--bg);
+    border: 2px solid var(--dim);
+    position: relative;
+    z-index: 1;
+  }
+  .year-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .year-meta {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* Marcador "Hoy" — el script lo coloca en su sitio */
+  .now {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0 0 8px;
+    position: relative;
+  }
+  .now-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--now);
+    box-shadow: 0 0 0 4px rgba(200,240,69,0.15), 0 0 18px rgba(200,240,69,0.55);
+    position: relative;
+    z-index: 1;
+    animation: nowPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes nowPulse {
+    0%,100% { box-shadow: 0 0 0 4px rgba(200,240,69,0.15), 0 0 14px rgba(200,240,69,0.45); }
+    50%     { box-shadow: 0 0 0 7px rgba(200,240,69,0.08), 0 0 24px rgba(200,240,69,0.7); }
+  }
+  .now-label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--now);
+    white-space: nowrap;
+  }
+  .now-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,240,69,0.5), transparent);
+  }
+
+  /* Paso */
+  .step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .js .step, .js .year {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .js .step.visible, .js .year.visible { opacity: 1; transform: none; }
+
+  .step-dot-wrap { padding-top: 4px; }
+
+  .step-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--c-deep);
+    color: var(--c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: var(--bg);
+    transition: box-shadow .4s ease, transform .4s ease;
+  }
+  .step:hover .step-dot { transform: scale(1.12); box-shadow: 0 0 18px var(--c-glow); }
+  .step.done .step-dot { background: var(--c); color: var(--bg); font-size: 15px; }
+
+  .step-card {
+    flex: 1;
+    min-width: 0;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 19px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease, opacity .35s ease;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: linear-gradient(var(--c), var(--c-deep));
+  }
+  .step-card:hover {
+    transform: translateX(4px);
+    border-color: var(--c-mid);
+    box-shadow: 0 14px 40px -22px rgba(0,0,0,0.9);
+  }
+  .step.done .step-card {
+    border-color: var(--c-mid);
+    background: linear-gradient(135deg, var(--c-soft), var(--card));
+  }
+  .step.late .step-card { opacity: 0.6; }
+
+  .step-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .step-eyebrow {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c);
+    background: var(--c-soft);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 9px;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15.5px;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-ico {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+  .step-ico.glyph {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--c-mid);
+    border-radius: 6px;
+    color: var(--c);
+    opacity: 1;
+  }
+  .step-sub {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 6px 13px;
+    min-width: 88px;
+  }
+  .badge-label {
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  .badge-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--c);
+    white-space: nowrap;
+  }
+  .step.late [data-left] { color: var(--late); }
+
+  /* Cola de la línea */
+  .tail {
+    max-width: 760px;
+    margin: 0 auto;
+    height: 70px;
+    position: relative;
+  }
+  .tail::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: -22px;
+    width: 2px;
+    height: 90px;
+    background: repeating-linear-gradient(to bottom, var(--music) 0 6px, transparent 6px 14px);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+    opacity: 0.6;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    max-width: 760px;
+    margin: 20px auto 0;
+    padding: 16px 18px;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    font-size: 9.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .footer b { color: var(--dim); }
+
+  @media (max-width: 520px) {
+    body { padding: 32px 14px 60px; }
+    .timeline::before, .tail::before { left: 20px; }
+    .step-dot-wrap, .year-dot-wrap, .now-dot-wrap { width: 44px; }
+    .step, .year, .now { gap: 14px; }
+    .overview { padding: 14px 14px 10px; }
+    .ov { gap: 10px; }
+    .ov-labels { width: 84px; }
+    .ov-label { font-size: 9.5px; }
+    .ov-tick .full { display: none; }
+    .ov-tick .short { display: inline; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .step, .js .year { opacity: 1; transform: none; transition: none; }
+    .now-dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">Idiomas · Instrumentos · Cosas a hacer</div>
+    <h1>Lista de <span class="dest">deseos</span></h1>
+    <div class="chips">
+      <span class="chip">Desde <b>sep 2026</b></span>
+      <span class="chip"><b data-total>12</b> deseos</span>
+      <span class="chip">Horizonte <b>2033</b></span>
+      <span class="chip"><b data-done-count>0</b>/<span data-total>12</span> cumplidos</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:var(--lang)"></i>Idiomas</span>
+    <span><i style="background:var(--music)"></i>Instrumentos</span>
+    <span><i style="background:var(--life)"></i>Cosas a hacer</span>
+    <span><i class="round" style="background:var(--now)"></i>Hoy</span>
+  </div>
+
+  <!-- ===== VISTA GENERAL ===== -->
+  <section class="overview" aria-label="Vista general de plazos">
+    <div class="ov-head"><span>Vista general</span><span>sep 2026 → 2033</span></div>
+    <div class="ov">
+      <div class="ov-labels" id="ovLabels"></div>
+      <div class="ov-tracks" id="ovTracks">
+        <div class="ov-now" id="ovNow"><span>hoy</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <div class="timeline" id="timeline">
+
+    <div class="now" id="now">
+      <div class="now-dot-wrap"><span class="now-dot"></span></div>
+      <div class="now-label">Hoy · <span data-today>sep 2026</span></div>
+    </div>
+
+    <!-- ===== 2027 ===== -->
+    <div class="year" data-year="2027">
+      <div class="year-dot-wrap"><span class="year-dot"></span></div>
+      <span class="year-label">2027</span>
+      <span class="year-meta">4 deseos</span>
+    </div>
+
+    <div class="step cat-life" id="carne" data-deadline="2027-01-31" data-short="Carné">
+      <div class="step-dot-wrap"><div class="step-dot">01</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">🚗</span>Carné de conducir</div>
+            <div class="step-sub">Permiso B</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Ene 2027</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-life" id="madrid" data-deadline="2027-05-31" data-short="Real Madrid">
+      <div class="step-dot-wrap"><div class="step-dot">02</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">🏟️</span>Ver jugar al Real Madrid</div>
+            <div class="step-sub">En directo · esta temporada (2026/27)</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">May 2027</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-life" id="cr7" data-deadline="2027-05-31" data-short="CR7">
+      <div class="step-dot-wrap"><div class="step-dot">03</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">⚽</span>Ver jugar a Cristiano Ronaldo</div>
+            <div class="step-sub">En directo · esta temporada (2026/27)</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">May 2027</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-life" id="carrera" data-deadline="2027-07-31" data-short="Carrera">
+      <div class="step-dot-wrap"><div class="step-dot">04</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">🎓</span>Acabar la carrera</div>
+            <div class="step-sub">Ingeniería Informática · Universitat de Barcelona</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Jul 2027</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2028 ===== -->
+    <div class="year" data-year="2028">
+      <div class="year-dot-wrap"><span class="year-dot"></span></div>
+      <span class="year-label">2028</span>
+      <span class="year-meta">3 deseos</span>
+    </div>
+
+    <div class="step cat-lang" id="frances" data-deadline="2028-09-30" data-short="Francés">
+      <div class="step-dot-wrap"><div class="step-dot">05</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Idioma</div>
+            <div class="step-title"><span class="step-ico glyph">Fr</span>Francés</div>
+            <div class="step-sub">Como máximo en 2 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2028</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-music" id="piano" data-deadline="2028-09-30" data-short="Piano">
+      <div class="step-dot-wrap"><div class="step-dot">06</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Instrumento</div>
+            <div class="step-title"><span class="step-ico">🎹</span>Piano</div>
+            <div class="step-sub">En 2 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2028</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-life" id="ultraligero" data-deadline="2028-12-31" data-short="Ultraligero">
+      <div class="step-dot-wrap"><div class="step-dot">07</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">🛩️</span>Permiso de piloto de ultraligeros</div>
+            <div class="step-sub">Licencia ULM · antes de que acabe 2028</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Dic 2028</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2029 ===== -->
+    <div class="year" data-year="2029">
+      <div class="year-dot-wrap"><span class="year-dot"></span></div>
+      <span class="year-label">2029</span>
+      <span class="year-meta">2 deseos</span>
+    </div>
+
+    <div class="step cat-music" id="saxo" data-deadline="2029-09-30" data-short="Saxo">
+      <div class="step-dot-wrap"><div class="step-dot">08</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Instrumento</div>
+            <div class="step-title"><span class="step-ico">🎷</span>Saxo</div>
+            <div class="step-sub">En 3 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2029</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-life" id="independizarme" data-deadline="2029-09-30" data-short="Independizarme">
+      <div class="step-dot-wrap"><div class="step-dot">09</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Cosas a hacer</div>
+            <div class="step-title"><span class="step-ico">🔑</span>Independizarme</div>
+            <div class="step-sub">En 3 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2029</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2031 ===== -->
+    <div class="year" data-year="2031">
+      <div class="year-dot-wrap"><span class="year-dot"></span></div>
+      <span class="year-label">2031</span>
+      <span class="year-meta">2 deseos</span>
+    </div>
+
+    <div class="step cat-lang" id="chino" data-deadline="2031-09-30" data-short="Chino">
+      <div class="step-dot-wrap"><div class="step-dot">10</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Idioma</div>
+            <div class="step-title"><span class="step-ico glyph">中</span>Chino mandarín</div>
+            <div class="step-sub">Como máximo en 5 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2031</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step cat-lang" id="arabe" data-deadline="2031-09-30" data-short="Árabe">
+      <div class="step-dot-wrap"><div class="step-dot">11</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Idioma</div>
+            <div class="step-title"><span class="step-ico glyph">ع</span>Árabe del Golfo Pérsico</div>
+            <div class="step-sub">Dialecto del Golfo · como máximo en 5 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2031</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2033 ===== -->
+    <div class="year" data-year="2033">
+      <div class="year-dot-wrap"><span class="year-dot"></span></div>
+      <span class="year-label">2033</span>
+      <span class="year-meta">1 deseo</span>
+    </div>
+
+    <div class="step cat-music" id="violin" data-deadline="2033-09-30" data-short="Violín">
+      <div class="step-dot-wrap"><div class="step-dot">12</div></div>
+      <div class="step-card">
+        <div class="step-top">
+          <div>
+            <div class="step-eyebrow">Instrumento</div>
+            <div class="step-title"><span class="step-ico">🎻</span>Violín</div>
+            <div class="step-sub">En 7 años</div>
+          </div>
+          <div class="badge-row">
+            <div class="badge"><span class="badge-label">Límite</span><span class="badge-value">Sep 2033</span></div>
+            <div class="badge"><span class="badge-label" data-left-label>Quedan</span><span class="badge-value" data-left>—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tail" aria-hidden="true"></div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <b>Sobre las fechas:</b> los plazos cuentan desde septiembre de 2026 y son límites máximos. «Esta temporada» se toma como el final de la temporada 2026/27 (mayo de 2027).
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    const DAY = 864e5;
+    const START = new Date(2026, 8, 1);   // sep 2026: origen de todos los plazos
+    const END = new Date(2034, 0, 1);     // borde derecho de la vista general
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+    const clamp01 = (v) => Math.min(Math.max(v, 0), 1);
+    const pos = (d) => clamp01((d - START) / (END - START)) * 100;
+    const monthYear = (d) => {
+      const m = d.toLocaleDateString('es-ES', { month: 'short' }).replace('.', '');
+      return m.charAt(0).toUpperCase() + m.slice(1) + ' ' + d.getFullYear();
+    };
+    const timeLeft = (deadline) => {
+      const days = Math.round((deadline - today) / DAY);
+      if (days < 45) return days + (days === 1 ? ' día' : ' días');
+      const months = Math.round(days / 30.44);
+      if (months < 24) return months + ' meses';
+      return (months / 12).toLocaleString('es-ES', { maximumFractionDigits: 1 }) + ' años';
+    };
+
+    const steps = [...document.querySelectorAll('.step')];
+    const labels = document.getElementById('ovLabels');
+    const tracks = document.getElementById('ovTracks');
+
+    // Eje de años de la vista general
+    for (let y = START.getFullYear() + 1; y < END.getFullYear(); y++) {
+      const x = pos(new Date(y, 0, 1));
+      tracks.insertAdjacentHTML('beforeend',
+        `<span class="ov-grid" style="left:${x}%"></span>` +
+        `<span class="ov-tick" style="left:${x}%"><span class="full">${y}</span><span class="short">'${String(y).slice(2)}</span></span>`);
+    }
+
+    let doneCount = 0;
+    steps.forEach((step) => {
+      const deadline = parse(step.dataset.deadline);
+      const done = step.dataset.done ? parse(step.dataset.done) : null;
+      const late = !done && deadline < today;
+      const cat = [...step.classList].find((c) => c.startsWith('cat-'));
+      const leftLabel = step.querySelector('[data-left-label]');
+      const leftValue = step.querySelector('[data-left]');
+
+      if (done) {
+        doneCount++;
+        step.classList.add('done');
+        step.querySelector('.step-dot').textContent = '✓';
+        leftLabel.textContent = 'Hecho';
+        leftValue.textContent = monthYear(done);
+      } else if (late) {
+        step.classList.add('late');
+        leftLabel.textContent = 'Estado';
+        leftValue.textContent = 'Vencido';
+      } else {
+        leftValue.textContent = timeLeft(deadline);
+      }
+
+      // Fila de la vista general: barra de sep 2026 al límite, rellena hasta hoy
+      const elapsed = done ? 100 : clamp01((today - START) / (deadline - START)) * 100;
+      const state = (done ? ' done' : '') + (late ? ' late' : '');
+      const title = step.querySelector('.step-title').textContent.trim() + ' · ' + monthYear(deadline);
+
+      const a = document.createElement('a');
+      a.className = 'ov-label ' + cat + state;
+      a.href = '#' + step.id;
+      a.textContent = step.dataset.short;
+      a.title = title;
+      labels.appendChild(a);
+
+      tracks.insertAdjacentHTML('beforeend',
+        `<div class="ov-row ${cat}${state}" title="${title}">` +
+          `<div class="ov-bar" style="width:${pos(deadline)}%">` +
+            `<div class="ov-fill" style="width:${elapsed}%"></div><span class="ov-end"></span>` +
+          `</div>` +
+        `</div>`);
+    });
+
+    document.getElementById('ovNow').style.left = pos(today) + '%';
+    document.querySelectorAll('[data-total]').forEach((el) => { el.textContent = steps.length; });
+    document.querySelector('[data-done-count]').textContent = doneCount;
+    document.querySelector('[data-today]').textContent =
+      today.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).replace('.', '');
+
+    // Marcador "Hoy": antes del primer deseo cuyo límite aún no ha pasado
+    const now = document.getElementById('now');
+    const next = steps.find((s) => parse(s.dataset.deadline) >= today);
+    if (next) {
+      const prev = next.previousElementSibling;
+      const anchor = prev && prev.classList.contains('year') && +prev.dataset.year > today.getFullYear() ? prev : next;
+      anchor.parentNode.insertBefore(now, anchor);
+    } else {
+      document.getElementById('timeline').appendChild(now);
+    }
+
+    // Aparición al hacer scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.step, .year').forEach((el) => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>

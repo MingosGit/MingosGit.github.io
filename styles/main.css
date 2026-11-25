@@ -382,6 +382,12 @@ body::after {
 }
 
 @media (max-width: 760px) {
+  /* En móvil la portada no ocupa toda la pantalla: así el nombre sale arriba
+     en vez de dejar un hueco vacío antes. */
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-h) + 56px);
+  }
   .hero-sub {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -611,6 +617,26 @@ a.section-note:hover { color: var(--acid); }
 }
 
 .work-preview img.show { opacity: 1; }
+
+/* Separador "Otros proyectos": los secundarios van más compactos */
+.work-subhead {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 40px 8px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.work-subhead ~ .work-item {
+  padding-top: clamp(16px, 2vw, 24px);
+  padding-bottom: clamp(16px, 2vw, 24px);
+}
+
+.work-subhead ~ .work-item .work-title {
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+}
 
 @media (max-width: 900px) {
   .work-item {

@@ -24,6 +24,22 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Facturas PDF → tabla contable -->
+  <url>
+    <loc>https://josecrub.com/facturas-a-excel/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Conciliación bancaria -->
+  <url>
+    <loc>https://josecrub.com/conciliacion-bancaria/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Supply Chain Simulator -->
   <url>
     <loc>https://josecrub.com/supply-chain-simulator/</loc>

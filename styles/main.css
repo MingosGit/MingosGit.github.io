@@ -1154,6 +1154,9 @@ a.section-note:hover { color: var(--acid); }
 
 .figure img:hover { transform: scale(1.015); }
 
+.figure video { width: 100%; display: block; background: #0d111c; }
+.figure-video { max-width: 760px; }
+
 .figure figcaption {
   font-family: var(--font-mono);
   font-size: 11px;

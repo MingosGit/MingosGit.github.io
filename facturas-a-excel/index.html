@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Facturas PDF → tabla contable: 50 facturas de proveedores con formatos distintos leídas en menos de un segundo, con duplicadas, descuadres y diferencias con el pedido detectadas, y los asientos contables listos." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/facturas-a-excel/" />
+  <title>Facturas PDF → tabla contable — José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../Media/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/facturas-a-excel/" />
+  <meta property="og:title" content="Facturas PDF → tabla contable" />
+  <meta property="og:description" content="50 facturas PDF de formatos distintos → Excel con asientos contables cuadrados e incidencias detectadas, en menos de un segundo." />
+  <meta property="og:image" content="https://josecrub.com/Media/facturas-a-excel.png" />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/main.css" />
+</head>
+<body>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/#trabajo" class="nav-link"><sup>01</sup>Proyectos</a>
+      <a href="/about/" class="nav-link"><sup>02</sup>Sobre mí</a>
+      <a href="/#contacto" class="nav-link"><sup>03</sup>Contacto</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <button class="nav-burger" aria-label="Abrir menú">Menú</button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="menu-overlay">
+    <a href="/#trabajo"><span class="idx">01</span>Proyectos</a>
+    <a href="/about/"><span class="idx">02</span>Sobre mí</a>
+    <a href="/#contacto"><span class="idx">03</span>Contacto</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/">Inicio</a> / <a href="/#trabajo">Proyectos</a> / <span>01</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Facturas PDF →<br /><span class="serif-it acid">tabla contable</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      Una carpeta con <strong>50 facturas de 6 proveedores</strong>, cada uno con su formato, convertida en
+      menos de un segundo en un Excel listo para contabilizar. Lo importante no es leer el PDF:
+      es <strong>encontrar las que no cuadran</strong> antes de que entren en la contabilidad.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Tipo</dt>
+        <dd>Automatización · Finanzas</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python · pdfplumber · openpyxl</dd>
+      </div>
+      <div>
+        <dt>Resultado</dt>
+        <dd>50 facturas en 0,6 s</dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd><a href="https://github.com/MingosGit/facturas-a-excel" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+  </header>
+
+  <!-- Demo -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>Qué hace</h2>
+    </div>
+    <figure class="figure figure-video" data-reveal>
+      <video src="../Media/facturas-a-excel/demo.mp4" poster="../Media/facturas-a-excel/poster.jpg" controls muted playsinline preload="metadata"></video>
+      <figcaption>Demo de 24 s generada a partir de una ejecución real</figcaption>
+    </figure>
+    <p class="case-p" data-reveal>
+      Le das la carpeta de facturas, el maestro de proveedores y los pedidos de compra. Devuelve un
+      Excel con el registro de todas las facturas, los <strong>asientos contables con el debe y el haber
+      cuadrados</strong> y una lista de las que hay que revisar, explicando por qué en lenguaje claro.
+    </p>
+    <p class="case-p" data-reveal>
+      De las 50 facturas de prueba, 9 tienen algo raro escondido a propósito, y las encuentra todas:
+    </p>
+    <ul class="case-list" data-reveal>
+      <li><strong>3 duplicadas:</strong> la misma factura que llega por email y escaneada</li>
+      <li><strong>3 con importe distinto al pedido:</strong> el proveedor factura más de lo que se pidió</li>
+      <li><strong>1 sin pedido</strong> y <strong>1 con un pedido que no existe</strong></li>
+      <li><strong>1 con la suma mal hecha:</strong> base + IVA no da el total</li>
+    </ul>
+  </section>
+
+  <!-- Capturas -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>Lo que entra y lo que sale</h2>
+    </div>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="../Media/facturas-a-excel/facturas-ejemplo.png" alt="Dos facturas inventadas con diseños distintos: una de catering con IVA del 10 % y otra de embalajes con recuadro" loading="lazy" />
+        <figcaption>Entra: facturas PDF con diseños distintos (datos inventados)</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/facturas-a-excel/resumen.png" alt="Hoja de resumen del Excel: 50 facturas, 41 listas para contabilizar, 9 para revisar e incidencias por tipo" loading="lazy" />
+        <figcaption>Sale: resumen con lo que está listo y lo que no</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/facturas-a-excel/asientos.png" alt="Hoja de asientos contables: gasto, IVA soportado y proveedor, con debe y haber" loading="lazy" />
+        <figcaption>Asientos contables de las facturas correctas</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/facturas-a-excel/incidencias.png" alt="Hoja de incidencias: archivo, proveedor, tipo de incidencia y detalle" loading="lazy" />
+        <figcaption>Incidencias explicadas una a una</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>Cómo funciona</h2>
+    </div>
+
+    <h3 class="case-h3" data-reveal>1 — Leer sin plantillas</h3>
+    <p class="case-p" data-reveal>
+      No hay una plantilla por proveedor. Busca las etiquetas habituales (<em>Base imponible</em>,
+      <em>Subtotal</em>, <em>Net amount</em>, <em>Cuota IVA</em>, <em>Retención IRPF</em>…) y entiende
+      números y fechas en formato español e internacional: <code>1.234,56</code> y <code>1,234.56</code>,
+      <code>16/09/2026</code>, <code>2026-09-16</code> o <em>30 de octubre de 2026</em>.
+    </p>
+
+    <h3 class="case-h3" data-reveal>2 — Identificar al proveedor</h3>
+    <p class="case-p" data-reveal>
+      Por su CIF/NIF contra el maestro de proveedores, que además dice a qué cuenta de gasto va cada uno
+      (600 compras, 623 servicios profesionales, 624 transportes…).
+    </p>
+
+    <h3 class="case-h3" data-reveal>3 — Validar</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Duplicadas:</strong> mismo proveedor y mismo número de factura</li>
+      <li><strong>Aritmética:</strong> base + IVA − IRPF = total, y el IVA es el porcentaje correcto</li>
+      <li><strong>Pedido de compra:</strong> que exista, que sea de ese proveedor y que el importe no se desvíe más de un 1 %</li>
+    </ul>
+
+    <h3 class="case-h3" data-reveal>4 — Excel listo para contabilizar</h3>
+    <p class="case-p" data-reveal>
+      Cuatro hojas: resumen, registro de facturas (las que hay que revisar, en rojo), asientos contables
+      e incidencias. Los asientos incluyen gasto, IVA soportado, retenciones y proveedor, y la suma del
+      debe y del haber se comprueba en los tests.
+    </p>
+  </section>
+
+  <!-- Retos -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Detalles que importan</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Seis formatos, cero plantillas</h3>
+        <p>Factura clásica, cabecera de color, una en inglés con decimales con punto, una con recuadro, una de catering al 10 % y la de una autónoma con IRPF.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Bandeja de entrada real</h3>
+        <p>Nombres de archivo caóticos (<code>scan_004.pdf</code>, <code>FW_factura_031.pdf</code>…) y la misma factura repetida con otro nombre.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Probado contra la verdad</h3>
+        <p>El generador guarda lo que debería salir de cada factura. Los tests comprueban los 50 documentos campo a campo y que se detectan las 9 incidencias, ni una más.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Explicable</h3>
+        <p>Cada incidencia dice qué falla con cifras: <em>«Pedido 639,00 € · facturado 710,00 € (+71,00 €)»</em>. Nada de cajas negras.</p>
+      </div>
+    </div>
+
+    <div class="chip-row" data-reveal style="margin-top:28px;">
+      <span>Python</span><span>pdfplumber</span><span>openpyxl</span><span>reportlab</span><span>pytest</span><span>GitHub Actions</span>
+    </div>
+  </section>
+
+  <!-- Siguiente proyecto -->
+  <a href="../conciliacion-bancaria/" class="next-project">
+    <span class="lbl">Siguiente proyecto — 02</span>
+    <span class="name">Conciliación bancaria</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/#trabajo">Todos los proyectos →</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <button class="close">Cerrar ✕</button>
+    <img alt="" />
+  </div>
+
+  <script src="../scripts/main.js" defer></script>
+</body>
+</html>

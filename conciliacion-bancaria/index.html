@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Conciliación bancaria en un clic: 2.000 movimientos del banco cruzados con la contabilidad en menos de un segundo, con la diferencia de saldos explicada al céntimo y los asientos propuestos." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/conciliacion-bancaria/" />
+  <title>Conciliación bancaria en un clic — José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../Media/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/conciliacion-bancaria/" />
+  <meta property="og:title" content="Conciliación bancaria en un clic" />
+  <meta property="og:description" content="2.000 movimientos del banco contra la contabilidad en menos de un segundo. Diferencia de saldos explicada al céntimo." />
+  <meta property="og:image" content="https://josecrub.com/Media/conciliacion-bancaria.png" />
+  <meta property="og:locale" content="es_ES" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/main.css" />
+</head>
+<body>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/#trabajo" class="nav-link"><sup>01</sup>Proyectos</a>
+      <a href="/about/" class="nav-link"><sup>02</sup>Sobre mí</a>
+      <a href="/#contacto" class="nav-link"><sup>03</sup>Contacto</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <button class="nav-burger" aria-label="Abrir menú">Menú</button>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="menu-overlay">
+    <a href="/#trabajo"><span class="idx">01</span>Proyectos</a>
+    <a href="/about/"><span class="idx">02</span>Sobre mí</a>
+    <a href="/#contacto"><span class="idx">03</span>Contacto</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/">Inicio</a> / <a href="/#trabajo">Proyectos</a> / <span>02</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Conciliación<br /><span class="serif-it acid">bancaria</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      El extracto del banco y la contabilidad nunca dicen lo mismo a fin de mes. Este programa cruza
+      <strong>2.000 movimientos contra 2.070 apuntes en menos de un segundo</strong> y deja la
+      diferencia de saldos <strong>explicada al céntimo</strong>.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Tipo</dt>
+        <dd>Automatización · Contabilidad</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python · openpyxl</dd>
+      </div>
+      <div>
+        <dt>Resultado</dt>
+        <dd>0,00 € sin explicar</dd>
+      </div>
+      <div>
+        <dt>Código</dt>
+        <dd><a href="https://github.com/MingosGit/conciliacion-bancaria" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+  </header>
+
+  <!-- Demo -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>Qué hace</h2>
+    </div>
+    <figure class="figure figure-video" data-reveal>
+      <video src="../Media/conciliacion-bancaria/demo.mp4" poster="../Media/conciliacion-bancaria/poster.jpg" controls muted playsinline preload="metadata"></video>
+      <figcaption>Demo de 27 s generada a partir de una ejecución real</figcaption>
+    </figure>
+    <p class="case-p" data-reveal>
+      Le das el extracto exportado del banco y el mayor de la cuenta 572. Encontrar los movimientos que
+      coinciden exactamente es lo fácil; lo que cuesta horas es todo lo demás:
+    </p>
+    <ul class="case-list" data-reveal>
+      <li>el banco <strong>recorta los nombres</strong>, los pone en mayúsculas y les quita los acentos</li>
+      <li>un cliente <strong>paga varias facturas en una sola transferencia</strong></li>
+      <li>otro paga <strong>12,50 € de menos</strong> porque descuenta una comisión</li>
+      <li><strong>comisiones, intereses y compras con tarjeta</strong> que nadie ha contabilizado</li>
+      <li><strong>pagos ya apuntados</strong> que el banco aún no ha cargado</li>
+    </ul>
+    <p class="case-p" data-reveal>
+      Al final, la diferencia de 68.062,88 € entre los dos saldos queda justificada partida a partida,
+      y cada movimiento pendiente sale con su <strong>asiento propuesto</strong>.
+    </p>
+  </section>
+
+  <!-- Capturas -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>El Excel</h2>
+    </div>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="../Media/conciliacion-bancaria/resumen.png" alt="Resumen de la conciliación: cuadre de saldos con diferencia sin explicar de 0,00 euros" loading="lazy" />
+        <figcaption>Resumen y cuadre de saldos al céntimo</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/conciliacion-bancaria/conciliados.png" alt="Hoja de movimientos conciliados con el método usado en cada uno" loading="lazy" />
+        <figcaption>Cada movimiento del banco con su apunte y el método</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/conciliacion-bancaria/solo-banco.png" alt="Movimientos que solo están en el banco, con la cuenta contable propuesta" loading="lazy" />
+        <figcaption>Lo que falta contabilizar, con su cuenta propuesta</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../Media/conciliacion-bancaria/asientos.png" alt="Asientos propuestos con debe y haber" loading="lazy" />
+        <figcaption>Asientos propuestos para dejarlo todo cuadrado</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Cómo funciona -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>Cómo cruza</h2>
+    </div>
+    <p class="case-p" data-reveal>Cuatro pasadas, de la más segura a la menos:</p>
+
+    <h3 class="case-h3" data-reveal>1 — Referencia de factura</h3>
+    <p class="case-p" data-reveal>Si el concepto del banco cita la factura (<code>TRANSF DE ÓPTICA GRÀCIA FV202601599</code>), se cruza directamente con ella, aunque el importe no coincida del todo.</p>
+
+    <h3 class="case-h3" data-reveal>2 — Importe y fecha</h3>
+    <p class="case-p" data-reveal>Mismo importe y fecha valor entre 0 y 5 días después del apunte. Si hay empate, decide el parecido del nombre (aunque el banco lo haya recortado) y después la fecha más cercana.</p>
+
+    <h3 class="case-h3" data-reveal>3 — Varias facturas en un pago</h3>
+    <p class="case-p" data-reveal>Para cada transferencia sin pareja, busca qué combinación de 2 a 5 facturas del mismo cliente suma exactamente ese importe.</p>
+
+    <h3 class="case-h3" data-reveal>4 — Cobros que llegan de menos</h3>
+    <p class="case-p" data-reveal>Mismo cliente y fechas, pero con una pequeña diferencia de importe: se cruza y la diferencia queda señalada para revisarla.</p>
+
+    <h3 class="case-h3" data-reveal>Y el cuadre</h3>
+    <p class="case-p" data-reveal>
+      Saldo del banco − movimientos sin contabilizar + pagos en tránsito − diferencias de cobro =
+      saldo contable. Si no da exactamente 0,00 €, algo se ha escapado.
+    </p>
+  </section>
+
+  <!-- Retos -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Detalles que importan</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Céntimos, no decimales</h3>
+        <p>Todos los importes se manejan en céntimos enteros para que la suma de 2.000 movimientos cuadre exacta, sin errores de redondeo.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Datos como los exporta un banco</h3>
+        <p>Fechas valor que no coinciden con la contabilidad, coma decimal, punto y coma como separador y conceptos recortados.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Probado movimiento a movimiento</h3>
+        <p>Los tests comprueban que los 2.000 movimientos acaban exactamente donde deben y que ninguno se usa dos veces.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Propone, no decide</h3>
+        <p>Lo dudoso no se fuerza: comisiones, tarjeta y diferencias salen separadas, con la cuenta y el asiento propuestos para que alguien lo valide.</p>
+      </div>
+    </div>
+
+    <div class="chip-row" data-reveal style="margin-top:28px;">
+      <span>Python</span><span>openpyxl</span><span>difflib</span><span>pytest</span><span>GitHub Actions</span>
+    </div>
+  </section>
+
+  <!-- Siguiente proyecto -->
+  <a href="../supply-chain-simulator/" class="next-project">
+    <span class="lbl">Siguiente proyecto — 03</span>
+    <span class="name">Supply Chain Simulator</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/#trabajo">Todos los proyectos →</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Imagen ampliada">
+    <button class="close">Cerrar ✕</button>
+    <img alt="" />
+  </div>
+
+  <script src="../scripts/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Supply Chain Simulator — a discrete-event simulator built with Python and SimPy to optimise inventory policies, with a P&L dashboard and what-if analysis." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/en/supply-chain-simulator/" />
+  <link rel="alternate" hreflang="es" href="https://josecrub.com/supply-chain-simulator/" />
+  <link rel="alternate" hreflang="en" href="https://josecrub.com/en/supply-chain-simulator/" />
+  <link rel="alternate" hreflang="x-default" href="https://josecrub.com/supply-chain-simulator/" />
+  <title>Supply Chain Simulator — José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../../Media/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/en/supply-chain-simulator/" />
+  <meta property="og:title" content="Supply Chain Simulator" />
+  <meta property="og:description" content="Discrete-event simulator with Python and SimPy: inventory policies, P&L dashboard and what-if analysis." />
+  <meta property="og:image" content="https://josecrub.com/Media/supply-chain-sim/tablero-pl.png" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../styles/main.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="/en/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/en/#trabajo" class="nav-link"><sup>01</sup>Projects</a>
+      <a href="/en/about/" class="nav-link"><sup>02</sup>About me</a>
+      <a href="/en/#contacto" class="nav-link"><sup>03</sup>Contact</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <a href="/supply-chain-simulator/" class="nav-lang" hreflang="es" lang="es" aria-label="Leer esta página en español">ES</a>
+    <button class="nav-burger" aria-label="Open menu">Menu</button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="menu-overlay">
+    <a href="/en/#trabajo"><span class="idx">01</span>Projects</a>
+    <a href="/en/about/"><span class="idx">02</span>About me</a>
+    <a href="/en/#contacto"><span class="idx">03</span>Contact</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Header -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/en/">Home</a> / <a href="/en/#trabajo">Projects</a> / <span>03</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Supply Chain<br /><span class="serif-it acid">Simulator</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      A supply chain simulator with a <strong>built-in P&amp;L dashboard</strong>.
+      It models a full year of operations with discrete events (SimPy) and shows the impact
+      of every inventory decision <strong>in euros, not just in units</strong>.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Type</dt>
+        <dd>Simulation · Web app</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python · SimPy · Streamlit</dd>
+      </div>
+      <div>
+        <dt>Demo</dt>
+        <dd><a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener">Live app ↗</a></dd>
+      </div>
+      <div>
+        <dt>Code</dt>
+        <dd><a href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+
+    <div class="btn-row" data-reveal>
+      <a href="https://retail-supply-chain-sim.streamlit.app/" target="_blank" rel="noopener" class="btn btn-solid">Open the simulator ↗</a>
+      <a href="https://github.com/MingosGit/retail-supply-chain-sim" target="_blank" rel="noopener" class="btn">See the code</a>
+    </div>
+  </header>
+
+  <!-- What it is -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>What it does</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      It lets you experiment with the key parameters of an inventory policy —
+      <strong>reorder point (ROP)</strong>, <strong>order quantity (Q)</strong>, lead time,
+      demand patterns and cost structure — and instantly see how they affect total cost
+      and service level.
+    </p>
+    <p class="case-p" data-reveal>
+      The app loads with pre-computed demo data (a <strong>“0-second”
+      experience</strong>): charts, financial metrics and the P&amp;L dashboard are visible
+      straight away, with nothing to configure.
+    </p>
+
+    <div class="note" data-reveal>
+      <h3>First load</h3>
+      <p>The simulator may take a few seconds to start the first time while Streamlit Cloud loads the Python libraries. After that it runs smoothly.</p>
+    </div>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>The app</h2>
+    </div>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="../../Media/supply-chain-sim/tablero-pl.png" alt="P&L dashboard with metrics in euros: potential revenue, operating costs and margin impact" loading="lazy" />
+        <figcaption>P&amp;L dashboard — valued demand, total cost and margin impact</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/supply-chain-sim/whatif-comparison.png" alt="What-if analysis: side-by-side comparison of the base scenario and a scenario with +50% demand" loading="lazy" />
+        <figcaption>Interactive what-if — base scenario vs +50&nbsp;% demand, with net ROI</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/supply-chain-sim/resultados-simulacion.png" alt="Simulation results: executive cards with total cost, storage, orders and stockouts" loading="lazy" />
+        <figcaption>Simulation results — executive KPIs</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/supply-chain-sim/eoq-asistente.png" alt="EOQ assistant with a dynamic recommendation of the optimal order quantity" loading="lazy" />
+        <figcaption>EOQ assistant — optimal order quantity in real time</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>How it works</h2>
+    </div>
+
+    <h3 class="case-h3" data-reveal>1 — Setup</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>ROP:</strong> stock level that automatically triggers a new order</li>
+      <li><strong>Q:</strong> units requested in each order</li>
+      <li><strong>Lead time:</strong> supplier delivery days</li>
+      <li><strong>Demand:</strong> statistical distribution (uniform, normal, Poisson) and seasonality</li>
+      <li><strong>Costs:</strong> ordering, holding and stockout</li>
+    </ul>
+
+    <h3 class="case-h3" data-reveal>2 — Discrete-event simulation</h3>
+    <p class="case-p" data-reveal>
+      The SimPy engine runs <strong>365 days of operations in under a second</strong> (NumPy
+      vectorisation + concurrent processes): it generates daily demand, manages inventory with the
+      ROP-Q policy, and logs orders, deliveries, stockouts and costs at every event.
+    </p>
+
+    <h3 class="case-h3" data-reveal>3 — Financial analysis</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>P&amp;L dashboard:</strong> potential revenue, operating costs and % margin impact</li>
+      <li><strong>What-if:</strong> demand slider (0.5x – 2x) with automatic comparison and net ROI</li>
+      <li><strong>KPIs:</strong> service level, turnover, fill rate and total cost</li>
+      <li><strong>Dynamic EOQ:</strong> economic order quantity recalculated whenever a cost changes</li>
+      <li><strong>Optimisation:</strong> grid search over ROP × Q with interactive heat maps</li>
+      <li><strong>Export:</strong> 3-sheet Excel file and TXT reports ready to present</li>
+    </ul>
+  </section>
+
+  <!-- Challenges -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Technical challenges</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>A 0-second experience</h3>
+        <p>Seed data with a pre-computed simulation in the session state: the first screen already shows real results, not an empty form.</p>
+      </div>
+      <div class="flat-card">
+        <h3>A P&amp;L that speaks to the CFO</h3>
+        <p>Units translated into euros: potential revenue, cost/revenue % and a P&amp;L breakdown in executive format.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Performance</h3>
+        <p>365 simulated days in &lt;1 s thanks to NumPy vectorisation and concurrent SimPy processes.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Real-time what-if</h3>
+        <p>Automatic base vs modified scenario comparison with Δ revenue, Δ costs and net ROI as you move a slider.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Accessibility</h3>
+        <p>Corporate theming with 14.7:1 contrast (WCAG AA), explanatory tooltips and real-time validation.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Robust state</h3>
+        <p>Streamlit session state that keeps results between interactions and exports with no data loss.</p>
+      </div>
+    </div>
+
+    <div class="chip-row" data-reveal style="margin-top:28px;">
+      <span>Python 3.11</span><span>SimPy</span><span>Streamlit</span><span>Pandas</span><span>NumPy</span><span>Plotly</span><span>Matplotlib</span>
+    </div>
+  </section>
+
+  <!-- Next project -->
+  <a href="../barcelona-real-estate/" class="next-project">
+    <span class="lbl">Next project — 05</span>
+    <span class="name">Barcelona Real Estate</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/en/#trabajo">All projects →</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Enlarged image">
+    <button class="close">Close ✕</button>
+    <img alt="" />
+  </div>
+
+  <script src="../../scripts/main.js" defer></script>
+</body>
+</html>

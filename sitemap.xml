@@ -71,4 +71,54 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- English -->
+  <url>
+    <loc>https://josecrub.com/en/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/about/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/facturas-a-excel/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/conciliacion-bancaria/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/supply-chain-simulator/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/barcelona-real-estate/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/finpredict-rnn/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://josecrub.com/en/beegame/</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -319,7 +319,8 @@
     (function initLang(){
       let lang = "es";
       try {
-        const saved = localStorage.getItem("torneoya_lang");
+        const param = new URLSearchParams(location.search).get("lang");  // ?lang=en desde el portfolio en inglés
+        const saved = (param && I18N[param]) ? param : localStorage.getItem("torneoya_lang");
         if (saved && I18N[saved]) lang = saved;
         else {
           const nav = (navigator.language || "es").slice(0,2);

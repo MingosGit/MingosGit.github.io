@@ -6,17 +6,21 @@
   const burger = document.querySelector(".nav-burger");
   const overlay = document.querySelector(".menu-overlay");
 
+  const EN = (document.documentElement.lang || "es").startsWith("en");
+  const TXT_MENU = EN ? "Menu" : "Menú";
+  const TXT_CERRAR = EN ? "Close" : "Cerrar";
+
   if (burger && overlay) {
     burger.addEventListener("click", () => {
       const open = overlay.classList.toggle("open");
-      burger.textContent = open ? "Cerrar" : "Menú";
+      burger.textContent = open ? TXT_CERRAR : TXT_MENU;
       document.body.style.overflow = open ? "hidden" : "";
     });
 
     overlay.querySelectorAll("a").forEach((a) =>
       a.addEventListener("click", () => {
         overlay.classList.remove("open");
-        burger.textContent = "Menú";
+        burger.textContent = TXT_MENU;
         document.body.style.overflow = "";
       })
     );

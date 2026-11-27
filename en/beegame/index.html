@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="BeeGame — a turn-based strategy game with symbolic AI: Expectimax with chance nodes, A* pathfinding and game theory to raise environmental awareness." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/en/beegame/" />
+  <link rel="alternate" hreflang="es" href="https://josecrub.com/beegame/" />
+  <link rel="alternate" hreflang="en" href="https://josecrub.com/en/beegame/" />
+  <link rel="alternate" hreflang="x-default" href="https://josecrub.com/beegame/" />
+  <title>BeeGame — José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../../Media/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/en/beegame/" />
+  <meta property="og:title" content="BeeGame — symbolic AI with Expectimax and A*" />
+  <meta property="og:description" content="A turn-based strategy game with Expectimax, A* pathfinding and game theory, built to raise environmental awareness." />
+  <meta property="og:image" content="https://josecrub.com/Media/BeeGame.png" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../styles/main.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="/en/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/en/#trabajo" class="nav-link"><sup>01</sup>Projects</a>
+      <a href="/en/about/" class="nav-link"><sup>02</sup>About me</a>
+      <a href="/en/#contacto" class="nav-link"><sup>03</sup>Contact</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <a href="/beegame/" class="nav-lang" hreflang="es" lang="es" aria-label="Leer esta página en español">ES</a>
+    <button class="nav-burger" aria-label="Open menu">Menu</button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="menu-overlay">
+    <a href="/en/#trabajo"><span class="idx">01</span>Projects</a>
+    <a href="/en/about/"><span class="idx">02</span>About me</a>
+    <a href="/en/#contacto"><span class="idx">03</span>Contact</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Header -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/en/">Home</a> / <a href="/en/#trabajo">Projects</a> / <span>07</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      Bee<span class="serif-it acid">Game</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      A turn-based strategy game in Python that simulates the relationship between bees and
+      human activity. It implements <strong>symbolic AI</strong>: Expectimax with chance nodes,
+      A* search for pathfinding and a multi-component heuristic function. An academic project
+      aimed at raising <strong>environmental awareness</strong>.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Type</dt>
+        <dd>Game · Symbolic AI · Academic</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python 3.12 · Pygame 2.6</dd>
+      </div>
+      <div>
+        <dt>Algorithms</dt>
+        <dd>Expectimax · A* · Game theory</dd>
+      </div>
+      <div>
+        <dt>Code</dt>
+        <dd><a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+
+    <figure class="figure" data-reveal>
+      <img src="../../Media/BeeGame.png" alt="Screenshot of BeeGame showing the board with the bee, flowers and obstacles" />
+      <figcaption>The board: the bee (MAX) against humanity (MIN)</figcaption>
+    </figure>
+  </header>
+
+  <!-- The AI -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>The artificial intelligence</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Expectimax</h3>
+        <p>Optimal decision making that accounts for probabilities: an extension of Minimax with <strong>chance nodes</strong> for the weather and flower reproduction.</p>
+      </div>
+      <div class="flat-card">
+        <h3>A* Pathfinding</h3>
+        <p>Optimal routes back to the hive avoiding obstacles, with a <strong>Manhattan distance</strong> heuristic.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Game theory</h3>
+        <p>A MAX agent (the bee) against a MIN agent (humanity), with <strong>strategic pruning</strong> constraints in the decision tree.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Complex heuristic</h3>
+        <p>An evaluation function with <strong>7 weighted components</strong> and adjustable weights to assess every game state.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Chance events</h3>
+        <p>A weather system (rain, sun, normal) and flower reproduction with <strong>dynamic probabilities</strong> every 4 turns.</p>
+      </div>
+      <div class="flat-card">
+        <h3>3 game modes</h3>
+        <p>Manual player, basic random AI or <strong>advanced Expectimax</strong> for both agents.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mechanics -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>Game mechanics</h2>
+    </div>
+
+    <h3 class="case-h3" data-reveal>The bee — MAX agent</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Health:</strong> 100 points — it dies at 0</li>
+      <li><strong>Energy:</strong> 100 points — spent when moving and collecting</li>
+      <li><strong>Nectar:</strong> capacity of 50 units; the goal is to store it in the hive</li>
+      <li><strong>Actions:</strong> move, pollinate flowers, rest and return to the hive with A*</li>
+    </ul>
+
+    <h3 class="case-h3" data-reveal>Humanity — MIN agent</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Pesticides:</strong> contaminate flowers — they die after 3</li>
+      <li><strong>Obstacles:</strong> block cells — up to 4 at once with FIFO removal</li>
+      <li><strong>Constraints:</strong> pesticides only within radius 2 of the bee; obstacles only within radius 3 of the hive</li>
+    </ul>
+
+    <h3 class="case-h3" data-reveal>Weather — chance nodes every 4 turns</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Rain (10&nbsp;%):</strong> removes 1 pesticide from every flower</li>
+      <li><strong>Sun (15&nbsp;%):</strong> raises the flower reproduction probability to 40&nbsp;%</li>
+      <li><strong>Normal (75&nbsp;%):</strong> no special effects</li>
+    </ul>
+
+    <div class="note" data-reveal>
+      <h3>Why it exists</h3>
+      <p>
+        The game aims to raise awareness of how important bees are for pollination,
+        showing interactively how pesticides and environmental obstacles
+        affect their survival.
+      </p>
+    </div>
+  </section>
+
+  <!-- Concepts -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>AI concepts applied</h2>
+    </div>
+    <p class="case-p" data-reveal>
+      Informed search (A*), Minimax extended with probabilistic nodes (Expectimax),
+      uncertainty modelling, strategic pruning and optimisation of heuristic functions
+      with adjustable weights.
+    </p>
+    <div class="chip-row" data-reveal>
+      <span>Python 3.12</span><span>Pygame 2.6</span><span>Expectimax</span><span>A* Pathfinding</span><span>Game Theory</span><span>Heuristics</span>
+    </div>
+    <div class="btn-row" data-reveal style="margin-top:28px;">
+      <a href="https://github.com/BeeGameIAProject/BeeGame" target="_blank" rel="noopener" class="btn btn-solid">Explore the code ↗</a>
+      <a href="https://github.com/BeeGameIAProject/BeeGame/blob/main/README.md" target="_blank" rel="noopener" class="btn">Documentation</a>
+    </div>
+  </section>
+
+  <!-- Next project -->
+  <a href="../../TorneoYa/?lang=en" class="next-project">
+    <span class="lbl">Next project — 08</span>
+    <span class="name">TorneoYa</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/en/#trabajo">All projects →</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Enlarged image">
+    <button class="close">Close ✕</button>
+    <img alt="" />
+  </div>
+
+  <script src="../../scripts/main.js" defer></script>
+</body>
+</html>

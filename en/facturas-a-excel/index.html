@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PDF invoices → accounting table: 50 supplier invoices in different layouts read in under a second, with duplicates, totals that don't add up and purchase-order mismatches detected, and the journal entries ready." />
+  <meta name="author" content="José Candon Rubio" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0c0e0c" />
+  <link rel="canonical" href="https://josecrub.com/en/facturas-a-excel/" />
+  <link rel="alternate" hreflang="es" href="https://josecrub.com/facturas-a-excel/" />
+  <link rel="alternate" hreflang="en" href="https://josecrub.com/en/facturas-a-excel/" />
+  <link rel="alternate" hreflang="x-default" href="https://josecrub.com/facturas-a-excel/" />
+  <title>PDF invoices → accounting table — José Candon Rubio</title>
+  <link rel="icon" type="image/png" href="../../Media/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://josecrub.com/en/facturas-a-excel/" />
+  <meta property="og:title" content="PDF invoices → accounting table" />
+  <meta property="og:description" content="50 PDF invoices in different layouts → Excel with balanced journal entries and the problems flagged, in under a second." />
+  <meta property="og:image" content="https://josecrub.com/Media/facturas-a-excel.png" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../styles/main.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="/en/" class="nav-brand"><span class="dot"></span>josecrub — bcn</a>
+    <div class="nav-links">
+      <a href="/en/#trabajo" class="nav-link"><sup>01</sup>Projects</a>
+      <a href="/en/about/" class="nav-link"><sup>02</sup>About me</a>
+      <a href="/en/#contacto" class="nav-link"><sup>03</sup>Contact</a>
+      <a href="https://github.com/MingosGit" target="_blank" rel="noopener" class="nav-link">GitHub ↗</a>
+    </div>
+    <a href="/facturas-a-excel/" class="nav-lang" hreflang="es" lang="es" aria-label="Leer esta página en español">ES</a>
+    <button class="nav-burger" aria-label="Open menu">Menu</button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="menu-overlay">
+    <a href="/en/#trabajo"><span class="idx">01</span>Projects</a>
+    <a href="/en/about/"><span class="idx">02</span>About me</a>
+    <a href="/en/#contacto"><span class="idx">03</span>Contact</a>
+    <a href="https://github.com/MingosGit" target="_blank" rel="noopener"><span class="idx">04</span>GitHub ↗</a>
+  </div>
+
+  <!-- Header -->
+  <header class="case-header">
+    <p class="crumbs" data-reveal><a href="/en/">Home</a> / <a href="/en/#trabajo">Projects</a> / <span>01</span></p>
+    <h1 class="case-title" data-reveal style="--reveal-delay:.06s">
+      PDF invoices →<br /><span class="serif-it acid">accounting table</span>
+    </h1>
+    <p class="case-lead" data-reveal style="--reveal-delay:.12s">
+      A folder with <strong>50 invoices from 6 suppliers</strong>, each with its own layout, turned
+      in under a second into an Excel file ready to post. Reading the PDF isn't the hard part:
+      it's <strong>catching the ones that don't add up</strong> before they reach the books.
+    </p>
+
+    <dl class="case-meta" data-reveal>
+      <div>
+        <dt>Type</dt>
+        <dd>Automation · Finance</dd>
+      </div>
+      <div>
+        <dt>Stack</dt>
+        <dd>Python · pdfplumber · openpyxl</dd>
+      </div>
+      <div>
+        <dt>Result</dt>
+        <dd>50 invoices in 0.6 s</dd>
+      </div>
+      <div>
+        <dt>Code</dt>
+        <dd><a href="https://github.com/MingosGit/facturas-a-excel" target="_blank" rel="noopener">GitHub ↗</a></dd>
+      </div>
+    </dl>
+  </header>
+
+  <!-- Demo -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">01</span>
+      <h2>What it does</h2>
+    </div>
+    <figure class="figure figure-video" data-reveal>
+      <video src="../../Media/facturas-a-excel/demo.mp4" poster="../../Media/facturas-a-excel/poster.jpg" controls muted playsinline preload="metadata"></video>
+      <figcaption>24-second demo generated from a real run (on-screen text in Spanish)</figcaption>
+    </figure>
+    <p class="case-p" data-reveal>
+      You give it the invoice folder, the supplier master file and the purchase orders. It returns
+      an Excel file with the register of every invoice, the <strong>journal entries with debits and
+      credits balanced</strong> and a list of the invoices that need a review, explaining why in
+      plain language.
+    </p>
+    <p class="case-p" data-reveal>
+      Out of the 50 test invoices, 9 have something wrong hidden on purpose, and it finds all of them:
+    </p>
+    <ul class="case-list" data-reveal>
+      <li><strong>3 duplicates:</strong> the same invoice arriving by email and scanned</li>
+      <li><strong>3 that don't match the purchase order:</strong> the supplier bills more than was ordered</li>
+      <li><strong>1 with no purchase order</strong> and <strong>1 with an order that doesn't exist</strong></li>
+      <li><strong>1 with a wrong total:</strong> net + VAT doesn't equal the total</li>
+    </ul>
+  </section>
+
+  <!-- Screenshots -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">02</span>
+      <h2>What goes in and what comes out</h2>
+    </div>
+    <div class="figure-grid" data-reveal>
+      <figure class="figure">
+        <img src="../../Media/facturas-a-excel/facturas-ejemplo.png" alt="Two made-up invoices with different designs: a catering one with 10% VAT and a packaging one with a boxed header" loading="lazy" />
+        <figcaption>In: PDF invoices with different designs (made-up data)</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/facturas-a-excel/resumen.png" alt="Excel summary sheet: 50 invoices, 41 ready to post, 9 to review and issues by type" loading="lazy" />
+        <figcaption>Out: a summary of what's ready and what isn't</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/facturas-a-excel/asientos.png" alt="Journal entries sheet: expense, input VAT and supplier, with debit and credit" loading="lazy" />
+        <figcaption>Journal entries for the correct invoices</figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="../../Media/facturas-a-excel/incidencias.png" alt="Issues sheet: file, supplier, issue type and detail" loading="lazy" />
+        <figcaption>Issues explained one by one</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="case-section">
+    <div class="case-h" data-reveal>
+      <span class="n">03</span>
+      <h2>How it works</h2>
+    </div>
+
+    <h3 class="case-h3" data-reveal>1 — Reading without templates</h3>
+    <p class="case-p" data-reveal>
+      There's no template per supplier. It looks for the usual labels (<em>Base imponible</em>,
+      <em>Subtotal</em>, <em>Net amount</em>, <em>Cuota IVA</em>, <em>Retención IRPF</em>…) and understands
+      Spanish and international number and date formats: <code>1.234,56</code> and <code>1,234.56</code>,
+      <code>16/09/2026</code>, <code>2026-09-16</code> or <em>30 de octubre de 2026</em>.
+    </p>
+
+    <h3 class="case-h3" data-reveal>2 — Identifying the supplier</h3>
+    <p class="case-p" data-reveal>
+      By its tax ID against the supplier master file, which also says which expense account each one
+      goes to (600 purchases, 623 professional services, 624 transport… in the Spanish chart of accounts).
+    </p>
+
+    <h3 class="case-h3" data-reveal>3 — Validating</h3>
+    <ul class="case-list" data-reveal>
+      <li><strong>Duplicates:</strong> same supplier and same invoice number</li>
+      <li><strong>Arithmetic:</strong> net + VAT − withholding tax = total, and the VAT is the right percentage</li>
+      <li><strong>Purchase order:</strong> it exists, it belongs to that supplier and the amount is within 1&nbsp;%</li>
+    </ul>
+
+    <h3 class="case-h3" data-reveal>4 — An Excel file ready to post</h3>
+    <p class="case-p" data-reveal>
+      Four sheets: summary, invoice register (the ones to review in red), journal entries and
+      issues. The entries include expense, input VAT, withholding tax and supplier, and the tests
+      check that total debits equal total credits.
+    </p>
+  </section>
+
+  <!-- Details -->
+  <section class="case-section case-section-wide">
+    <div class="case-h" data-reveal>
+      <span class="n">04</span>
+      <h2>Details that matter</h2>
+    </div>
+    <div class="flat-grid" data-reveal>
+      <div class="flat-card">
+        <h3>Six layouts, zero templates</h3>
+        <p>A classic invoice, a coloured header, one in English with decimal points, a boxed one, a catering one at 10&nbsp;% VAT and a freelancer's with income-tax withholding.</p>
+      </div>
+      <div class="flat-card">
+        <h3>A real inbox</h3>
+        <p>Chaotic file names (<code>scan_004.pdf</code>, <code>FW_factura_031.pdf</code>…) and the same invoice repeated under another name.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Tested against the truth</h3>
+        <p>The generator stores what should come out of every invoice. The tests check all 50 documents field by field and that exactly the 9 issues are found, not one more.</p>
+      </div>
+      <div class="flat-card">
+        <h3>Explainable</h3>
+        <p>Every issue says what's wrong, with figures: <em>“Order €639.00 · invoiced €710.00 (+€71.00)”</em>. No black boxes.</p>
+      </div>
+    </div>
+
+    <div class="chip-row" data-reveal style="margin-top:28px;">
+      <span>Python</span><span>pdfplumber</span><span>openpyxl</span><span>reportlab</span><span>pytest</span><span>GitHub Actions</span>
+    </div>
+  </section>
+
+  <!-- Next project -->
+  <a href="../conciliacion-bancaria/" class="next-project">
+    <span class="lbl">Next project — 02</span>
+    <span class="name">Bank reconciliation</span>
+  </a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span data-year>2026</span> José Candon Rubio</span>
+      <a href="/en/#trabajo">All projects →</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-label="Enlarged image">
+    <button class="close">Close ✕</button>
+    <img alt="" />
+  </div>
+
+  <script src="../../scripts/main.js" defer></script>
+</body>
+</html>
